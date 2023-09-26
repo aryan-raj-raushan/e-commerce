@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import MyContext from "./myContext";
 
-function MyState(props: any) {
+const MyState = (props: any) => {
   const [mode, setMode] = useState("light");
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   const toggleMode = () => {
     if (mode === "light") {
@@ -14,7 +16,9 @@ function MyState(props: any) {
     }
   };
   return (
-    <MyContext.Provider value={{ mode, toggleMode }}>
+    <MyContext.Provider
+      value={{ mode, toggleMode, loading, setLoading, user, setUser }}
+    >
       {props.children}
     </MyContext.Provider>
   );
