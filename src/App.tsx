@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Navigate,
 } from "react-router-dom";
 import Order from "./pages/order/Order";
 import Home from "./pages/home/Home";
@@ -18,18 +17,22 @@ import SignUpPage from "./pages/registeration/SignUpPage";
 import LoginPage from "./pages/registeration/LoginPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useContext } from "react";
-import myContext from "./context/myContext";
+import { ProtectedRoutes, ProtectedRoutesForAdmin } from './HOC/routes/protectedRoutes';
 
 const App = () => {
-  // const context = useContext(myContext);
-  // const { user } = context;
   return (
     <MyState>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/order" element={<Order />} />
+          <Route
+            path="/order"
+            element={
+              <ProtectedRoutes>
+                <Order />
+              </ProtectedRoutes>
+            }
+          />
           <Route path="/cart" element={<Cart />} />
           <Route
             path="/dashboard"
@@ -67,22 +70,3 @@ const App = () => {
 };
 
 export default App;
-
-export const ProtectedRoutes = ({ children }: any) => {
-  if (localStorage.getItem("currentUser")) {
-    return children;
-  } else {
-    return <Navigate to="/login" />;
-  }
-};
-
-export const ProtectedRoutesForAdmin = ({ children }: any) => {
-  const context = useContext(myContext);
-  const { user } = context;
-  console.log(user.email);
-  if (user.email.includes("aryan")) {
-    return children;
-  } else {
-    return <Navigate to="/login" />;
-  }
-};

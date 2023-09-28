@@ -34,7 +34,6 @@ const Login = () => {
     e.preventDefault();
     accountLogin();
   };
-
   const accountLogin = async () => {
     const { email, password } = loginState;
     try {
@@ -44,6 +43,7 @@ const Login = () => {
         email,
         password
       );
+      localStorage.setItem("user", JSON.stringify(userCredential));
       const user = userCredential.user;
       setUser(user);
       toast.success("Signin Successfully", {
@@ -58,7 +58,9 @@ const Login = () => {
       });
       navigate("/");
     } catch (error: any) {
-      const errorMessage = getCustomErrorMessage(error.code);
+      const errorCode = error.code;
+      const errorMessage = getCustomErrorMessage(errorCode);
+      setLoading(false);
       setError(errorMessage);
       toast.error(errorMessage, {
         position: "top-right",
@@ -70,10 +72,9 @@ const Login = () => {
         progress: undefined,
         theme: "colored",
       });
-    } finally {
-      setLoading(false);
     }
   };
+
   const getCustomErrorMessage = (errorCode: string) => {
     // Create a mapping of Firebase error codes to custom error messages
     const errorMessages: any = {
@@ -92,7 +93,6 @@ const Login = () => {
       errorMessages[errorCode] || "An error occurred. Please try again later."
     ); // Default message
   };
-
   return (
     <form className="space-y-6">
       <div className="space-y-2">

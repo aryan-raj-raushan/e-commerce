@@ -9,17 +9,19 @@ import { firebaseAuth } from "../../firebase/firebase.config";
 
 const Navbar = () => {
   const context = useContext(myContext);
-  const { toggleMode, mode, user } = context;
+  const { toggleMode, mode } = context;
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  const logout = () => {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const handleLogout = () => {
     signOut(firebaseAuth)
       .then(() => {
+        localStorage.removeItem("user");
         navigate("/login");
       })
       .catch((error) => {
-        // An error happened.
+        console.log(error.message)
       });
   };
 
@@ -27,7 +29,7 @@ const Navbar = () => {
     <div className="bg-white sticky top-0 z-50  ">
       {/* Mobile menu */}
 
-      <MobileMenu open={open} mode={mode} setOpen={setOpen} />
+      <MobileMenu open={open} mode={mode} setOpen={setOpen} logout={handleLogout} user={user}/>
 
       {/* Desktop menu */}
       <header className="relative bg-white">
@@ -114,7 +116,7 @@ const Navbar = () => {
                         className="-m-2 block p-2 font-medium text-gray-900"
                         style={{ color: mode === "dark" ? "white" : "" }}
                       >
-                        admin
+                        Admin
                       </Link>
                     </div>
                   ) : (
@@ -125,7 +127,7 @@ const Navbar = () => {
                     <div className="flow-root">
                       <a
                         href="/login"
-                        onClick={logout}
+                        onClick={handleLogout}
                         className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
                         style={{ color: mode === "dark" ? "white" : "" }}
                       >
@@ -133,7 +135,15 @@ const Navbar = () => {
                       </a>
                     </div>
                   ) : (
-                    ""
+                    <div className="flow-root">
+                      <a
+                        href="/login"
+                        className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                      >
+                        Login
+                      </a>
+                    </div>
                   )}
                 </div>
 
