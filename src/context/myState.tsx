@@ -12,10 +12,13 @@ import { toast } from "react-toastify";
 import { firebaseDb } from "../firebase/firebase.config";
 
 const MyState = (props: any) => {
-  const [mode, setMode] = useState("light");
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<any>(null);
+  /* -------------------------------------------------------------------------- */
+  /*                                  Dark Mode                                 */
+  /* -------------------------------------------------------------------------- */
 
+  const [mode, setMode] = useState("light");
   const toggleMode = () => {
     if (mode === "light") {
       setMode("dark");
@@ -40,29 +43,56 @@ const MyState = (props: any) => {
     }),
   });
 
-  // ********************** Add Product Section  **********************
+  /* -------------------------------------------------------------------------- */
+  /*                               Add Product Section                          */
+  /* -------------------------------------------------------------------------- */
   const addProduct = async () => {
-    if (Object.values(products).some(value => value === null)) {
+    if (Object.values(products).some((value) => value === null)) {
       return toast.error("Please fill all fields");
     }
     const productRef = collection(firebaseDb, "products");
     setLoading(true);
     try {
       await addDoc(productRef, products);
-      toast.success("Product Add successfully");
+      toast.success("Product Add successfully", {
+        position: "top-right",
+        autoClose: 1200,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       getProductData();
       // closeModal()
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 1500);
       setLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       setLoading(false);
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
     setProducts("");
   };
 
   const [product, setProduct] = useState([]);
 
-  // ****** get product
+  /* -------------------------------------------------------------------------- */
+  /*                                 get product                                */
+  /* -------------------------------------------------------------------------- */
+
   const getProductData = async () => {
     setLoading(true);
     try {
@@ -86,6 +116,10 @@ const MyState = (props: any) => {
     }
   };
 
+  /* -------------------------------------------------------------------------- */
+  /*                                  useEffect                                 */
+  /* -------------------------------------------------------------------------- */
+
   useEffect(() => {
     getProductData();
   }, []);
@@ -101,7 +135,7 @@ const MyState = (props: any) => {
         setProducts,
         addProduct,
         product,
-        setUser
+        setUser,
       }}
     >
       {props.children}

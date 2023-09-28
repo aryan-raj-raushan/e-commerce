@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 // import { MdOutlineProductionQuantityLimits } from "react-icons/md";
-import { FaUser, FaCartPlus } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import {
   AiFillShopping,
   // AiFillPlusCircle,
@@ -15,7 +15,7 @@ import User from "./tabs/User";
 
 const DashboardTab = () => {
   const context = useContext(myContext);
-  const { mode } = context;
+  const { mode, product,loading } = context;
   // let [isOpen, setIsOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -41,7 +41,7 @@ const DashboardTab = () => {
   ];
 
   const tabComp = [
-    { component: <Product mode={mode} /> },
+    { component: <Product mode={mode} data={product} loading={loading}/> },
     { component: <Order mode={mode} /> },
     { component: <User mode={mode} /> },
   ];
