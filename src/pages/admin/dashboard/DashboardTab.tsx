@@ -15,13 +15,13 @@ import User from "./tabs/User";
 
 const DashboardTab = () => {
   const context = useContext(myContext);
-  const { mode, product,loading } = context;
+  const { mode, product, loading, edithandle,deleteProduct } = context;
   // let [isOpen, setIsOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
 
   // const handleOpen = () => {
   //   setIsOpen(!isOpen);
-  // };  
+  // };
   const tabsData = [
     {
       icon: <AiOutlineShoppingCart />,
@@ -41,7 +41,17 @@ const DashboardTab = () => {
   ];
 
   const tabComp = [
-    { component: <Product mode={mode} data={product} loading={loading}/> },
+    {
+      component: (
+        <Product
+          mode={mode}
+          data={product}
+          loading={loading}
+          edithandle={edithandle}
+          deleteProduct={deleteProduct}
+        />
+      ),
+    },
     { component: <Order mode={mode} /> },
     { component: <User mode={mode} /> },
   ];

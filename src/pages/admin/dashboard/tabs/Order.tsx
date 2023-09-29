@@ -57,7 +57,7 @@ const Order = ({ mode }: any) => {
         <tbody>
           {userDetails.map((item: any, index: number) => (
             <tr
-              key={item.id}
+              key={index}
               className={`${
                 index % 2 === 0 ? "bg-gray-50" : ""
               } border-b  dark:border-gray-700`}

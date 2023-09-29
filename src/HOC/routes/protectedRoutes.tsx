@@ -10,7 +10,6 @@ export const ProtectedRoutes = ({ children }: any) => {
   
   export const ProtectedRoutesForAdmin = ({ children }: any) => {
     const admin = JSON.parse(localStorage.getItem("user") || "{}");
-    console.log(admin.user.email)
     if (admin.user.email.includes("gmail")) {
       return children;
     } else {

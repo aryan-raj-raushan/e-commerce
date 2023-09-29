@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import myContext from "../../context/myContext";
 import { Link, useNavigate } from "react-router-dom";
-import { BsFillCloudSunFill } from "react-icons/bs";
+import { BsCart3, BsFillCloudSunFill } from "react-icons/bs";
 import { FiSun } from "react-icons/fi";
 import MobileMenu from "./MobileMenu";
 import { signOut } from "firebase/auth";
 import { firebaseAuth } from "../../firebase/firebase.config";
+import { useSelector } from "react-redux";
+import { getCommonStyles } from "../../HOC/hoc/HOC";
 
 const Navbar = () => {
   const context = useContext(myContext);
@@ -14,6 +16,9 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
+  console.log(user)
+  const cartItems = useSelector((state: any) => state.cart);
+  // console.log("nav", cartItems);
   const handleLogout = () => {
     signOut(firebaseAuth)
       .then(() => {
@@ -21,35 +26,72 @@ const Navbar = () => {
         navigate("/login");
       })
       .catch((error) => {
-        console.log(error.message)
+        console.log(error.message);
       });
+  };
+  const darkText = getCommonStyles(mode);
+  const darkBg = getCommonStyles(mode, { backgroundColor: "rgb(80 82 87)" });
+
+  const menuItems = [
+    { label: "Find a Store", link: "/store" },
+    { label: "Help", link: "/help" },
+    { label: "Join Us", link: "/signup" },
+    { label: "Sign In", link: "/login" },
+  ];
+
+  const [loggedIn, setLoggedIn] = useState(false); // You can set this state based on your authentication logic
+
+  const toggleLogin = () => {
+    // Implement your login/logout logic here and update the loggedIn state accordingly
+    setLoggedIn(!loggedIn);
   };
 
   return (
     <div className="bg-white sticky top-0 z-50  ">
       {/* Mobile menu */}
 
-      <MobileMenu open={open} mode={mode} setOpen={setOpen} logout={handleLogout} user={user}/>
+      <MobileMenu
+        open={open}
+        mode={mode}
+        setOpen={setOpen}
+        logout={handleLogout}
+        user={user}
+      />
 
       {/* Desktop menu */}
       <header className="relative bg-white">
-        <p
-          className="flex h-10 items-center justify-center bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
-          style={{
-            backgroundColor: mode === "dark" ? "rgb(62 64 66)" : "",
-            color: mode === "dark" ? "white" : "",
-          }}
-        >
-          Get free delivery on orders over ₹300
-        </p>
+        {/* /* -------------------------------- Upper nav -------------------------------  */}
+        <div className="flex h-10 items-center justify-end bg-black px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3 cursor-pointer">
+            {menuItems.map((item, index) => {
+              // Conditionally change "Join Us" and "Sign In" to "Log Out" when the user is logged in
+              if (
+                (item.label === "Join Us" || item.label === "Sign In") &&
+                loggedIn
+              ) {
+                return (
+                  <React.Fragment key={index}>
+                    <a href="/" onClick={toggleLogin}>
+                      Log Out
+                    </a>
+                  </React.Fragment>
+                );
+              } else {
+                return (
+                  <React.Fragment key={index}>
+                    <a href={item.link}>{item.label}</a>
+                    {index !== menuItems.length - 1 && <span>|</span>}
+                  </React.Fragment>
+                );
+              }
+            })}
+          </div>
+        </div>
 
         <nav
           aria-label="Top"
           className="bg-gray-100 px-4 sm:px-6 lg:px-8 shadow-xl "
-          style={{
-            backgroundColor: mode === "dark" ? "#282c34" : "",
-            color: mode === "dark" ? "white" : "",
-          }}
+          style={darkBg}
         >
           <div className="">
             <div className="flex h-16 items-center">
@@ -57,10 +99,7 @@ const Navbar = () => {
                 type="button"
                 className="rounded-md bg-white p-2 text-gray-400 lg:hidden"
                 onClick={() => setOpen(true)}
-                style={{
-                  backgroundColor: mode === "dark" ? "rgb(80 82 87)" : "",
-                  color: mode === "dark" ? "white" : "",
-                }}
+                style={darkBg}
               >
                 <span className="sr-only">Open menu</span>
                 <svg
@@ -85,7 +124,7 @@ const Navbar = () => {
                   <div className="flex ">
                     <h1
                       className=" text-2xl font-bold text-black  px-2 py-1 rounded"
-                      style={{ color: mode === "dark" ? "white" : "" }}
+                      style={darkText}
                     >
                       E-Bharat
                     </h1>
@@ -98,14 +137,14 @@ const Navbar = () => {
                   <Link
                     to={"/allproducts"}
                     className="text-sm font-medium text-gray-700 "
-                    style={{ color: mode === "dark" ? "white" : "" }}
+                    style={darkText}
                   >
                     All Products
                   </Link>
                   <Link
                     to={"/order"}
                     className="text-sm font-medium text-gray-700 "
-                    style={{ color: mode === "dark" ? "white" : "" }}
+                    style={darkText}
                   >
                     Order
                   </Link>
@@ -114,7 +153,7 @@ const Navbar = () => {
                       <Link
                         to={"/dashboard"}
                         className="-m-2 block p-2 font-medium text-gray-900"
-                        style={{ color: mode === "dark" ? "white" : "" }}
+                        style={darkText}
                       >
                         Admin
                       </Link>
@@ -123,13 +162,13 @@ const Navbar = () => {
                     ""
                   )}
 
-                  {user ? (
+                  {user?.user ? (
                     <div className="flow-root">
                       <a
                         href="/login"
                         onClick={handleLogout}
                         className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
-                        style={{ color: mode === "dark" ? "white" : "" }}
+                        style={darkText}
                       >
                         Logout
                       </a>
@@ -139,7 +178,7 @@ const Navbar = () => {
                       <a
                         href="/login"
                         className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
-                        style={{ color: mode === "dark" ? "white" : "" }}
+                        style={darkText}
                       >
                         Login
                       </a>
@@ -156,7 +195,7 @@ const Navbar = () => {
                     />
                     <span
                       className="ml-3 block text-sm font-medium"
-                      style={{ color: mode === "dark" ? "white" : "" }}
+                      style={darkText}
                     >
                       INDIA
                     </span>
@@ -191,28 +230,15 @@ const Navbar = () => {
                   <Link
                     to={"/cart"}
                     className="group -m-2 flex items-center p-2"
-                    style={{ color: mode === "dark" ? "white" : "" }}
+                    style={darkText}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                      />
-                    </svg>
+                    <BsCart3 size={20} />
 
                     <span
-                      className="ml-2 text-sm font-medium text-gray-700 group-"
-                      style={{ color: mode === "dark" ? "white" : "" }}
+                      className="ml-2 text-sm font-medium text-gray-700 group"
+                      style={darkText}
                     >
-                      0
+                      {cartItems.length}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </Link>

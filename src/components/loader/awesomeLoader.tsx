@@ -1,10 +1,10 @@
 export const ScatterBoxLoaderComponent = () => {
   return (
     <>
-      <ScatterBoxLoader
+      {/* <ScatterBoxLoader
         primaryColor={"#6366F1"}
         background={theme.colors["background"]}
-      />
+      /> */}
     </>
   );
 };

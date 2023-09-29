@@ -1,21 +1,24 @@
 import Input from "./Input";
 import FormAction from "./FormAction";
 import useRegisterationHook from "./useRegisterationHook";
+import { FallingLines } from "react-loader-spinner";
 
 const Signup = () => {
   const {
     error,
     handleSubmit,
-    handleChange,
+    handleSignUp,
     loading,
-    isFormValid,
+    isSignUpValid,
     signupFields,
     signupState,
   } = useRegisterationHook();
   return (
     <>
       {loading ? (
-        <div className="flex items-center justify-center">Loading...</div>
+        <div className="flex items-center justify-center">
+          <FallingLines color="#4fa94d" width="100" visible={true} />
+        </div>
       ) : (
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="">
@@ -23,7 +26,7 @@ const Signup = () => {
               <div key={field.id}>
                 <Input
                   key={field.id}
-                  handleChange={handleChange}
+                  handleChange={handleSignUp}
                   value={signupState[field.id]}
                   labelText={field.labelText}
                   labelFor={field.labelFor}
@@ -41,7 +44,7 @@ const Signup = () => {
             <FormAction
               handleSubmit={handleSubmit}
               text="Signup"
-              disabled={!isFormValid}
+              disabled={!isSignUpValid}
             />
           </div>
         </form>

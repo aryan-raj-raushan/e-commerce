@@ -1,33 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import myContext from "../../context/myContext";
 import Products from "./products";
-
-const items = [
-  {
-    title: "This is title 1",
-    price: "₹ 500",
-    imageUrl: "https://dummyimage.com/720x400",
-  },
-  {
-    title: "This is title 2",
-    price: "₹ 500",
-    imageUrl: "https://dummyimage.com/720x400",
-  },
-  {
-    title: "This is title 3",
-    price: "₹ 500",
-    imageUrl: "https://dummyimage.com/720x400",
-  },
-  {
-    title: "This is title 4",
-    price: "₹ 500",
-    imageUrl: "https://dummyimage.com/720x400",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../redux/cartSlice";
+import { toast } from "react-toastify";
 
 const ProductCard = () => {
   const context = useContext(myContext);
-  const { mode } = context;
+  const { mode,product } = context;
+
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: any) => state.cart);
+  console.log(cartItems)
+  const addCart = (product: any) => {
+    dispatch(addToCart(product));
+    toast.success("add to cart");
+  };
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-8 md:py-16 mx-auto">
@@ -43,13 +35,15 @@ const ProductCard = () => {
 
         {/* Products */}
         <div className="flex flex-wrap -m-4">
-          {items.map((item: any, index: number) => (
+          {product.map((item: any, index: number) => (
             <Products
               key={index}
               title={item.title}
               price={item.price}
               imageUrl={item.imageUrl}
               mode={mode}
+              handleCart= {addCart}
+              data={item}
             />
           ))}
         </div>
