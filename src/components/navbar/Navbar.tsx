@@ -16,9 +16,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
-  console.log(user)
   const cartItems = useSelector((state: any) => state.cart);
-  // console.log("nav", cartItems);
   const handleLogout = () => {
     signOut(firebaseAuth)
       .then(() => {

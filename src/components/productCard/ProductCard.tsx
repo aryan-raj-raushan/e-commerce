@@ -11,7 +11,6 @@ const ProductCard = () => {
 
   const dispatch = useDispatch();
   const cartItems = useSelector((state: any) => state.cart);
-  console.log(cartItems)
   const addCart = (product: any) => {
     dispatch(addToCart(product));
     toast.success("add to cart");
