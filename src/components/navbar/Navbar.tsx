@@ -8,6 +8,7 @@ import { signOut } from "firebase/auth";
 import { firebaseAuth } from "../../firebase/firebase.config";
 import { useSelector } from "react-redux";
 import { getCommonStyles } from "../../HOC/hoc/HOC";
+import { CartItem } from "../../MaterialUI/Icon";
 
 const Navbar = () => {
   const context = useContext(myContext);
@@ -43,7 +44,6 @@ const Navbar = () => {
     // Implement your login/logout logic here and update the loggedIn state accordingly
     setLoggedIn(!loggedIn);
   };
-
   return (
     <div className="bg-white sticky top-0 z-50  ">
       {/* Mobile menu */}
@@ -86,6 +86,7 @@ const Navbar = () => {
           </div>
         </div>
 
+          {/* /* -------------------------------- Lower Nav -------------------------------  */}
         <nav
           aria-label="Top"
           className="bg-gray-100 px-4 sm:px-6 lg:px-8 shadow-xl "
@@ -184,7 +185,7 @@ const Navbar = () => {
                   )}
                 </div>
 
-                <div className="hidden lg:ml-8 lg:flex">
+                {/* <div className="hidden lg:ml-8 lg:flex">
                   <a href="/" className="flex items-center text-gray-700 ">
                     <img
                       src="https://ecommerce-sk.vercel.app/img/indiaflag.png"
@@ -198,7 +199,7 @@ const Navbar = () => {
                       INDIA
                     </span>
                   </a>
-                </div>
+                </div> */}
                 <div className="hidden lg:ml-8 lg:flex">
                   <a href="/" className="flex items-center text-gray-700 ">
                     <img
@@ -224,20 +225,13 @@ const Navbar = () => {
                 </div>
 
                 {/* Cart */}
-                <div className="ml-4 flow-root lg:ml-6">
+                <div className="flow-root pt-1">
                   <Link
                     to={"/cart"}
-                    className="group -m-2 flex items-center p-2"
+                    className="group flex items-center p-2"
                     style={darkText}
                   >
-                    <BsCart3 size={20} />
-
-                    <span
-                      className="ml-2 text-sm font-medium text-gray-700 group"
-                      style={darkText}
-                    >
-                      {cartItems.length}
-                    </span>
+                    <CartItem cartItem={cartItems.length} mode={mode}/>
                     <span className="sr-only">items in cart, view bag</span>
                   </Link>
                 </div>
