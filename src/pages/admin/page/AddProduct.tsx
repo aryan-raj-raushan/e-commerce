@@ -13,6 +13,7 @@ const AddProduct = () => {
     { name: "imageUrl", placeholder: "Product imageUrl" },
     { name: "category", placeholder: "Product category" },
     { name: "description", placeholder: "Product description" },
+    { name: "Discount", placeholder: "Discount percent (optional)"},
   ];
 
   const handleChange = (e: any) => {

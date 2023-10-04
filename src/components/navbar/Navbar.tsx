@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import myContext from "../../context/myContext";
 import { Link, useNavigate } from "react-router-dom";
-import { BsCart3, BsFillCloudSunFill } from "react-icons/bs";
+import { BsFillCloudSunFill } from "react-icons/bs";
 import { FiSun } from "react-icons/fi";
 import MobileMenu from "./MobileMenu";
 import { signOut } from "firebase/auth";
@@ -62,7 +62,6 @@ const Navbar = () => {
         <div className="flex h-10 items-center justify-end bg-black px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 cursor-pointer">
             {menuItems.map((item, index) => {
-              // Conditionally change "Join Us" and "Sign In" to "Log Out" when the user is logged in
               if (
                 (item.label === "Join Us" || item.label === "Sign In") &&
                 loggedIn
@@ -86,7 +85,7 @@ const Navbar = () => {
           </div>
         </div>
 
-          {/* /* -------------------------------- Lower Nav -------------------------------  */}
+        {/* /* -------------------------------- Lower Nav -------------------------------  */}
         <nav
           aria-label="Top"
           className="bg-gray-100 px-4 sm:px-6 lg:px-8 shadow-xl "
@@ -185,30 +184,17 @@ const Navbar = () => {
                   )}
                 </div>
 
-                {/* <div className="hidden lg:ml-8 lg:flex">
-                  <a href="/" className="flex items-center text-gray-700 ">
-                    <img
-                      src="https://ecommerce-sk.vercel.app/img/indiaflag.png"
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
-                    />
-                    <span
-                      className="ml-3 block text-sm font-medium"
-                      style={darkText}
-                    >
-                      INDIA
-                    </span>
-                  </a>
-                </div> */}
-                <div className="hidden lg:ml-8 lg:flex">
-                  <a href="/" className="flex items-center text-gray-700 ">
-                    <img
-                      className="inline-block w-10 h-10 rounded-full"
-                      src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
-                      alt="Dan_Abromov"
-                    />
-                  </a>
-                </div>
+                {user?.user && (
+                  <div className="hidden lg:ml-8 lg:flex">
+                    <a href="/" className="flex items-center text-gray-700 ">
+                      <img
+                        className="inline-block w-10 h-10 rounded-full"
+                        src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
+                        alt="Dan_Abromov"
+                      />
+                    </a>
+                  </div>
+                )}
 
                 {/* Search */}
                 <div className="flex lg:ml-6">
@@ -225,16 +211,16 @@ const Navbar = () => {
                 </div>
 
                 {/* Cart */}
-                <div className="flow-root pt-1">
-                  <Link
-                    to={"/cart"}
-                    className="group flex items-center p-2"
-                    style={darkText}
-                  >
-                    <CartItem cartItem={cartItems.length} mode={mode}/>
-                    <span className="sr-only">items in cart, view bag</span>
-                  </Link>
-                </div>
+                  <div className="flow-root pt-1">
+                    <Link
+                      to={"/cart"}
+                      className="group flex items-center p-2"
+                      style={darkText}
+                    >
+                      <CartItem cartItem={cartItems.length} mode={mode} />
+                      <span className="sr-only">items in cart, view bag</span>
+                    </Link>
+                  </div>
               </div>
             </div>
           </div>

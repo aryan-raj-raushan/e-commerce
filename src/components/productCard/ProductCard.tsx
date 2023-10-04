@@ -3,7 +3,7 @@ import myContext from "../../context/myContext";
 import Products from "./products";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
-import { toast } from "react-toastify";
+import { showSuccessToast } from "../../HOC/hoc/HOC";
 
 const ProductCard = () => {
   const context = useContext(myContext);
@@ -13,7 +13,7 @@ const ProductCard = () => {
   const cartItems = useSelector((state: any) => state.cart);
   const addCart = (product: any) => {
     dispatch(addToCart(product));
-    toast.success("add to cart");
+    showSuccessToast("add to cart");
   };
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));

@@ -12,8 +12,13 @@ const cartSlice = createSlice({
       };
       state.push(serializedCartItem);
     },
-    deleteFromCart(state, action) {
-      return state.filter((item: any) => item.id !== action.payload.id);
+    deleteFromCart: (state, action) => {
+      const itemIdToDelete = action.payload.id;
+      const indexToDelete = state.findIndex((item:any) => item.id === itemIdToDelete);
+
+      if (indexToDelete !== -1) {
+        state.splice(indexToDelete, 1);
+      }
     },
   },
 });

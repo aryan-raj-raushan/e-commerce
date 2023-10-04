@@ -20,25 +20,25 @@ export const getCommonStyles = (mode: "dark" | "light", styleOptions: { backgrou
 export const showSuccessToast = (message:any) => {
   toast.success(message, {
     position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: true,
+    autoClose: 1200,
+    hideProgressBar: false,
     closeOnClick: true,
-    pauseOnHover: true,
+    pauseOnHover: false,
     draggable: true,
     progress: undefined,
-    theme: "colored",
+    // theme: "colored",
   });
 };
 
 export const showErrorToast = (message:any) => {
   toast.error(message, {
     position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: true,
+    autoClose: 2000,
+    hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    theme: "colored",
+    // theme: "colored",
   });
 }

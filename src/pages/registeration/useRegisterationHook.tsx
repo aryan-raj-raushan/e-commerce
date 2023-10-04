@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { firebaseAuth, firebaseDb } from "../../firebase/firebase.config";
 import myContext from "../../context/myContext";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
-import { toast } from "react-toastify";
 import { signupFields } from "../../const/Const";
 import { showErrorToast, showSuccessToast } from "../../HOC/hoc/HOC";
 
@@ -85,16 +84,7 @@ const useRegisterationHook = () => {
       };
       const userRef = collection(firebaseDb, "users");
       await addDoc(userRef, user);
-      toast.success("Signup Succesfully", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      showSuccessToast("Signup Succesfully");
       setLoading(false);
       navigate("/login");
     } catch (error: any) {
@@ -102,16 +92,7 @@ const useRegisterationHook = () => {
       const errorMessage = getCustomErrorMessage(errorCode);
       setLoading(false);
       setError(errorMessage);
-      toast.error(errorMessage, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      showErrorToast(errorMessage);
     }
   };
 

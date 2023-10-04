@@ -13,7 +13,7 @@ const Products = ({ mode, handleCart, data }: any) => {
       >
         <div className="flex justify-center cursor-pointer">
           <img
-            className="rounded-2xl w-full h-full p-2 hover:scale-110 transition-scale-110 duration-300 ease-in-out"
+            className="rounded-2xl  sm:w-full min-h-[300px] max-h-96 object-contain p-2 hover:scale-110 transition-scale-110 duration-300 ease-in-out"
             src={imageUrl}
             alt="product"
           />
@@ -30,7 +30,7 @@ const Products = ({ mode, handleCart, data }: any) => {
             className="leading-relaxed mb-3"
             style={{ color: mode === "dark" ? "white" : "" }}
           >
-            {price}
+            ₹{price}
           </p>
           <div className="flex justify-center">
             <button

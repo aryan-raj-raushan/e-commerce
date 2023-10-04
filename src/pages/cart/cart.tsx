@@ -1,185 +1,153 @@
-import React, { useContext, useEffect, useState } from "react";
-import myContext from "../../context/myContext";
 import Layout from "../../components/layout/layout";
-import CartModal from "../../components/modal/CartModal";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteFromCart } from "../../redux/cartSlice";
-import { toast } from "react-toastify";
+import Shipping from "./Shipping";
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import useCartHook from "./useCartHook";
+import EmptyCart from "./EmptyCart";
+// import Lottie from "lottie-react";
 
 const Cart = () => {
-  const context = useContext(myContext);
-  const { mode } = context;
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state: any) => state.cart);
-  console.log(cartItems);
-
-  const [totalAmount, setTotalAmount] = useState(0);
-  useEffect(() => {
-    let temp = 0;
-    cartItems.forEach((cartItem: any) => {
-      const priceWithoutCommas = cartItem.price.replace(/,/g, "");
-      const priceAsFloat = parseFloat(priceWithoutCommas);
-      if (!isNaN(priceAsFloat)) {
-        temp += priceAsFloat;
-      }
-    });
-    setTotalAmount(temp);
-    console.log(temp);
-  }, [cartItems]);
-
-  const shipping: number = 100;
-  const grandTotal = shipping + totalAmount;
-
-  // add to cart
-  const deleteCart = (item: any) => {
-    dispatch(deleteFromCart(item));
-    toast.success("delete g cart");
-  };
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-  }, [cartItems]);
-
-  const [expandedItems, setExpandedItems] = useState<(number | string)[]>([]);
-  // Adjust the number of lines to display initially
-  const [displayedLines, setDisplayedLines] = useState(3); 
-
-  const toggleExpand = (index: number) => {
-    if (expandedItems.includes(index)) {
-      // Item is expanded, so collapse it
-      setExpandedItems(expandedItems.filter((item) => item !== index));
-    } else {
-      // Item is not expanded, so expand it
-      setExpandedItems([...expandedItems, index]);
-    }
-  };
-
+  const {
+    darkText,
+    darkBg,
+    handleIncrease,
+    handleDecrease,
+    uniqueCart,
+    cartItems,
+  } = useCartHook();
+  console.log(cartItems.length);
   return (
     <Layout>
-      <div
-        className="h-full bg-white pt-5 pb-10"
-        style={{
-          backgroundColor: mode === "dark" ? "#282c34" : "",
-          color: mode === "dark" ? "white" : "",
-        }}
-      >
-        <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
-        <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0 ">
-          <div className="rounded-lg md:w-2/3 ">
-            {cartItems.map((item: any, index: number) => {
-              const { price, description, title, imageUrl } = item;
-              const isExpanded = expandedItems.includes(index);
-              return (
-                <div
-                  key={index}
-                  className={`justify-between mb-10 rounded-lg border drop-shadow-xl bg-white p-6 sm:flex sm:justify-start ${
-                    isExpanded ? "expanded" : ""
-                  }`}
-                  style={{
-                    backgroundColor: mode === "dark" ? "rgb(32 33 34)" : "",
-                    color: mode === "dark" ? "white" : "",
-                  }}
-                >
-                  <img
-                    src={imageUrl}
-                    alt={title}
-                    className="w-full rounded-lg sm:w-40 sm:h-40"
-                  />
-                  <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-                    <div className="mt-5 sm:mt-0">
-                      <h2
-                        className="text-lg font-bold text-gray-900"
-                        style={{ color: mode === "dark" ? "white" : "" }}
-                      >
-                        {title}
-                      </h2>
-                      <p
-                        className="mt-1 text-sm font-semibold text-gray-700"
-                        style={{ color: mode === "dark" ? "white" : "" }}
-                      >
-                        ₹{price}
-                      </p>
-
-                      <div className="text-sm text-gray-900 mt-2">
-                        {description
-                          .split("\n")
-                          .slice(0, isExpanded ? undefined : displayedLines)
-                          .map((item: any, index: number) => (
-                            <li key={index}>{item}</li>
-                          ))}
+      <div className="h-full bg-white py-10" style={darkBg("#282c34")}>
+        {cartItems && cartItems.length > 0 ? (
+          <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0 ">
+            <div className="rounded-lg md:w-2/3 ">
+              {uniqueCart.map((item: any, index: number) => {
+                const { price, title, imageUrl, count } = item;
+                const priceWithoutCommas = price.replace(/,/g, "");
+                const priceAsFloat = parseFloat(priceWithoutCommas);
+                const shipping = priceAsFloat > 500 ? 0 : 40;
+                return (
+                  <div
+                    key={index}
+                    className={`justify-between mb-10 rounded-lg border drop-shadow-xl bg-white p-6 sm:flex sm:justify-start`}
+                    style={darkBg("rgb(32,33,34)")}
+                  >
+                    <div className="justify-between flex sm:justify-start flex-1">
+                      <img
+                        src={imageUrl}
+                        alt={title}
+                        className="rounded-lg w-40 h-40 object-contain"
+                      />
+                      <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
+                        <div className="mt-5 sm:mt-0">
+                          <h2
+                            className="text-sm sm:text-base font-bold text-gray-900"
+                            style={darkText}
+                          >
+                            {title}
+                          </h2>
+                          <p
+                            className="pt-2 text-base font-semibold text-gray-700"
+                            style={darkText}
+                          >
+                            ₹{price}{" "}
+                            <span className="text-green-500 text-sm pl-1">
+                              (10% off)
+                            </span>
+                          </p>
+                          <div className="w-20 flex items-center justify-between border border-gray-300 px-2 rounded mt-4">
+                            <button
+                              onClick={() => handleDecrease(item)}
+                              className="text-gray-500 hover:text-gray-700"
+                            >
+                              <AiOutlineMinus />
+                            </button>
+                            <div className="w-12 text-center">{count}</div>
+                            <button
+                              onClick={() => handleIncrease(item)}
+                              className="text-gray-500 hover:text-gray-700"
+                            >
+                              <AiOutlinePlus />
+                            </button>
+                          </div>
+                          <div className="text-sm pt-5 flex flex-col sm:flex-row items-start sm:items-center gap-1">
+                            Delivery by Fri Oct 6{" "}
+                            <span className="hidden sm:block">| </span>
+                            <div className="text-gray-700 " style={darkText}>
+                              {priceAsFloat > 500 ? (
+                                <>
+                                  <span className="line-through">₹40</span>{" "}
+                                  <span className="text-green-700">Free</span>
+                                </>
+                              ) : (
+                                <>
+                                  <span className="">₹{shipping}</span>{" "}
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <button
-                        onClick={() => toggleExpand(index)}
-                        className="text-gray-900 pt-2"
-                      >
-                        {isExpanded ? "Read Less" : "Read More"}
-                      </button>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
 
-          <div
-            className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3"
-            style={{
-              backgroundColor: mode === "dark" ? "rgb(32 33 34)" : "",
-              color: mode === "dark" ? "white" : "",
-            }}
-          >
-            <div className="mb-2 flex justify-between">
-              <p
-                className="text-gray-700"
-                style={{ color: mode === "dark" ? "white" : "" }}
-              >
-                Subtotal
-              </p>
-              <p
-                className="text-gray-700"
-                style={{ color: mode === "dark" ? "white" : "" }}
-              >
-                ₹100
-              </p>
-            </div>
-            <div className="flex justify-between">
-              <p
-                className="text-gray-700"
-                style={{ color: mode === "dark" ? "white" : "" }}
-              >
-                Shipping
-              </p>
-              <p
-                className="text-gray-700"
-                style={{ color: mode === "dark" ? "white" : "" }}
-              >
-                ₹20
-              </p>
-            </div>
-            <hr className="my-4" />
-            <div className="flex justify-between mb-3">
-              <p
-                className="text-lg font-bold"
-                style={{ color: mode === "dark" ? "white" : "" }}
-              >
-                Total
-              </p>
-              <div>
-                <p
-                  className="mb-1 text-lg font-bold"
-                  style={{ color: mode === "dark" ? "white" : "" }}
-                >
-                  ₹200
-                </p>
-              </div>
-            </div>
-            {/* <Modal  /> */}
-            <CartModal />
+            <Shipping
+              cartItems={cartItems}
+              darkText={darkText}
+              darkBg={darkBg}
+            />
           </div>
-        </div>
+        ) : (
+          <EmptyCart />
+        )}
       </div>
     </Layout>
   );
 };
 
 export default Cart;
+
+// const [expandedItems, setExpandedItems] = useState<(number | string)[]>([]);
+// // Adjust the number of lines to display initially
+// // const [displayedLines, setDisplayedLines] = useState(3);
+// const displayedLines:number = 3
+
+// const toggleExpand = (index: number) => {
+//   if (expandedItems.includes(index)) {
+//     // Item is expanded, so collapse it
+//     setExpandedItems(expandedItems.filter((item) => item !== index));
+//   } else {
+//     // Item is not expanded, so expand it
+//     setExpandedItems([...expandedItems, index]);
+//   }
+// };
+
+//  const isExpanded = expandedItems.includes(index);
+// {/* <div
+//                         className="text-sm text-gray-700 mt-2"
+//                         style={darkText}
+//                       >
+//                         {description
+//                           .split("\n")
+//                           .slice(0, isExpanded ? undefined : displayedLines)
+//                           .map((item: any, index: number) => (
+//                             <li key={index}>{item}</li>
+//                           ))}
+//                       </div>
+//                       <button
+//                         onClick={() => toggleExpand(index)}
+//                         className="text-gray-900 pt-2"
+//                         style={darkText}
+//                       >
+//                         {isExpanded ? "Read Less" : "Read More"}
+//                       </button> */}
+
+// <div
+//                     onClick={() => deleteCart(item)}
+//                     className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6 cursor-pointer"
+//                   >
+//                     <BsTrash3 size={20} />
+//                   </div>

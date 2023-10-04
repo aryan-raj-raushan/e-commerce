@@ -11,8 +11,8 @@ import {
   query,
   setDoc,
 } from "firebase/firestore";
-import { toast } from "react-toastify";
 import { firebaseDb } from "../firebase/firebase.config";
+import { showErrorToast, showSuccessToast } from "../HOC/hoc/HOC";
 
 const MyState = (props: any) => {
   const [loading, setLoading] = useState(false);
@@ -53,22 +53,13 @@ const MyState = (props: any) => {
 
   const addProduct = async () => {
     if (Object.values(products).some((value) => value === null)) {
-      return toast.error("Please fill all fields");
+      return showErrorToast("Please fill all fields");
     }
     const productRef = collection(firebaseDb, "products");
     setLoading(true);
     try {
       await addDoc(productRef, products);
-      toast.success("Product Add successfully", {
-        position: "top-right",
-        autoClose: 1200,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      showSuccessToast("Product Add successfully");
       getProductData();
       // closeModal()
       setTimeout(() => {
@@ -78,16 +69,7 @@ const MyState = (props: any) => {
     } catch (error: any) {
       console.log(error);
       setLoading(false);
-      toast.error(error.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      showErrorToast(error.message);
     }
     setProducts("");
   };
@@ -115,16 +97,7 @@ const MyState = (props: any) => {
     } catch (error: any) {
       console.log(error);
       setLoading(false);
-      toast.error(error.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      showErrorToast(error.message);
     }
   };
 
@@ -140,16 +113,7 @@ const MyState = (props: any) => {
     setLoading(true);
     try {
       await setDoc(doc(firebaseDb, "products", products.id), products);
-      toast.success("Product Add successfully", {
-        position: "top-right",
-        autoClose: 1200,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      showSuccessToast("Product Add successfully");
       getProductData();
       setTimeout(() => {
         setLoading(false);
@@ -159,16 +123,7 @@ const MyState = (props: any) => {
       setLoading(false);
       console.log(error);
       setLoading(false);
-      toast.error(error.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      showErrorToast(error.message);
     }
     setProducts("");
   };
@@ -177,20 +132,11 @@ const MyState = (props: any) => {
     try {
       setLoading(true);
       await deleteDoc(doc(firebaseDb, "products", item.id));
-      toast.success("Product Deleted successfully", {
-        position: "top-right",
-        autoClose: 1200,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      showSuccessToast("Product Deleted successfully");
       setLoading(false);
       getProductData();
     } catch (error) {
-      toast.error("Product Deleted Falied");
+      showErrorToast("Product Deleted Falied");
       setLoading(false);
     }
   };
@@ -214,6 +160,7 @@ const MyState = (props: any) => {
         setProducts,
         addProduct,
         product,
+        user,
         setUser,
         updateProduct,
         deleteProduct,
