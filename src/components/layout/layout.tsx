@@ -2,16 +2,26 @@ import React from 'react'
 import Navbar from '../navbar/Navbar'
 import Footer from '../footer/footer'
 
-const Layout = ({ children }:any) => {
+export type LayoutProps = {
+  children: any;
+  showHalf?: boolean;
+  showFull?: boolean;
+  className?: boolean
+};
+
+const Layout = ({
+  children,
+  showHalf = true,
+  showFull = true,
+  className = false
+}: LayoutProps) => {
   return (
     <div>
       <Navbar />
-      <div className="content">
-        {children}
-      </div>
-      <Footer />
+      <div className="content">{children}</div>
+      <Footer showHalf={showHalf} showFull={showFull} className={className} />
     </div>
-  )
-}
+  );
+};
 
 export default Layout

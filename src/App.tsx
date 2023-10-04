@@ -18,6 +18,7 @@ import LoginPage from "./pages/registeration/LoginPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ProtectedRoutes, ProtectedRoutesForAdmin } from './HOC/routes/protectedRoutes';
+import AllProducts from './pages/all-products/AllProducts';
 
 const App = () => {
   return (
@@ -68,6 +69,7 @@ const App = () => {
               </ProtectedRoutesForAdmin>
             }
           />
+           <Route path="/allproducts" element={<AllProducts />} />
           <Route path="/*" element={<NoPage />} />
         </Routes>
         <ToastContainer />

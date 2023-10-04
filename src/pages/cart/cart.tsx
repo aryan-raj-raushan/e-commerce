@@ -14,10 +14,9 @@ const Cart = () => {
     uniqueCart,
     cartItems,
   } = useCartHook();
-  console.log(cartItems.length);
   return (
-    <Layout>
-      <div className="h-full bg-white py-10" style={darkBg("#282c34")}>
+    <Layout showFull={false} className={true}>
+      <div className="h-full bg-white py-10 " style={darkBg("#282c34")}>
         {cartItems && cartItems.length > 0 ? (
           <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0 ">
             <div className="rounded-lg md:w-2/3 ">
@@ -101,7 +100,7 @@ const Cart = () => {
             />
           </div>
         ) : (
-          <EmptyCart />
+          <EmptyCart darkText={darkText} darkBg={darkBg}/>
         )}
       </div>
     </Layout>
