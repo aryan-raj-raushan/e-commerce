@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { firebaseAuth, firebaseDb } from "../../firebase/firebase.config";
@@ -76,8 +77,11 @@ const useRegisterationHook = () => {
         email,
         password
       );
+      await updateProfile(users.user, {
+        displayName: name,
+      });
       const user = {
-        name: name,
+        name: users.user.displayName,
         uid: users.user.uid,
         email: users.user.email,
         time: Timestamp.now(),

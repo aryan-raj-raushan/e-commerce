@@ -91,7 +91,7 @@ export const signupFields = [
     type: "text",
     autoComplete: "name",
     isRequired: true,
-    placeholder: "Name",
+    placeholder: "Full Name",
   },
   {
     labelText: "Email address",

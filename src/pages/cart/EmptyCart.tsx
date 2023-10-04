@@ -26,7 +26,7 @@ const EmptyCart = ({ darkText, darkBg }: any) => {
   }, []);
   const navigate = useNavigate()
   const handleClick = () => {
-    navigate('/')
+    navigate('/allproducts')
   }
   return (
     <div className="flex flex-col gap-2 items-center justify-center h-full">

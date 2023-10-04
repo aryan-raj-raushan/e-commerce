@@ -9,6 +9,8 @@ import { firebaseAuth } from "../../firebase/firebase.config";
 import { useSelector } from "react-redux";
 import { getCommonStyles } from "../../HOC/hoc/HOC";
 import { CartItem } from "../../MaterialUI/Icon";
+import { BackgroundLetterAvatars } from "../../MaterialUI/Avatar";
+import DefaultUser from '../../assets/images/user.png'
 
 const Navbar = () => {
   const context = useContext(myContext);
@@ -17,6 +19,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const userName = user?.user?.displayName
   const cartItems = useSelector((state: any) => state.cart);
   const handleLogout = () => {
     signOut(firebaseAuth)
@@ -184,15 +187,20 @@ const Navbar = () => {
                   )}
                 </div>
 
-                {user?.user && (
+                {user?.user?.displayName ? (
+                  <div className="hidden lg:ml-4 lg:flex">
+                    <BackgroundLetterAvatars userName={userName}/>
+                  </div>
+                ) : (
                   <div className="hidden lg:ml-8 lg:flex">
                     <a href="/" className="flex items-center text-gray-700 ">
                       <img
                         className="inline-block w-10 h-10 rounded-full"
-                        src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
+                        src={DefaultUser}
                         alt="Dan_Abromov"
                       />
                     </a>
+                    <BackgroundLetterAvatars />
                   </div>
                 )}
 
