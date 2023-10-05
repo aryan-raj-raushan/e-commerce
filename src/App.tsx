@@ -19,6 +19,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ProtectedRoutes, ProtectedRoutesForAdmin } from './HOC/routes/protectedRoutes';
 import AllProducts from './pages/all-products/AllProducts';
+import FinalOrder from './components/modal/FinalOrder';
 
 const App = () => {
   return (
@@ -70,6 +71,7 @@ const App = () => {
             }
           />
            <Route path="/allproducts" element={<AllProducts />} />
+           <Route path="/payment" element={<FinalOrder />} />
           <Route path="/*" element={<NoPage />} />
         </Routes>
         <ToastContainer />

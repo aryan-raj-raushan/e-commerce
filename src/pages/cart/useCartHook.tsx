@@ -1,7 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import myContext from "../../context/myContext";
 import { useDispatch, useSelector } from "react-redux";
-import { getCommonStyles, showSuccessToast } from "../../HOC/hoc/HOC";
+import {
+  getCommonStyles,
+  showErrorToast,
+  showSuccessToast,
+} from "../../HOC/hoc/HOC";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
 import { toast } from "react-toastify";
 
@@ -73,7 +77,6 @@ const useCartHook = () => {
   });
   const uniqueCart = Object.values(uniqueItems).reverse();
 
-
   /* -------------------------------------------------------------------------- */
   /*                                Shipping Cart                               */
   /* -------------------------------------------------------------------------- */
@@ -85,6 +88,7 @@ const useCartHook = () => {
     shipping: 0,
     totalDiscount: "",
     delivery: 0,
+    buyItem: 0,
   });
 
   const calculateTotals = (cartItems: any) => {
@@ -114,6 +118,7 @@ const useCartHook = () => {
 
     const grandTotal = shipping + discountedPrice + securePackageCharge;
     const totalDiscount = (totalAmount - discountedPrice).toFixed(2);
+    const buyItem = grandTotal;
 
     return {
       totalAmount,
@@ -122,6 +127,7 @@ const useCartHook = () => {
       securePackageCharge,
       totalDiscount,
       delivery,
+      buyItem,
     };
   };
 
@@ -145,6 +151,43 @@ const useCartHook = () => {
     });
   }, [cartItems]);
 
+  /* -------------------------------------------------------------------------- */
+  /*                                 Buying Cart                                */
+  /* -------------------------------------------------------------------------- */
+
+  const initialFormData = {
+    name: '',
+    address: '',
+    state: '',
+    city: '',
+    pincode: '',
+    mobileNumber: '',
+    date: new Date().toLocaleString('en-US', {
+      month: 'short',
+      day: '2-digit',
+      year: 'numeric',
+    }),
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleBuy = async (e: any) => {
+    e.preventDefault();
+    if (Object.values(formData).some((value) => value === "")) {
+      showErrorToast("All fields are required");
+      return;
+    }
+
+    const addressInfo = { ...formData };
+    setFormData(initialFormData);
+    console.log(addressInfo);
+  };
+
   return {
     darkText,
     darkBg,
@@ -153,6 +196,9 @@ const useCartHook = () => {
     uniqueCart,
     cartItems,
     cartSummary,
+    handleBuy,
+    handleChange,
+    formData
   };
 };
 

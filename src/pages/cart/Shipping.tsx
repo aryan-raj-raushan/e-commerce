@@ -1,8 +1,10 @@
+import { useState } from "react";
 import CartModal from "../../components/modal/CartModal";
 import useCartHook from "./useCartHook";
+import { useNavigate } from "react-router-dom";
 
 const Shipping = ({ cartItems, darkText, darkBg }: any) => {
-  const { cartSummary } = useCartHook();
+  const { cartSummary, handleBuy, handleChange, formData } = useCartHook();
 
   const {
     totalAmount,
@@ -10,9 +12,14 @@ const Shipping = ({ cartItems, darkText, darkBg }: any) => {
     securePackageCharge,
     shipping,
     totalDiscount,
-    delivery
+    delivery,
   } = cartSummary;
- 
+  let [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const handleModal = () => {
+    // setIsOpen(!isOpen);
+    navigate("/payment");
+  };
   return (
     <div
       className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3 md:sticky md:top-36"
@@ -71,8 +78,23 @@ const Shipping = ({ cartItems, darkText, darkBg }: any) => {
           </p>
         </div>
       </div>
+      <div className="  text-center rounded-lg text-white font-bold">
+        <button
+          type="button"
+          onClick={handleModal}
+          className="w-full  bg-violet-600 py-2 text-center rounded-lg text-white font-bold"
+        >
+          Buy Now
+        </button>
+      </div>
       {/* <Modal  /> */}
-      <CartModal />
+      {/* <CartModal
+        handleModal={handleModal}
+        isOpen={isOpen}
+        handleBuy={handleBuy}
+        handleChange={handleChange}
+        formData={formData}
+      /> */}
     </div>
   );
 };

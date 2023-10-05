@@ -14,6 +14,7 @@ const Cart = () => {
     uniqueCart,
     cartItems,
   } = useCartHook();
+
   return (
     <Layout showFull={false} className={true}>
       <div className="h-full bg-white py-10 " style={darkBg("#282c34")}>
@@ -91,6 +92,7 @@ const Cart = () => {
                   </div>
                 );
               })}
+             
             </div>
 
             <Shipping
@@ -100,7 +102,7 @@ const Cart = () => {
             />
           </div>
         ) : (
-          <EmptyCart darkText={darkText} darkBg={darkBg}/>
+          <EmptyCart darkText={darkText} darkBg={darkBg} />
         )}
       </div>
     </Layout>

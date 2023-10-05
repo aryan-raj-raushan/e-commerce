@@ -147,3 +147,94 @@ export const loginFields = [
     placeholder: "Password",
   },
 ];
+
+export const buyingData = [
+  {
+    label: "Enter Full Name",
+    type: "text",
+    name: "name",
+    id: "name",
+    md: 12
+  },
+  {
+    label: "Full Address",
+    type: "text",
+    name: "address",
+    id: "street",
+    md: 12
+  },
+  {
+    label: "State",
+    type: "Select",
+    name: "state",
+    id: "state",
+    md: 4
+  },
+  {
+    label: "City",
+    type: "Select",
+    name: "city",
+    id: "city",
+    md: 4
+  },
+  {
+    label: "Pincode",
+    type: "text",
+    name: "pincode",
+    id: "pincode",
+    md: 4
+  },
+  {
+    label: "Enter Email address",
+    type: "text",
+    name: "email",
+    id: "email",
+    md: 6
+  },
+  {
+    label: "Enter Mobile Number",
+    type: "text",
+    name: "mobileNumber",
+    id: "mobileNumber",
+    md: 6
+  },
+];
+
+export const stateCodes:any = {
+  "Andhra Pradesh": "AP",
+  "Arunachal Pradesh": "AR",
+  "Assam": "AS",
+  "Bihar": "BR",
+  "Chhattisgarh": "CG",
+  "Goa": "GA",
+  "Gujarat": "GJ",
+  "Haryana": "HR",
+  "Himachal Pradesh": "HP",
+  "Jammu and Kashmir": "JK",
+  "Jharkhand": "JH",
+  "Karnataka": "KA",
+  "Kerala": "KL",
+  "Madhya Pradesh": "MP",
+  "Maharashtra": "MH",
+  "Manipur": "MN",
+  "Meghalaya": "ML",
+  "Mizoram": "MZ",
+  "Nagaland": "NL",
+  "Odisha": "OD",
+  "Punjab": "PB",
+  "Rajasthan": "RJ",
+  "Sikkim": "SK",
+  "Tamil Nadu": "TN",
+  "Telangana": "TG",
+  "Tripura": "TR",
+  "Uttarakhand": "UK",
+  "Uttar Pradesh": "UP",
+  "West Bengal": "WB",
+  "Andaman and Nicobar Islands": "AN",
+  "Chandigarh": "CH",
+  "Dadra and Nagar Haveli": "DN",
+  "Daman and Diu": "DD",
+  "Delhi": "DL",
+  "Lakshadweep": "LD",
+  "Puducherry": "PY"
+};

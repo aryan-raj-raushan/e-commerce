@@ -128,6 +128,10 @@ const MyState = (props: any) => {
     setProducts("");
   };
 
+  /* -------------------------------------------------------------------------- */
+  /*                                DeleteProduct                               */
+  /* -------------------------------------------------------------------------- */
+
   const deleteProduct = async (item: any) => {
     try {
       setLoading(true);
