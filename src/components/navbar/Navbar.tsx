@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import myContext from "../../context/myContext";
 import { Link, useNavigate } from "react-router-dom";
 import { BsFillCloudSunFill } from "react-icons/bs";
@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { getCommonStyles } from "../../HOC/hoc/HOC";
 import { CartItem } from "../../MaterialUI/Icon";
 import { BackgroundLetterAvatars } from "../../MaterialUI/Avatar";
-import DefaultUser from '../../assets/images/user.png'
+import DefaultUser from "../../assets/images/user.png";
 
 const Navbar = () => {
   const context = useContext(myContext);
@@ -19,8 +19,9 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const userName = user?.user?.displayName
+  const userName = user?.user?.displayName;
   const cartItems = useSelector((state: any) => state.cart);
+
   const handleLogout = () => {
     signOut(firebaseAuth)
       .then(() => {
@@ -31,62 +32,58 @@ const Navbar = () => {
         console.log(error.message);
       });
   };
+
+  const handleMobileMenu = () => {
+    setOpen(!open);
+  };
   const darkText = getCommonStyles(mode);
   const darkBg = getCommonStyles(mode, { backgroundColor: "rgb(80 82 87)" });
 
-  const menuItems = [
-    { label: "Find a Store", link: "/store" },
-    { label: "Help", link: "/help" },
-    { label: "Join Us", link: "/signup" },
-    { label: "Sign In", link: "/login" },
-  ];
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    if (user?.user) {
+      setLoggedIn(true);
+    }
+  }, [user]);
 
-  const [loggedIn, setLoggedIn] = useState(false); // You can set this state based on your authentication logic
+  const menuItems = loggedIn
+    ? [
+        { label: "Find a Store", link: "/store" },
+        { label: "Help", link: "/help" },
+        { label: `Welcome, ${user?.user?.displayName}`, link: "/" },
+      ]
+    : [
+        { label: "Find a Store", link: "/store" },
+        { label: "Help", link: "/help" },
+        { label: "Join Us", link: "/signup" },
+        { label: "Sign In", link: "/login" },
+      ];
 
-  const toggleLogin = () => {
-    // Implement your login/logout logic here and update the loggedIn state accordingly
-    setLoggedIn(!loggedIn);
-  };
   return (
-    <div className="bg-white sticky top-0 z-50  ">
-      {/* Mobile menu */}
-
-      <MobileMenu
-        open={open}
-        mode={mode}
-        setOpen={setOpen}
-        logout={handleLogout}
-        user={user}
-      />
-
+    <div className="bg-white sticky top-0 z-40">
       {/* Desktop menu */}
       <header className="relative bg-white">
-        {/* /* -------------------------------- Upper nav -------------------------------  */}
-        <div className="flex h-10 items-center justify-end bg-black px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
+        {/* -------------------------------- Upper nav ------------------------------- */}
+        <div className="hidden lg:flex h-10 items-center justify-end bg-black px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 cursor-pointer">
-            {menuItems.map((item, index) => {
-              if (
-                (item.label === "Join Us" || item.label === "Sign In") &&
-                loggedIn
-              ) {
-                return (
-                  <React.Fragment key={index}>
-                    <a href="/" onClick={toggleLogin}>
-                      Log Out
-                    </a>
-                  </React.Fragment>
-                );
-              } else {
-                return (
-                  <React.Fragment key={index}>
-                    <a href={item.link}>{item.label}</a>
-                    {index !== menuItems.length - 1 && <span>|</span>}
-                  </React.Fragment>
-                );
-              }
-            })}
+            {menuItems.map((item, index) => (
+              <React.Fragment key={index}>
+                <a href={item.link}>{item.label}</a>
+                {index !== menuItems.length - 1 && <span>|</span>}
+              </React.Fragment>
+            ))}
           </div>
         </div>
+
+        {/* Mobile menu */}
+
+        <MobileMenu
+          open={open}
+          mode={mode}
+          setOpen={handleMobileMenu}
+          logout={handleLogout}
+          user={user}
+        />
 
         {/* /* -------------------------------- Lower Nav -------------------------------  */}
         <nav
@@ -99,7 +96,7 @@ const Navbar = () => {
               <button
                 type="button"
                 className="rounded-md bg-white p-2 text-gray-400 lg:hidden"
-                onClick={() => setOpen(true)}
+                onClick={handleMobileMenu}
                 style={darkBg}
               >
                 <span className="sr-only">Open menu</span>
@@ -187,20 +184,19 @@ const Navbar = () => {
                   )}
                 </div>
 
-                {user?.user?.displayName ? (
+                {user?.user && (
                   <div className="hidden lg:ml-4 lg:flex">
-                    <BackgroundLetterAvatars userName={userName}/>
-                  </div>
-                ) : (
-                  <div className="hidden lg:ml-8 lg:flex">
-                    <a href="/" className="flex items-center text-gray-700 ">
+                    {user?.user?.displayName ? (
+                      <BackgroundLetterAvatars userName={userName} />
+                    ) : (
                       <img
-                        className="inline-block w-10 h-10 rounded-full"
-                        src={DefaultUser}
+                        className="inline-block w-8 h-8 rounded-full lg:ml-8"
+                        src={
+                          user?.user?.displayName ? DefaultUser : "Dan_Abromov"
+                        }
                         alt="Dan_Abromov"
                       />
-                    </a>
-                    <BackgroundLetterAvatars />
+                    )}
                   </div>
                 )}
 
@@ -219,16 +215,16 @@ const Navbar = () => {
                 </div>
 
                 {/* Cart */}
-                  <div className="flow-root pt-1">
-                    <Link
-                      to={"/cart"}
-                      className="group flex items-center p-2"
-                      style={darkText}
-                    >
-                      <CartItem cartItem={cartItems.length} mode={mode} />
-                      <span className="sr-only">items in cart, view bag</span>
-                    </Link>
-                  </div>
+                <div className="flow-root pt-1">
+                  <Link
+                    to={"/cart"}
+                    className="group flex items-center p-2"
+                    style={darkText}
+                  >
+                    <CartItem cartItem={cartItems.length} mode={mode} />
+                    <span className="sr-only">items in cart, view bag</span>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

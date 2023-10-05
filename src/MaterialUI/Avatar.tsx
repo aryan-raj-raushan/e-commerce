@@ -28,7 +28,7 @@ function stringAvatar(name: string) {
   }
 export const BackgroundLetterAvatars = ({userName}:any) => {
   return (
-    <Stack direction="row" spacing={2}>
+    <Stack direction="row" classes={""} spacing={2}>
       <Avatar {...stringAvatar(`${userName}`)} />
     </Stack>
   );

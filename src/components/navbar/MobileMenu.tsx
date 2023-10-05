@@ -1,6 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { RxCross2 } from 'react-icons/rx'
 import { Link } from "react-router-dom";
 
 
@@ -8,7 +7,7 @@ const MobileMenu = ({ open, setOpen, mode, user, logout }: any) => {
   return (
     <>
       <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
+        <Dialog as="div" className="relative  z-40 lg:hidden" onClose={setOpen}>
           <Transition.Child
             as={Fragment}
             enter="transition-opacity ease-linear duration-300"
@@ -18,10 +17,10 @@ const MobileMenu = ({ open, setOpen, mode, user, logout }: any) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-x-0 top-16 bg-black bg-opacity-25" />
           </Transition.Child>
 
-          <div className="fixed inset-0 z-40 flex">
+          <div className="fixed inset-x-0 top-16 shadow-lg bottom-0 flex  z-40">
             <Transition.Child
               as={Fragment}
               enter="transition ease-in-out duration-300 transform"
@@ -32,23 +31,13 @@ const MobileMenu = ({ open, setOpen, mode, user, logout }: any) => {
               leaveTo="-translate-x-full"
             >
               <Dialog.Panel
-                className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl"
+                className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-gray-50 pt-2 pb-12 shadow-xl"
                 style={{
                   backgroundColor: mode === "dark" ? "rgb(40, 44, 52)" : "",
                   color: mode === "dark" ? "white" : "",
                 }}
               >
-                <div className="flex px-4 pb-2 pt-28">
-                  <button
-                    type="button"
-                    className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
-                    onClick={() => setOpen(false)}
-                  >
-                    <span className="sr-only">Close menu</span>
-                    <RxCross2 />
-                  </button>
-                </div>
-                <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+                <div className="space-y-6 border-b border-gray-200 px-4 py-6">
                   <Link
                     to={"/allproducts"}
                     className="text-sm font-medium text-gray-900 "
@@ -73,7 +62,7 @@ const MobileMenu = ({ open, setOpen, mode, user, logout }: any) => {
                         className="-m-2 block p-2 font-medium text-gray-900"
                         style={{ color: mode === "dark" ? "white" : "" }}
                       >
-                        admin
+                        Admin
                       </Link>
                     </div>
                   ) : (
@@ -117,7 +106,7 @@ const MobileMenu = ({ open, setOpen, mode, user, logout }: any) => {
                   </div>
                 </div>
 
-                <div className="border-t border-gray-200 px-4 py-6">
+                {/* <div className="border-t border-gray-200 px-4 py-6">
                   <a href="/" className="-m-2 flex items-center p-2">
                     <img
                       src="img/indiaflag.png"
@@ -132,7 +121,7 @@ const MobileMenu = ({ open, setOpen, mode, user, logout }: any) => {
                     </span>
                     <span className="sr-only">, change currency</span>
                   </a>
-                </div>
+                </div> */}
               </Dialog.Panel>
             </Transition.Child>
           </div>

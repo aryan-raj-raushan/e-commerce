@@ -64,7 +64,11 @@ const useRegisterationHook = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    createAccount();
+    if (signupState.password !== signupState["confirm-password"]) {
+      setError("Password and Confirm Password do not match");
+    } else {
+      createAccount();
+    }
   };
 
   // Handle Signup API Integration here

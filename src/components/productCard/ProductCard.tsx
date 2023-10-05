@@ -33,7 +33,7 @@ const ProductCard = () => {
         </div>
 
         {/* Products */}
-        <div className="flex flex-wrap -m-4">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap m-4 ">
           {product.map((item: any, index: number) => (
             <Products
               key={index}
