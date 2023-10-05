@@ -128,12 +128,22 @@ const FinalOrder = () => {
                                 name="fullAddress.city"
                                 value={formData.fullAddress.city}
                                 onChange={handleChange}
+                                style={{ whiteSpace: "normal" }} // Allow text to wrap
                               >
-                                {cityOptions.map((city: any, index: number) => (
-                                  <MenuItem key={index} value={city.value}>
-                                    {city.displayValue}
+                                {cityOptions.length === 0 ? (
+                                  <MenuItem value="">
+                                    Your area is not deliverable. We will be
+                                    reaching soon to your address.
                                   </MenuItem>
-                                ))}
+                                ) : (
+                                  cityOptions.map(
+                                    (city: any, index: number) => (
+                                      <MenuItem key={index} value={city.value}>
+                                        {city.displayValue}
+                                      </MenuItem>
+                                    )
+                                  )
+                                )}
                               </Select>
                             </FormControl>
                           )}
@@ -143,7 +153,7 @@ const FinalOrder = () => {
                               label={field.label}
                               variant="outlined"
                               fullWidth
-                            //   margin="normal"
+                              //   margin="normal"
                               name={`fullAddress.${field.name}`}
                               value={formData.fullAddress[field.name]}
                               onChange={handleChange}
