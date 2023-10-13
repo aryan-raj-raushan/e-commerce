@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Layout from "../layout/layout";
+import React from "react";
 import {
   FormControl,
   Grid,
@@ -8,130 +7,23 @@ import {
   TextField,
   Select,
 } from "@mui/material";
-import { buyingData, stateCodes } from "../../const/Const";
-import { showErrorToast, showSuccessToast } from "../../HOC/hoc/HOC";
-import { City, State } from "country-state-city";
-import { addDoc, collection } from "firebase/firestore";
-import { firebaseDb } from "../../firebase/firebase.config";
-import { useSelector } from "react-redux";
-const FinalOrder = () => {
-  const initialFormData = {
-    name: "",
-    fullAddress: {
-      address: "",
-      city: "",
-      state: "",
-      pincode: "",
-    },
-    email: "",
-    mobileNumber: "",
-    date: new Date().toLocaleString("en-US", {
-      month: "short",
-      day: "2-digit",
-      year: "numeric",
-    }),
-  };
+import { buyingData } from "../../const/Const";
+import { State } from "country-state-city";
+import Layout from "../../components/layout/layout";
+import usePaymentHook from "./usePaymentHook";
 
-  const finalPriceItems = JSON.parse(localStorage.getItem('finalPrice') || "{}");
-  const cartItems = useSelector((state: any) => state.cart);
-
-  const {grandTotal,totalDiscount, totalItems, buyItem} = finalPriceItems
-  console.log(buyItem)
-
-  const [formData, setFormData] = useState<any>(initialFormData);
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-
-    if (name.startsWith("fullAddress.")) {
-      const subField = name.split(".")[1];
-      setFormData((prevData: any) => ({
-        ...prevData,
-        fullAddress: {
-          ...prevData.fullAddress,
-          [subField]: value,
-        },
-      }));
-    } else {
-      setFormData((prevData: any) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
-  };
-
-  const handleBuy = async (e: any) => {
-    e.preventDefault();
-    if (
-      Object.values(formData.fullAddress).some((value) => value === "") ||
-      Object.values(formData)
-        .filter((key) => key !== "fullAddress")
-        .some((value) => value === "")
-    ) {
-      showErrorToast("All fields are required");
-      return;
-    }
-
-    const addressInfo = { ...formData };
-    var options = {
-      key: "rzp_test_1twO1LimQ1DymK",
-      key_secret: "diAu4olPzsEQNVg87U2kSImD",
-      amount: buyItem*100,
-      currency: "INR",
-      order_receipt: 'order_rcptid_' + formData.name,
-      name: "E-Bharat",
-      description: "for testing purpose",
-      handler: (response: any) => {
-        showSuccessToast('Payment Successful')
-        const paymentId = response.razorpay_payment_id
-        // store in firebase 
-        const orderInfo = {
-          cartItems,
-          addressInfo,
-          date: new Date().toLocaleString(
-            "en-US",
-            {
-              month: "short",
-              day: "2-digit",
-              year: "numeric",
-            }
-          ),
-          email: JSON.parse(localStorage.getItem("user") || "{}").user.email,
-          userid: JSON.parse(localStorage.getItem("user") || "{}").user.uid,
-          paymentId
-        }
-        try {
-          const orderData = addDoc(collection(firebaseDb, "orders"), orderInfo)
-          setFormData(initialFormData);
-        } catch (error) {
-          console.log(error)
-        }
-      },
-      theme: {
-        color: "#3399cc"
-      }
-    };
-    const pay = new (window as any).Razorpay(options);
-    pay.open();
-  };
-
-  const [cityOptions, setCityOptions] = useState<any>([]);
-  const [selectedState, setSelectedState] = useState("");
-
-  const handleStateChange = (event: any) => {
-    const selectedState = event.target.value;
-    setSelectedState(selectedState);
-    const stateCode = stateCodes[selectedState];
-    const countryCode = "IN";
-    const cities = City.getCitiesOfState(countryCode, stateCode);
-    setCityOptions(
-      cities.map((city: any) => ({
-        value: city.name,
-        displayValue: city.name,
-      }))
-    );
-    handleChange(event);
-  };
+const Payment = () => {
+  const {
+    handleBuy,
+    formData,
+    handleStateChange,
+    handleChange,
+    cityOptions,
+    selectedState,
+    totalItems,
+    totalDiscount,
+    grandTotal,
+  } = usePaymentHook();
 
   return (
     <Layout showFull={false} className={false}>
@@ -252,9 +144,7 @@ const FinalOrder = () => {
                 <ul className="list-group">
                   <li className="list-group-item justify-between border-b-2 border-gray-200 py-2 flex items-center">
                     <p className="text-gray-600">Total items</p>
-                    <p className="font-semibold text-gray-800 ">
-                      {totalItems}
-                    </p>
+                    <p className="font-semibold text-gray-800 ">{totalItems}</p>
                   </li>
                   <li className="list-group-item justify-between border-b-2 border-gray-200 py-2 flex">
                     <p>
@@ -295,4 +185,4 @@ const FinalOrder = () => {
   );
 };
 
-export default FinalOrder;
+export default Payment;

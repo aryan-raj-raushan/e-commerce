@@ -23,7 +23,7 @@ import {
   ProtectedRoutesForAdmin,
 } from "./HOC/routes/protectedRoutes";
 import AllProducts from "./pages/all-products/AllProducts";
-import FinalOrder from "./components/modal/FinalOrder";
+import Payment from './pages/payment/Payment';
 
 const App = () => {
   return (
@@ -79,7 +79,7 @@ const App = () => {
             path="/payment"
             element={
               <ProtectedPaymentGateway>
-                <FinalOrder />
+               <Payment />
               </ProtectedPaymentGateway>
             }
           />

@@ -15,7 +15,8 @@ import User from "./tabs/User";
 
 const DashboardTab = () => {
   const context = useContext(myContext);
-  const { mode, product, loading, edithandle,deleteProduct } = context;
+  const { mode, product, loading, edithandle,deleteProduct,order } = context;
+  // console.log(order)
   // let [isOpen, setIsOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -52,7 +53,7 @@ const DashboardTab = () => {
         />
       ),
     },
-    { component: <Order mode={mode} /> },
+    { component: <Order mode={mode} orderDetails={order} /> },
     { component: <User mode={mode} /> },
   ];
 

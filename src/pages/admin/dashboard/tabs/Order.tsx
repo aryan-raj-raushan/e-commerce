@@ -1,26 +1,11 @@
-const userDetails = [
-  {
-    paymentId: "3393939",
-    imageSrc: "https://dummyimage.com/720x400",
-    title: "Title",
-    price: "₹100",
-    category: "pots",
-    name: "name",
-    address: "india",
-    pincode: "82828",
-    phoneNumber: "929929929929",
-    email: "kkakka@gmail.com",
-    date: "12 Aug 2019",
-  },
-  // Add more data objects as needed
-];
 const columns = [
+  { key: "index", label: "S.No." },
   { key: "paymentId", label: "Payment Id" },
-  { key: "imageSrc", label: "Image", isImage: true },
+  { key: "imageUrl", label: "Image", isImage: true },
   { key: "title", label: "Title" },
   { key: "price", label: "Price" },
   { key: "category", label: "Category" },
-  { key: "name", label: "Name" },
+  { key: "allorder.addressInfo.name", label: "Name" },
   { key: "address", label: "Address" },
   { key: "pincode", label: "Pincode" },
   { key: "phoneNumber", label: "Phone Number" },
@@ -28,7 +13,7 @@ const columns = [
   { key: "date", label: "Date" },
 ];
 
-const Order = ({ mode }: any) => {
+const Order = ({ mode, orderDetails }: any) => {
   return (
     <div className="relative overflow-x-auto mb-16">
       <h1
@@ -37,7 +22,7 @@ const Order = ({ mode }: any) => {
       >
         Order Details
       </h1>
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
         <thead
           className="text-xs border border-gray-600 text-black uppercase bg-gray-200 shadow-[inset_0_0_8px_rgba(0,0,0,0.6)]"
           style={{
@@ -47,42 +32,66 @@ const Order = ({ mode }: any) => {
         >
           <tr>
             {columns.map((column) => (
-              <th key={column.key} scope="col" className="px-6 py-3">
+              <th key={column.key} scope="col" className="px-2 py-3">
                 {column.label}
               </th>
             ))}
           </tr>
         </thead>
+        {orderDetails.map((allorder: any, index: number) => (
+          <tbody key={index}>
+            {allorder.cartItems.map((item: any, serial: number) => {
+              const { title, category, imageUrl, price } = item;
+              const {
+                name,
+                mobileNumber,
+                email,
+                date,
+                fullAddress,
+              } = allorder.addressInfo;
+              const {paymentId} = allorder
+              const { state, pincode, address, city } = fullAddress;
 
-        <tbody>
-          {userDetails.map((item: any, index: number) => (
-            <tr
-              key={index}
-              className={`${
-                index % 2 === 0 ? "bg-gray-50" : ""
-              } border-b  dark:border-gray-700`}
-              style={{
-                backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
-                color: mode === "dark" ? "white" : "",
-              }}
-            >
-              {columns.map((column) => (
-                <td
-                  key={column.key}
-                  className={`px-6 py-4 text-black ${
-                    column.isImage ? "font-medium whitespace-nowrap" : ""
-                  } ${mode === "dark" ? "text-white" : ""}`}
+              const rowData = [
+                { label: index + 1 },
+                { label: paymentId },
+                { content: <img className="w-16" src={imageUrl} alt="img" /> },
+                { label: title },
+                { label: `₹${price}` },
+                { label: category },
+                { label: name },
+                { label: `${address}, ${city}, ${state}` },
+                { label: pincode },
+                { label: mobileNumber },
+                { label: email },
+                { label: date },
+              ];
+
+              return (
+                <tr
+                  key={serial}
+                  className={`bg-gray-50 border-b ${
+                    mode === "dark" ? "dark:border-gray-700" : ""
+                  }`}
+                  style={{
+                    backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
+                    color: mode === "dark" ? "white" : "",
+                  }}
                 >
-                  {column.isImage ? (
-                    <img className="w-16" src={item[column.key]} alt="img" />
-                  ) : (
-                    item[column.key]
-                  )}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
+                  {rowData.map((cellData, cellIndex) => (
+                    <td
+                      key={cellIndex}
+                      className="px-2 py-4 text-black"
+                      style={{ color: mode === "dark" ? "white" : "" }}
+                    >
+                      {cellData.content || cellData.label}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        ))}
       </table>
     </div>
   );

@@ -6,6 +6,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDocs,
   onSnapshot,
   orderBy,
   query,
@@ -146,10 +147,33 @@ const MyState = (props: any) => {
   };
 
   /* -------------------------------------------------------------------------- */
-  /*                                 Paymentmode                                */
+  /*                                 PaymentMode                                */
   /* -------------------------------------------------------------------------- */
 
-  const [paymentMode, setPaymentMode] = useState(false)
+  const[paymentMode, setPaymentMode] = useState()
+
+  /* -------------------------------------------------------------------------- */
+  /*                                 Order data                                */
+  /* -------------------------------------------------------------------------- */
+
+  const [order, setOrder] = useState([]);
+
+  const getOrderData = async () => {
+    setLoading(true)
+    try {
+      const result = await getDocs(collection(firebaseDb, "orders"))
+      const ordersArray:any = [];
+      result.forEach((doc) => {
+        ordersArray.push(doc.data());
+        setLoading(false)
+      });
+      setOrder(ordersArray);
+      setLoading(false);
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
 
   /* -------------------------------------------------------------------------- */
   /*                                  useEffect                                 */
@@ -157,6 +181,7 @@ const MyState = (props: any) => {
 
   useEffect(() => {
     getProductData();
+    getOrderData()
   }, []);
 
   return (
@@ -177,6 +202,7 @@ const MyState = (props: any) => {
         edithandle,
         paymentMode,
         setPaymentMode,
+        order
       }}
     >
       {props.children}
