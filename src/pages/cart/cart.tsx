@@ -16,8 +16,6 @@ const Cart = () => {
     cartItems,
   } = useCartHook();
 
-
-
   return (
     <Layout showFull={false} className={true}>
       <div className="h-full bg-white py-10 " style={darkBg("#282c34")}>
