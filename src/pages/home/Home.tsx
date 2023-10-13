@@ -1,10 +1,19 @@
-import React from 'react'
-import Layout from '../../components/layout/layout'
+import Layout from "../../components/layout/layout";
+import HeroSection from "../../components/heroSection/HeroSection";
+import Filter from "../../components/filter/Filter";
+import ProductCard from "../../components/productCard/ProductCard";
+import Track from "../../components/track/Track";
+import Testimonial from "../../components/testimonial/Testimonial";
 
 const Home = () => {
   return (
-    <Layout>Home</Layout>
-  )
-}
-
-export default Home
+    <Layout>
+      <HeroSection />
+      <Filter /> 
+      <ProductCard />
+      <Track />
+      <Testimonial />
+    </Layout>
+  );
+};
+export default Home;
