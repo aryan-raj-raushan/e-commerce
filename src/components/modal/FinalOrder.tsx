@@ -9,9 +9,11 @@ import {
   Select,
 } from "@mui/material";
 import { buyingData, stateCodes } from "../../const/Const";
-import { showErrorToast } from "../../HOC/hoc/HOC";
+import { showErrorToast, showSuccessToast } from "../../HOC/hoc/HOC";
 import { City, State } from "country-state-city";
-
+import { addDoc, collection } from "firebase/firestore";
+import { firebaseDb } from "../../firebase/firebase.config";
+import { useSelector } from "react-redux";
 const FinalOrder = () => {
   const initialFormData = {
     name: "",
@@ -29,6 +31,12 @@ const FinalOrder = () => {
       year: "numeric",
     }),
   };
+
+  const finalPriceItems = JSON.parse(localStorage.getItem('finalPrice') || "{}");
+  const cartItems = useSelector((state: any) => state.cart);
+
+  const {grandTotal,totalDiscount, totalItems, buyItem} = finalPriceItems
+  console.log(buyItem)
 
   const [formData, setFormData] = useState<any>(initialFormData);
 
@@ -65,8 +73,46 @@ const FinalOrder = () => {
     }
 
     const addressInfo = { ...formData };
-    setFormData(initialFormData);
-    console.log(addressInfo);
+    var options = {
+      key: "rzp_test_1twO1LimQ1DymK",
+      key_secret: "diAu4olPzsEQNVg87U2kSImD",
+      amount: buyItem*100,
+      currency: "INR",
+      order_receipt: 'order_rcptid_' + formData.name,
+      name: "E-Bharat",
+      description: "for testing purpose",
+      handler: (response: any) => {
+        showSuccessToast('Payment Successful')
+        const paymentId = response.razorpay_payment_id
+        // store in firebase 
+        const orderInfo = {
+          cartItems,
+          addressInfo,
+          date: new Date().toLocaleString(
+            "en-US",
+            {
+              month: "short",
+              day: "2-digit",
+              year: "numeric",
+            }
+          ),
+          email: JSON.parse(localStorage.getItem("user") || "{}").user.email,
+          userid: JSON.parse(localStorage.getItem("user") || "{}").user.uid,
+          paymentId
+        }
+        try {
+          const orderData = addDoc(collection(firebaseDb, "orders"), orderInfo)
+          setFormData(initialFormData);
+        } catch (error) {
+          console.log(error)
+        }
+      },
+      theme: {
+        color: "#3399cc"
+      }
+    };
+    const pay = new (window as any).Razorpay(options);
+    pay.open();
   };
 
   const [cityOptions, setCityOptions] = useState<any>([]);
@@ -76,7 +122,6 @@ const FinalOrder = () => {
     const selectedState = event.target.value;
     setSelectedState(selectedState);
     const stateCode = stateCodes[selectedState];
-    console.log(stateCode);
     const countryCode = "IN";
     const cities = City.getCitiesOfState(countryCode, stateCode);
     setCityOptions(
@@ -91,7 +136,7 @@ const FinalOrder = () => {
   return (
     <Layout showFull={false} className={false}>
       <div className="mx-auto mt-5 max-w-4xl min-h-[516px]">
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col md:flex-row md:gap-8">
           <div className="mb-4 w-full md:w-2/3">
             <div className="bg-white shadow-md rounded-md">
               <div className="p-6">
@@ -128,22 +173,36 @@ const FinalOrder = () => {
                                 name="fullAddress.city"
                                 value={formData.fullAddress.city}
                                 onChange={handleChange}
-                                style={{ whiteSpace: "normal" }} // Allow text to wrap
+                                style={{ whiteSpace: "normal" }}
                               >
-                                {cityOptions.length === 0 ? (
-                                  <MenuItem value="">
-                                    Your area is not deliverable. We will be
-                                    reaching soon to your address.
-                                  </MenuItem>
-                                ) : (
-                                  cityOptions.map(
-                                    (city: any, index: number) => (
-                                      <MenuItem key={index} value={city.value}>
-                                        {city.displayValue}
-                                      </MenuItem>
-                                    )
-                                  )
-                                )}
+                                {cityOptions.length === 0
+                                  ? selectedState
+                                    ? [
+                                        // Use square brackets to create an array
+                                        <MenuItem key="notDeliverable" value="">
+                                          Your area is not deliverable. We will
+                                          be reaching soon to your address.
+                                        </MenuItem>,
+                                      ]
+                                    : [
+                                        // Use square brackets to create an array
+                                        <MenuItem
+                                          key="selectStateFirst"
+                                          value=""
+                                        >
+                                          Please Select State First.
+                                        </MenuItem>,
+                                      ]
+                                  : cityOptions.map(
+                                      (city: any, index: number) => (
+                                        <MenuItem
+                                          key={index}
+                                          value={city.value}
+                                        >
+                                          {city.displayValue}
+                                        </MenuItem>
+                                      )
+                                    )}
                               </Select>
                             </FormControl>
                           )}
@@ -179,13 +238,6 @@ const FinalOrder = () => {
                       );
                     })}
                   </Grid>
-                  <button
-                    type="button"
-                    onClick={handleBuy}
-                    className="focus:outline-none w-full mt-4 text-white bg-violet-600 hover:bg-violet-800 outline-0 font-medium rounded-lg text-sm px-5 py-2.5"
-                  >
-                    Order Now
-                  </button>
                 </form>
               </div>
             </div>
@@ -193,29 +245,46 @@ const FinalOrder = () => {
 
           <div className="mb-4 w-full md:w-1/3">
             <div className="bg-white shadow-md rounded-md">
-              <div className="p-4">
-                <h5 className="text-lg font-semibold mb-4">Summary</h5>
+              <div className="px-8 py-4">
+                <h5 className="text-lg font-semibold text-gray-800 pb-3">
+                  Summary
+                </h5>
                 <ul className="list-group">
-                  <li className="list-group-item justify-between border-0 px-0 pb-0">
-                    <span>Products</span>
-                    <span className="font-semibold">$53.98</span>
+                  <li className="list-group-item justify-between border-b-2 border-gray-200 py-2 flex items-center">
+                    <p className="text-gray-600">Total items</p>
+                    <p className="font-semibold text-gray-800 ">
+                      {totalItems}
+                    </p>
                   </li>
-                  <li className="list-group-item justify-between px-0">
-                    <span>Shipping</span>
-                    <span className="font-semibold">Gratis</span>
+                  <li className="list-group-item justify-between border-b-2 border-gray-200 py-2 flex">
+                    <p>
+                      <span className="text-gray-600">Total</span>
+                      <span className="font-semibold text-gray-800">
+                        Savings
+                      </span>
+                    </p>
+
+                    <p className="font-semibold text-green-600 ">
+                      ₹{totalDiscount}
+                    </p>
                   </li>
-                  <li className="list-group-item justify-between border-0 px-0 mb-3">
+                  <li className="list-group-item justify-between py-2 flex">
                     <div>
-                      <strong>Total amount</strong>
-                      <p className="mb-0">(including VAT)</p>
+                      <span className="text-gray-600">
+                        Final Price (inc. GST)
+                      </span>
                     </div>
-                    <span>
-                      <strong>$53.98</strong>
-                    </span>
+                    <p className="font-semibold text-gray-800 text-right">
+                      ₹{grandTotal}
+                    </p>
                   </li>
                 </ul>
-                <button className="btn bg-blue-500 text-white mt-4 w-full py-2">
-                  Make purchase
+                <button
+                  type="button"
+                  onClick={handleBuy}
+                  className="focus:outline-none w-full mt-4 text-white bg-violet-600 hover:bg-violet-800 outline-0 font-medium rounded-lg text-sm px-5 py-2.5"
+                >
+                  Proceed to pay
                 </button>
               </div>
             </div>

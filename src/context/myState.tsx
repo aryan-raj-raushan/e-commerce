@@ -146,6 +146,12 @@ const MyState = (props: any) => {
   };
 
   /* -------------------------------------------------------------------------- */
+  /*                                 Paymentmode                                */
+  /* -------------------------------------------------------------------------- */
+
+  const [paymentMode, setPaymentMode] = useState(false)
+
+  /* -------------------------------------------------------------------------- */
   /*                                  useEffect                                 */
   /* -------------------------------------------------------------------------- */
 
@@ -169,6 +175,8 @@ const MyState = (props: any) => {
         updateProduct,
         deleteProduct,
         edithandle,
+        paymentMode,
+        setPaymentMode,
       }}
     >
       {props.children}

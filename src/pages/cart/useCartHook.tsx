@@ -3,15 +3,15 @@ import myContext from "../../context/myContext";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCommonStyles,
-  showErrorToast,
   showSuccessToast,
 } from "../../HOC/hoc/HOC";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const useCartHook = () => {
   const context = useContext(myContext);
-  const { mode } = context;
+  const { mode,setPaymentMode } = context;
   const dispatch = useDispatch();
   const cartItems = useSelector((state: any) => state.cart);
 
@@ -89,6 +89,7 @@ const useCartHook = () => {
     totalDiscount: "",
     delivery: 0,
     buyItem: 0,
+    totalItems: 0
   });
 
   const calculateTotals = (cartItems: any) => {
@@ -119,6 +120,7 @@ const useCartHook = () => {
     const grandTotal = shipping + discountedPrice + securePackageCharge;
     const totalDiscount = (totalAmount - discountedPrice).toFixed(2);
     const buyItem = grandTotal;
+    const totalItems = cartItems.length
 
     return {
       totalAmount,
@@ -128,11 +130,12 @@ const useCartHook = () => {
       totalDiscount,
       delivery,
       buyItem,
+      totalItems
     };
   };
 
   useEffect(() => {
-    setCartSummary((prevCartSummary) => {
+    setCartSummary((prevCartSummary:any) => {
       const cartSummaryValues = calculateTotals(cartItems);
       const numberFormatter = new Intl.NumberFormat("en-IN", {
         minimumFractionDigits: 2,
@@ -146,46 +149,19 @@ const useCartHook = () => {
         grandTotal: numberFormatter.format(cartSummaryValues.grandTotal),
         totalDiscount: numberFormatter.format(
           parseFloat(cartSummaryValues.totalDiscount)
-        ), // Format totalDiscount here
+        ),
       };
     });
-  }, [cartItems]);
+  }, [cartItems, setCartSummary]);
 
-  /* -------------------------------------------------------------------------- */
-  /*                                 Buying Cart                                */
-  /* -------------------------------------------------------------------------- */
+  useEffect(() => {
+    localStorage.setItem("finalPrice", JSON.stringify(cartSummary));
+  }, [cartSummary]);
 
-  const initialFormData = {
-    name: '',
-    address: '',
-    state: '',
-    city: '',
-    pincode: '',
-    mobileNumber: '',
-    date: new Date().toLocaleString('en-US', {
-      month: 'short',
-      day: '2-digit',
-      year: 'numeric',
-    }),
-  };
-
-  const [formData, setFormData] = useState(initialFormData);
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleBuy = async (e: any) => {
-    e.preventDefault();
-    if (Object.values(formData).some((value) => value === "")) {
-      showErrorToast("All fields are required");
-      return;
-    }
-
-    const addressInfo = { ...formData };
-    setFormData(initialFormData);
-    console.log(addressInfo);
+  const navigate = useNavigate();
+  const handlePayment = () => {
+    navigate("/payment");
+    setPaymentMode(true)
   };
 
   return {
@@ -196,9 +172,7 @@ const useCartHook = () => {
     uniqueCart,
     cartItems,
     cartSummary,
-    handleBuy,
-    handleChange,
-    formData
+    handlePayment
   };
 };
 

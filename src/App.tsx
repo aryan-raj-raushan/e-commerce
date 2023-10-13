@@ -17,9 +17,13 @@ import SignUpPage from "./pages/registeration/SignUpPage";
 import LoginPage from "./pages/registeration/LoginPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ProtectedRoutes, ProtectedRoutesForAdmin } from './HOC/routes/protectedRoutes';
-import AllProducts from './pages/all-products/AllProducts';
-import FinalOrder from './components/modal/FinalOrder';
+import {
+  ProtectedPaymentGateway,
+  ProtectedRoutes,
+  ProtectedRoutesForAdmin,
+} from "./HOC/routes/protectedRoutes";
+import AllProducts from "./pages/all-products/AllProducts";
+import FinalOrder from "./components/modal/FinalOrder";
 
 const App = () => {
   return (
@@ -70,8 +74,16 @@ const App = () => {
               </ProtectedRoutesForAdmin>
             }
           />
-           <Route path="/allproducts" element={<AllProducts />} />
-           <Route path="/payment" element={<FinalOrder />} />
+          <Route path="/allproducts" element={<AllProducts />} />
+          <Route
+            path="/payment"
+            element={
+              <ProtectedPaymentGateway>
+                <FinalOrder />
+              </ProtectedPaymentGateway>
+            }
+          />
+
           <Route path="/*" element={<NoPage />} />
         </Routes>
         <ToastContainer />

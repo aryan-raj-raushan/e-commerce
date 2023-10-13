@@ -1,11 +1,7 @@
-import { useState } from "react";
-import CartModal from "../../components/modal/CartModal";
 import useCartHook from "./useCartHook";
-import { useNavigate } from "react-router-dom";
 
 const Shipping = ({ cartItems, darkText, darkBg }: any) => {
-  const { cartSummary, handleBuy, handleChange, formData } = useCartHook();
-
+  const { cartSummary,handlePayment } = useCartHook();
   const {
     totalAmount,
     grandTotal,
@@ -13,13 +9,8 @@ const Shipping = ({ cartItems, darkText, darkBg }: any) => {
     shipping,
     totalDiscount,
     delivery,
+    totalItems
   } = cartSummary;
-  let [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
-  const handleModal = () => {
-    // setIsOpen(!isOpen);
-    navigate("/payment");
-  };
   return (
     <div
       className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3 md:sticky md:top-36"
@@ -28,7 +19,7 @@ const Shipping = ({ cartItems, darkText, darkBg }: any) => {
       <div className="pb-3 flex justify-between">
         <p className="text-gray-700" style={darkText}>
           Price{" "}
-          {cartItems.length > 0 && <span>({cartItems.length} items)</span>}
+          {cartItems.length > 0 && <span>({totalItems} items)</span>}
         </p>
         <p className="text-gray-700 font-medium" style={darkText}>
           ₹{totalAmount}
@@ -81,20 +72,12 @@ const Shipping = ({ cartItems, darkText, darkBg }: any) => {
       <div className="  text-center rounded-lg text-white font-bold">
         <button
           type="button"
-          onClick={handleModal}
+          onClick={handlePayment}
           className="w-full  bg-violet-600 py-2 text-center rounded-lg text-white font-bold"
         >
           Buy Now
         </button>
       </div>
-      {/* <Modal  /> */}
-      {/* <CartModal
-        handleModal={handleModal}
-        isOpen={isOpen}
-        handleBuy={handleBuy}
-        handleChange={handleChange}
-        formData={formData}
-      /> */}
     </div>
   );
 };
