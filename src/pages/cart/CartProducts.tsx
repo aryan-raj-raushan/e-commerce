@@ -6,7 +6,7 @@ import EmptyCart from "./EmptyCart";
 // import moment from "moment"
 // import Lottie from "lottie-react";
 
-const Cart = () => {
+const CartProducts = () => {
   const {
     darkText,
     darkBg,
@@ -110,7 +110,7 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartProducts;
 
 // const [expandedItems, setExpandedItems] = useState<(number | string)[]>([]);
 // // Adjust the number of lines to display initially

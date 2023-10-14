@@ -10,7 +10,6 @@ import Dashboard from "./pages/admin/dashboard/dashboard";
 import NoPage from "./pages/no-page/NoPage";
 import MyState from "./context/myState";
 import ProductInfo from "./pages/product-info/ProductInfo";
-import Cart from "./pages/cart/Cart";
 import AddProduct from "./pages/admin/page/AddProduct";
 import UpdateProduct from "./pages/admin/page/UpdateProduct";
 import SignUpPage from "./pages/registeration/SignUpPage";
@@ -24,6 +23,7 @@ import {
 } from "./HOC/routes/protectedRoutes";
 import AllProducts from "./pages/all-products/AllProducts";
 import Payment from './pages/payment/Payment';
+import CartProducts from './pages/cart/CartProducts';
 
 const App = () => {
   return (
@@ -43,7 +43,7 @@ const App = () => {
             path="/cart"
             element={
               <ProtectedRoutes>
-                <Cart />
+                <CartProducts/>
               </ProtectedRoutes>
             }
           />
