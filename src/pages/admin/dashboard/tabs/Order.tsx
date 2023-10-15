@@ -13,22 +13,20 @@ const columns = [
   { key: "date", label: "Date" },
 ];
 
-const Order = ({ mode, orderDetails }: any) => {
+const Order = ({ mode, orderDetails,darkText,darkBg }: any) => {
+
   return (
     <div className="relative overflow-x-auto mb-16">
       <h1
         className=" text-center mb-5 text-3xl font-semibold underline"
-        style={{ color: mode === "dark" ? "white" : "" }}
+        style={darkText}
       >
         Order Details
       </h1>
       <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
         <thead
           className="text-xs border border-gray-600 text-black uppercase bg-gray-200 shadow-[inset_0_0_8px_rgba(0,0,0,0.6)]"
-          style={{
-            backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
-            color: mode === "dark" ? "white" : "",
-          }}
+          style={darkBg}
         >
           <tr>
             {columns.map((column) => (
@@ -73,16 +71,13 @@ const Order = ({ mode, orderDetails }: any) => {
                   className={`bg-gray-50 border-b ${
                     mode === "dark" ? "dark:border-gray-700" : ""
                   }`}
-                  style={{
-                    backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
-                    color: mode === "dark" ? "white" : "",
-                  }}
+                  style={darkBg}
                 >
                   {rowData.map((cellData, cellIndex) => (
                     <td
                       key={cellIndex}
                       className="px-2 py-4 text-black"
-                      style={{ color: mode === "dark" ? "white" : "" }}
+                      style={darkText}
                     >
                       {cellData.content || cellData.label}
                     </td>

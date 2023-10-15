@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
+import { months } from "../../const/Const";
 
-export  const CommonInputProps = ({field, handleChange, products}:any) => {
+export const CommonInputProps = ({ field, handleChange, products }: any) => {
   return {
     name: field.name,
     onChange: handleChange,
@@ -11,13 +12,15 @@ export  const CommonInputProps = ({field, handleChange, products}:any) => {
   };
 };
 
-export const getCommonStyles = (mode: "dark" | "light", styleOptions: { backgroundColor?: string } = {}) => ({
+export const getCommonStyles = (
+  mode: "dark" | "light",
+  styleOptions: { backgroundColor?: string } = {}
+) => ({
   backgroundColor: mode === "dark" ? styleOptions.backgroundColor : "",
   color: mode === "dark" ? "white" : "",
 });
 
-
-export const showSuccessToast = (message:any) => {
+export const showSuccessToast = (message: any) => {
   toast.success(message, {
     position: "top-right",
     autoClose: 1200,
@@ -30,7 +33,7 @@ export const showSuccessToast = (message:any) => {
   });
 };
 
-export const showErrorToast = (message:any) => {
+export const showErrorToast = (message: any) => {
   toast.error(message, {
     position: "top-right",
     autoClose: 2000,
@@ -41,4 +44,11 @@ export const showErrorToast = (message:any) => {
     progress: undefined,
     // theme: "colored",
   });
-}
+};
+
+export const formatDate = (date: any) => {
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+};

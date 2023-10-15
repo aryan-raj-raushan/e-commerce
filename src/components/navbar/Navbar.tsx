@@ -124,7 +124,7 @@ const Navbar = () => {
                       className=" text-2xl font-bold text-black  px-2 py-1 rounded"
                       style={darkText}
                     >
-                      E-Bharat
+                      24Seven
                     </h1>
                   </div>
                 </Link>

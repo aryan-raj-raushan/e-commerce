@@ -150,7 +150,7 @@ const MyState = (props: any) => {
   /*                                 PaymentMode                                */
   /* -------------------------------------------------------------------------- */
 
-  const[paymentMode, setPaymentMode] = useState()
+  const [paymentMode, setPaymentMode] = useState();
 
   /* -------------------------------------------------------------------------- */
   /*                                 Order data                                */
@@ -159,21 +159,50 @@ const MyState = (props: any) => {
   const [order, setOrder] = useState([]);
 
   const getOrderData = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const result = await getDocs(collection(firebaseDb, "orders"))
-      const ordersArray:any = [];
+      const result = await getDocs(collection(firebaseDb, "orders"));
+      const ordersArray: any = [];
       result.forEach((doc) => {
         ordersArray.push(doc.data());
-        setLoading(false)
+        setLoading(false);
       });
       setOrder(ordersArray);
       setLoading(false);
     } catch (error) {
-      console.log(error)
-      setLoading(false)
+      console.log(error);
+      setLoading(false);
     }
-  }
+  };
+
+  /* -------------------------------------------------------------------------- */
+  /*                                    user                                    */
+  /* -------------------------------------------------------------------------- */
+
+  const [userData, setUserData] = useState([]);
+
+  const getUserData = async () => {
+    setLoading(true);
+    try {
+      const result = await getDocs(collection(firebaseDb, "users"));
+      const usersArray: any = [];
+
+      result.forEach((doc) => {
+        const userData = doc.data();
+        // Check if the timestamp field exists and is a timestamp
+        if (userData.time && userData.time instanceof Timestamp) {
+          userData.time = userData.time.toDate(); 
+        }
+        usersArray.push(userData);
+      });
+
+      setUserData(usersArray);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
 
   /* -------------------------------------------------------------------------- */
   /*                                  useEffect                                 */
@@ -181,7 +210,8 @@ const MyState = (props: any) => {
 
   useEffect(() => {
     getProductData();
-    getOrderData()
+    getOrderData();
+    getUserData();
   }, []);
 
   return (
@@ -202,7 +232,8 @@ const MyState = (props: any) => {
         edithandle,
         paymentMode,
         setPaymentMode,
-        order
+        order,
+        userData,
       }}
     >
       {props.children}
