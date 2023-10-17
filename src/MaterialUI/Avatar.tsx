@@ -17,7 +17,7 @@ function stringAvatar(name: string) {
     const firstName = nameParts[0];
     const lastName = nameParts[1];
     
-    const initials = `${firstName[0].toUpperCase()}${lastName[0].toUpperCase()}`;
+    const initials = `${firstName[0].toUpperCase()}${lastName ? lastName[0].toUpperCase() : ''}`;
   
     return {
       sx: {

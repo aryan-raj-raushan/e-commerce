@@ -76,7 +76,7 @@ const usePaymentHook = () => {
       amount: Math.round(buyItem * 100),
       currency: "INR",
       order_receipt: "order_rcptid_" + formData.name,
-      name: "E-Bharat",
+      name: "24Seven",
       description: "for testing purpose",
       handler: (response: any) => {
         showSuccessToast("Payment Successful");

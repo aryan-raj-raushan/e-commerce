@@ -1,74 +1,69 @@
-const userDetails = [
-  {
-    id: 1,
-    name: "name",
-    address: "india",
-    pincode: "82828",
-    phoneNumber: "929929929929",
-    email: "kkakka@gmail.com",
-    date: "12 Aug 2019",
-  },
-  // Add more data objects as needed
-];
-const columns = [
-  { key: "id", label: "S.No" },
-  { key: "name", label: "Name" },
-  { key: "address", label: "Address" },
-  { key: "pincode", label: "Pincode" },
-  { key: "phoneNumber", label: "Phone Number" },
-  { key: "email", label: "Email" },
-  { key: "date", label: "Date" },
-];
+import { formatDate } from "../../../../HOC/hoc/HOC";
 
-const User = ({ mode }: any) => {
+const columns = [
+  { key: "uid", label: "UID" },
+  { key: "name", label: "Name" },
+  { key: "email", label: "Email" },
+];
+const User = ({ userData, darkText, darkBg }: any) => {
   return (
     <div className="relative overflow-x-auto mb-16">
       <h1
         className=" text-center mb-5 text-3xl font-semibold underline"
-        style={{ color: mode === "dark" ? "white" : "" }}
+        style={darkText}
       >
         User Details
       </h1>
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
         <thead
           className="text-xs border border-gray-600 text-black uppercase bg-gray-200 shadow-[inset_0_0_8px_rgba(0,0,0,0.6)]"
-          style={{
-            backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
-            color: mode === "dark" ? "white" : "",
-          }}
+          style={darkBg}
         >
           <tr>
+            <th scope="col" className="px-6 py-3">
+              S.No.
+            </th>
+
             {columns.map((column) => (
               <th key={column.key} scope="col" className="px-6 py-3">
                 {column.label}
               </th>
             ))}
+            <th scope="col" className="px-6 py-3">
+              Date
+            </th>
           </tr>
         </thead>
-
         <tbody>
-          {userDetails.map((item: any, index: number) => (
-            <tr
-              key={item.id}
-              className={`${
-                index % 2 === 0 ? "bg-gray-50" : ""
-              } border-b  dark:border-gray-700`}
-              style={{
-                backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
-                color: mode === "dark" ? "white" : "",
-              }}
-            >
-              {columns.map((column) => (
-                <td
-                  key={column.key}
-                  className="px-6 py-4 text-black"
-                  style={{ color: mode === "dark" ? "white" : "" }}
-                >
-                  {item[column.key]}
+          {userData.map((item: any, index: number) => {
+            const myDate = new Date(item.time);
+            const formattedDate = formatDate(myDate);
+            return (
+              <tr
+                key={item.uid}
+                className={`${
+                  index % 2 === 0 ? "bg-gray-50" : ""
+                } border-b  dark:border-gray-700`}
+                style={darkBg}
+              >
+                <td className="px-6 py-4 text-black " style={darkText}>
+                  {index + 1}.
                 </td>
-              ))}
-            </tr>
-          ))}
+                {columns.map((column) => (
+                  <td
+                    key={column.key}
+                    className="px-6 py-4 text-black"
+                    style={darkText}
+                  >
+                    {item[column.key]}
+                  </td>
+                ))}
+                <td className="px-6 py-4 text-black " style={darkText}>
+                  {formattedDate}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

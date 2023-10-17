@@ -4,11 +4,12 @@ import Products from "./products";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
 import { showSuccessToast } from "../../HOC/hoc/HOC";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = () => {
   const context = useContext(myContext);
   const { mode,product } = context;
-
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const cartItems = useSelector((state: any) => state.cart);
   const addCart = (product: any) => {
@@ -20,6 +21,9 @@ const ProductCard = () => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
+  const handleClick  = (id:any) => {
+    navigate(`/productinfo/${id}`)
+  }
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 pt-4 pb-8 md:pt-8 md:pb-16 mx-auto">
@@ -59,6 +63,7 @@ const ProductCard = () => {
               mode={mode}
               handleCart={addCart}
               data={item}
+              handleClick={handleClick}
             />
           ))}
         </div>

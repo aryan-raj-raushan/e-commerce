@@ -1,9 +1,12 @@
 import React from "react";
 
-const Products = ({ mode, handleCart, data }: any) => {
-  const { title, price, imageUrl } = data;
+const Products = ({ mode, handleCart, data, handleClick }: any) => {
+  const { title, price, imageUrl, id } = data;
   return (
-    <div className="p-4 md:w-1/4 drop-shadow-lg">
+    <div
+      className="p-4 md:w-1/4 drop-shadow-lg"
+      onClick={() => handleClick(id)}
+    >
       <div
         className="h-full border-2 hover:shadow-gray-100 hover:shadow-2xl transition-shadow duration-300 ease-in-out border-gray-200 border-opacity-60 rounded-2xl overflow-hidden flex flex-col justify-between"
         style={{

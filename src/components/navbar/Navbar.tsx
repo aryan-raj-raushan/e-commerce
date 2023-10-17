@@ -11,11 +11,14 @@ import { getCommonStyles } from "../../HOC/hoc/HOC";
 import { CartItem } from "../../MaterialUI/Icon";
 import { BackgroundLetterAvatars } from "../../MaterialUI/Avatar";
 import DefaultUser from "../../assets/images/user.png";
+import DropdownMenu from "./DropdownMenu";
+import { Fade as Hamburger } from "hamburger-react";
 
 const Navbar = () => {
   const context = useContext(myContext);
   const { toggleMode, mode } = context;
   const [open, setOpen] = useState(false);
+  // const [play, setPlay] = useState(0);
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -59,6 +62,10 @@ const Navbar = () => {
         { label: "Sign In", link: "/login" },
       ];
 
+  const [showDropdown, setShowDropdown] = useState(false);
+  const handleShowDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
   return (
     <div className="bg-white sticky top-0 z-40">
       {/* Desktop menu */}
@@ -83,6 +90,8 @@ const Navbar = () => {
           setOpen={handleMobileMenu}
           logout={handleLogout}
           user={user}
+          userName={userName}
+          darkText={darkText}
         />
 
         {/* /* -------------------------------- Lower Nav -------------------------------  */}
@@ -91,143 +100,100 @@ const Navbar = () => {
           className="bg-gray-100 px-4 sm:px-6 lg:px-8 shadow-xl "
           style={darkBg}
         >
-          <div className="">
-            <div className="flex h-16 items-center">
-              <button
-                type="button"
-                className="rounded-md bg-white p-2 text-gray-400 lg:hidden"
-                onClick={handleMobileMenu}
-                style={darkBg}
-              >
-                <span className="sr-only">Open menu</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6"
+          {/* <div className=""> */}
+          <div className="flex h-16 items-center">
+            <div
+              className="rounded-md lg:hidden flex items-center border-2 border-gray-200 mr-1 h-10 w-auto justify-center"
+              onClick={handleMobileMenu}
+              style={darkBg}
+            >
+              <Hamburger
+                toggled={open}
+                toggle={setOpen}
+                size={18}
+                direction="right"
+                duration={0.8}
+                distance="sm"
+                color="black"
+                rounded
+                hideOutline={true}
+              />
+            </div>
+
+            {/* Logo */}
+            <div className="sm:ml-4 flex items-center lg:ml-0">
+              <Link to={"/"} className="lg:ml-4">
+                <h2 className="text-gray-900 text-xl sm:text-3xl font-extrabold">
+                  24<span className="text-purple-500">Seven</span>
+                </h2>
+              </Link>
+            </div>
+
+            <div className="ml-auto flex items-center">
+              {user?.user ? (
+                <div
+                  className=" lg:ml-4 hidden lg:flex relative cursor-pointer"
+                  onClick={handleShowDropdown}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                  />
-                </svg>
-              </button>
-
-              {/* Logo */}
-              <div className="ml-4 flex lg:ml-0">
-                <Link to={"/"} className="flex">
-                  <div className="flex ">
-                    <h1
-                      className=" text-2xl font-bold text-black  px-2 py-1 rounded"
-                      style={darkText}
-                    >
-                      E-Bharat
-                    </h1>
+                  {user?.user?.displayName ? (
+                    <BackgroundLetterAvatars userName={userName} />
+                  ) : (
+                    <img
+                      className="inline-block w-8 h-8 rounded-full lg:ml-8"
+                      src={
+                        user?.user?.displayName ? DefaultUser : "Dan_Abromov"
+                      }
+                      alt="Dan_Abromov"
+                    />
+                  )}
+                  <div className="absolute top-12 right-0">
+                    <DropdownMenu
+                      showDropdown={showDropdown}
+                      handleLogout={handleLogout}
+                      user={user}
+                      mode={mode}
+                    />
                   </div>
-                </Link>
-              </div>
+                </div>
+              ) : (
+                <div className="lg:flow-root hidden">
+                  <a
+                    href="/login"
+                    className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
+                    style={darkText}
+                  >
+                    Login
+                  </a>
+                </div>
+              )}
 
-              <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <Link
-                    to={"/allproducts"}
-                    className="text-sm font-medium text-gray-700 "
-                    style={darkText}
-                  >
-                    All Products
-                  </Link>
-                  <Link
-                    to={"/order"}
-                    className="text-sm font-medium text-gray-700 "
-                    style={darkText}
-                  >
-                    Order
-                  </Link>
-                  {user?.user?.email.includes("aryan") ? (
-                    <div className="flow-root">
-                      <Link
-                        to={"/dashboard"}
-                        className="-m-2 block p-2 font-medium text-gray-900"
-                        style={darkText}
-                      >
-                        Admin
-                      </Link>
-                    </div>
+              {/* Search */}
+              <div className="flex lg:ml-6">
+                <button className="" onClick={toggleMode}>
+                  {mode === "light" ? (
+                    <FiSun className="" size={30} />
+                  ) : "dark" ? (
+                    <BsFillCloudSunFill size={30} />
                   ) : (
                     ""
                   )}
+                </button>
+              </div>
 
-                  {user?.user ? (
-                    <div className="flow-root">
-                      <a
-                        href="/login"
-                        onClick={handleLogout}
-                        className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
-                        style={darkText}
-                      >
-                        Logout
-                      </a>
-                    </div>
-                  ) : (
-                    <div className="flow-root">
-                      <a
-                        href="/login"
-                        className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
-                        style={darkText}
-                      >
-                        Login
-                      </a>
-                    </div>
-                  )}
-                </div>
-
-                {user?.user && (
-                  <div className="hidden lg:ml-4 lg:flex">
-                    {user?.user?.displayName ? (
-                      <BackgroundLetterAvatars userName={userName} />
-                    ) : (
-                      <img
-                        className="inline-block w-8 h-8 rounded-full lg:ml-8"
-                        src={
-                          user?.user?.displayName ? DefaultUser : "Dan_Abromov"
-                        }
-                        alt="Dan_Abromov"
-                      />
-                    )}
-                  </div>
-                )}
-
-                {/* Search */}
-                <div className="flex lg:ml-6">
-                  <button className="" onClick={toggleMode}>
-                    {/* <MdDarkMode size={35} style={{ color: mode === 'dark' ? 'white' : '' }} /> */}
-                    {mode === "light" ? (
-                      <FiSun className="" size={30} />
-                    ) : "dark" ? (
-                      <BsFillCloudSunFill size={30} />
-                    ) : (
-                      ""
-                    )}
-                  </button>
-                </div>
-
-                {/* Cart */}
-                <div className="flow-root pt-1">
-                  <Link
-                    to={"/cart"}
-                    className="group flex items-center p-2"
-                    style={darkText}
-                  >
-                    <CartItem cartItem={cartItems.length} mode={mode} />
-                    <span className="sr-only">items in cart, view bag</span>
-                  </Link>
-                </div>
+              {/* Cart */}
+              <div className="flow-root sm:pt-1">
+                <Link
+                  to={"/cart"}
+                  className="group flex items-center p-2"
+                  style={darkText}
+                >
+                  <CartItem cartItem={cartItems.length} mode={mode} />
+                  <span className="sr-only">items in cart, view bag</span>
+                </Link>
               </div>
             </div>
           </div>
+          {/* </div> */}
         </nav>
       </header>
     </div>

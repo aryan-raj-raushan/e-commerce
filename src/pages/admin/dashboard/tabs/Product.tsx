@@ -11,7 +11,14 @@ const columns = [
   { key: "date", label: "Date" },
 ];
 
-const Product = ({ mode, data, edithandle, deleteProduct }: any) => {
+const Product = ({
+  mode,
+  data,
+  edithandle,
+  deleteProduct,
+  darkBg,
+  darkText,
+}: any) => {
   const navigate = useNavigate();
   const handleAddProduct = () => {
     navigate("/addproduct");
@@ -24,7 +31,7 @@ const Product = ({ mode, data, edithandle, deleteProduct }: any) => {
     <div className="px-4 md:px-0 mb-16">
       <h1
         className="text-center mb-5 text-3xl font-semibold underline"
-        style={{ color: mode === "dark" ? "white" : "" }}
+        style={darkText}
       >
         Product Details
       </h1>
@@ -33,10 +40,7 @@ const Product = ({ mode, data, edithandle, deleteProduct }: any) => {
           onClick={handleAddProduct}
           type="button"
           className="focus:outline-none text-white bg-pink-600 shadow-[inset_0_0_10px_rgba(0,0,0,0.6)] border hover:bg-pink-700 outline-0 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
-          style={{
-            backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
-            color: mode === "dark" ? "white" : "",
-          }}
+          style={darkBg}
         >
           {" "}
           <div className="flex gap-2 items-center">
@@ -48,10 +52,7 @@ const Product = ({ mode, data, edithandle, deleteProduct }: any) => {
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead
             className="text-xs border border-gray-600 text-black uppercase bg-gray-200 shadow-[inset_0_0_8px_rgba(0,0,0,0.6)]"
-            style={{
-              backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
-              color: mode === "dark" ? "white" : "",
-            }}
+            style={darkBg}
           >
             <tr>
               <th scope="col" className="px-6 py-3">
@@ -76,15 +77,9 @@ const Product = ({ mode, data, edithandle, deleteProduct }: any) => {
                 className={`${
                   index % 2 === 0 ? "bg-gray-50" : ""
                 } border-b  dark:border-gray-700`}
-                style={{
-                  backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
-                  color: mode === "dark" ? "white" : "",
-                }}
+                style={darkBg}
               >
-                <td
-                  className="px-6 py-4 text-black "
-                  style={{ color: mode === "dark" ? "white" : "" }}
-                >
+                <td className="px-6 py-4 text-black " style={darkText}>
                   {index + 1}.
                 </td>
                 {columns.map((column) => (
@@ -105,7 +100,7 @@ const Product = ({ mode, data, edithandle, deleteProduct }: any) => {
                   <div className=" flex gap-2 items-center">
                     <div
                       className=" flex gap-2 cursor-pointer text-black"
-                      style={{ color: mode === "dark" ? "white" : "" }}
+                      style={darkText}
                     >
                       <div
                         className="hover:scale-110"
