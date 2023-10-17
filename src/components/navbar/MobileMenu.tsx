@@ -1,9 +1,47 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
+import { BackgroundLetterAvatars } from "../../MaterialUI/Avatar";
+import DefaultUser from "../../assets/images/user.png";
+import { AiOutlineShopping } from "react-icons/ai";
+import { FaUserLock } from "react-icons/fa";
+import { RiCustomerService2Line } from "react-icons/ri";
+import { FiLogOut, FiUser } from "react-icons/fi";
 
-
-const MobileMenu = ({ open, setOpen, mode, user, logout }: any) => {
+const MobileMenu = ({
+  open,
+  setOpen,
+  mode,
+  user,
+  logout,
+  userName,
+  darkText,
+}: any) => {
+  const menuItems = [
+    user?.user && { label: "My Profile", href: "/", icon: <FiUser /> },
+    {
+      label: "Order",
+      href: "/order",
+      icon: <AiOutlineShopping />,
+    },
+    user?.user?.email.includes("aryan") && {
+      label: "Admin",
+      href: "/dashboard",
+      icon: <FaUserLock />,
+    },
+    {
+      label: "Contact Us",
+      href: "/",
+      icon: <RiCustomerService2Line />,
+    },
+    user?.user
+      ? {
+          label: "Logout",
+          onClick: logout,
+          icon: <FiLogOut />,
+        }
+      : { label: "Login", href: "/login", icon: <FiUser /> },
+  ].filter(Boolean);
   return (
     <>
       <Transition.Root show={open} as={Fragment}>
@@ -20,7 +58,7 @@ const MobileMenu = ({ open, setOpen, mode, user, logout }: any) => {
             <div className="fixed inset-x-0 top-16 bg-black bg-opacity-25" />
           </Transition.Child>
 
-          <div className="fixed inset-x-0 top-16 shadow-lg bottom-0 flex  z-40">
+          <div className="fixed inset-x-0 top-16 shadow-lg bottom-0 flex z-40">
             <Transition.Child
               as={Fragment}
               enter="transition ease-in-out duration-300 transform"
@@ -37,91 +75,58 @@ const MobileMenu = ({ open, setOpen, mode, user, logout }: any) => {
                   color: mode === "dark" ? "white" : "",
                 }}
               >
-                <div className="space-y-6 border-b border-gray-200 px-4 py-6">
-                  <Link
-                    to={"/allproducts"}
-                    className="text-sm font-medium text-gray-900 "
-                    style={{ color: mode === "dark" ? "white" : "" }}
-                  >
-                    All Products
-                  </Link>
-                  <div className="flow-root">
-                    <Link
-                      to={"/order"}
-                      style={{ color: mode === "dark" ? "white" : "" }}
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                    >
-                      Order
-                    </Link>
-                  </div>
-
-                  {user?.user?.email.includes("aryan") ? (
-                    <div className="flow-root">
-                      <Link
-                        to={"/dashboard"}
-                        className="-m-2 block p-2 font-medium text-gray-900"
-                        style={{ color: mode === "dark" ? "white" : "" }}
-                      >
-                        Admin
-                      </Link>
+                <div className="space-y-4 border-b border-gray-200 px-5 py-6 text-sm font-normal text-black">
+                  {menuItems.map((item: any, index: number) => (
+                    <div className="flow-root" key={index}>
+                      {item.href ? (
+                        <Link to={item.href} className="block" style={darkText}>
+                          <div className="flex items-center">
+                            {item.icon && (
+                              <div className="mr-2">{item.icon}</div>
+                            )}
+                            {item.label}
+                          </div>
+                        </Link>
+                      ) : (
+                        <>
+                          {user?.user ? (
+                            <button
+                              onClick={item.onClick}
+                              className="block cursor-pointer"
+                              style={darkText}
+                            >
+                              <div className="flex items-center">
+                                {item.icon && (
+                                  <div className="mr-2">{item.icon}</div>
+                                )}
+                                {item.label}
+                              </div>
+                            </button>
+                          ) : null}
+                        </>
+                      )}
                     </div>
-                  ) : (
-                    ""
-                  )}
-
-                  {user ? (
-                    <div className="flow-root">
-                      <a
-                        href="/login"
-                        onClick={logout}
-                        className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
-                        style={{ color: mode === "dark" ? "white" : "" }}
-                      >
-                        Logout
-                      </a>
-                    </div>
-                  ) : (
-                    <div className="flow-root">
-                      <a
-                        href="/login"
-                        className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
-                        style={{ color: mode === "dark" ? "white" : "" }}
-                      >
-                        Login
-                      </a>
-                    </div>
-                  )}
-
-                  <div className="flow-root">
-                    <Link
-                      to={"/"}
-                      className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
-                    >
-                      <img
-                        className="inline-block w-10 h-10 rounded-full"
-                        src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
-                        alt="Dan_Abromov"
-                      />{" "}
-                    </Link>
+                  ))}
+                  <div className="">
+                    {user?.user && (
+                      <div className="text-sm font-normal text-black">
+                        {user?.user?.displayName ? (
+                          <BackgroundLetterAvatars userName={userName} />
+                        ) : (
+                          <img
+                            className="inline-block w-8 h-8 rounded-full lg:ml-8"
+                            src={
+                              user?.user?.displayName
+                                ? DefaultUser
+                                : "Dan_Abromov"
+                            }
+                            alt="Dan_Abromov"
+                          />
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
-
-                {/* <div className="border-t border-gray-200 px-4 py-6">
-                  <a href="/" className="-m-2 flex items-center p-2">
-                    <img
-                      src="img/indiaflag.png"
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
-                    />
-                    <span
-                      className="ml-3 block text-base font-medium text-gray-900"
-                      style={{ color: mode === "dark" ? "white" : "" }}
-                    >
-                      INDIA
-                    </span>
-                    <span className="sr-only">, change currency</span>
-                  </a>
-                </div> */}
               </Dialog.Panel>
             </Transition.Child>
           </div>

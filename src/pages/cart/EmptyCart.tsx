@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import EmptyCartGirlLottie from "../../assets/Lottie/emptyCartGirl.json";
 import EmptyCartLottie from "../../assets/Lottie/emptyCart.json";
-import "animate.css"; // Import Animate.css
+import "animate.css"; 
 import { useNavigate } from "react-router-dom";
 
 const EmptyCart = ({ darkText, darkBg }: any) => {

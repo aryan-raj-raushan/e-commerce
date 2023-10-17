@@ -3,8 +3,6 @@ import Shipping from "./Shipping";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import useCartHook from "./useCartHook";
 import EmptyCart from "./EmptyCart";
-// import moment from "moment"
-// import Lottie from "lottie-react";
 
 const CartProducts = () => {
   const {

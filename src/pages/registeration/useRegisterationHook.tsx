@@ -37,7 +37,6 @@ const useRegisterationHook = () => {
         "Wrong password. Please enter the correct password.",
       "auth/email-not-found":
         "Email not found. The provided email address is not registered.",
-      // Add more error codes and custom messages as needed
     };
 
     return (
@@ -92,9 +91,10 @@ const useRegisterationHook = () => {
       };
       const userRef = collection(firebaseDb, "users");
       await addDoc(userRef, user);
+      localStorage.setItem("user", JSON.stringify(users));
       showSuccessToast("Signup Succesfully");
       setLoading(false);
-      navigate("/login");
+      navigate("/");
     } catch (error: any) {
       const errorCode = error.code;
       const errorMessage = getCustomErrorMessage(errorCode);
@@ -125,9 +125,9 @@ const useRegisterationHook = () => {
   /* -------------------------------------------------------------------------- */
 
   const accountLogin = async () => {
+    setLoading(true);
     const { email, password } = loginState;
     try {
-      setLoading(true);
       const userCredential = await signInWithEmailAndPassword(
         firebaseAuth,
         email,
