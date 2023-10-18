@@ -43,9 +43,9 @@ export const Slider2 = ({ children, options }: any) => {
     centeredSlides: false,
     modules: [FreeMode, Navigation, Scrollbar],
     freeMode: true,
-    mousewheel: {
-      releaseOnEdges: true,
-    },
+    // mousewheel: {
+    //   releaseOnEdges: true,
+    // },
     cssMode: true,
     slidesPerView: "auto",
     navigation: {
@@ -56,7 +56,6 @@ export const Slider2 = ({ children, options }: any) => {
     scrollbar: {
       hide: true,
       draggable: true,
-      // el: '.swiper-scrollbar',
     },
     ...options,
   };
@@ -79,17 +78,13 @@ export const Slider3 = ({ children, options }: any) => {
     centeredSlides: false,
     modules: [FreeMode, Scrollbar],
     freeMode: true,
-    mousewheel: {
-      releaseOnEdges: true,
-    },
     cssMode: true,
     slidesPerView: "auto",
     scrollbar: {
       hide: true,
       draggable: true,
     },
-
-    loop: true,
+    // loop: true,
     ...options,
   };
 
