@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
 import { showSuccessToast } from "../../HOC/hoc/HOC";
 import { useNavigate } from "react-router-dom";
+import { SwiperSlide } from "swiper/react";
+import { Slider3 } from "../../HOC/hoc/Slider";
 
 const ProductCard = () => {
   const context = useContext(myContext);
-  const { mode,product } = context;
-  const navigate = useNavigate()
+  const { mode, product } = context;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartItems = useSelector((state: any) => state.cart);
   const addCart = (product: any) => {
@@ -21,14 +23,14 @@ const ProductCard = () => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const handleClick  = (id:any) => {
-    navigate(`/productinfo/${id}`)
-  }
+  const handleClick = (id: any) => {
+    navigate(`/productinfo/${id}`);
+  };
   return (
     <section className="text-gray-600 body-font">
-      <div className="container px-5 pt-4 pb-8 md:pt-8 md:pb-16 mx-auto">
+      <div className="container px-2 sm:px-5 pt-4 pb-8 md:pt-8 md:pb-12">
         <div className="flex">
-          <div className="w-auto mb-3 lg:mb-5 relative mx-10">
+          <div className="w-auto mb-3 lg:mb-5 relative sm:mx-10">
             <h1
               className="sm:text-3xl text-2xl font-[900] leading-10  title-font mb-2 text-black "
               style={{ color: mode === "dark" ? "white" : "" }}
@@ -53,19 +55,23 @@ const ProductCard = () => {
         </div>
 
         {/* Products */}
-        <div className="flex flex-col sm:flex-row sm:flex-wrap m-4 ">
+        <div className=" max-w-fit">
+          <Slider3 className="max-w-fit">
           {product.map((item: any, index: number) => (
-            <Products
-              key={index}
-              title={item.title}
-              price={item.price}
-              imageUrl={item.imageUrl}
-              mode={mode}
-              handleCart={addCart}
-              data={item}
-              handleClick={handleClick}
-            />
+            <SwiperSlide key={index} className="max-w-fit">
+              <Products
+                title={item.title}
+                price={item.price}
+                imageUrl={item.imageUrl}
+                mode={mode}
+                handleCart={addCart}
+                data={item}
+                handleClick={handleClick}
+              />
+            </SwiperSlide>
           ))}
+          </Slider3>
+          
         </div>
       </div>
     </section>
