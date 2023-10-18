@@ -1,11 +1,11 @@
 import Layout from "../../components/layout/layout";
-import HeroSection from "../../components/heroSection/HeroSection";
+import HeroSection from "../../components/home/heroSection/HeroSection";
 // import Filter from "../../components/filter/Filter";
-import ProductCard from "../../components/productCard/ProductCard";
-import Track from "../../components/track/Track";
-import Testimonial from "../../components/testimonial/Testimonial";
-import Categories from "../../components/categories/Categories";
-import Trending from "../../components/trending/Trending";
+import Categories from "../../components/home/categories/Categories";
+import ProductCard from "../../components/home/productCard/ProductCard";
+import Trending from "../../components/home/trending/Trending";
+import Track from "../../components/home/track/Track";
+import Testimonial from "../../components/home/testimonial/Testimonial";
 
 const Home = () => {
   return (

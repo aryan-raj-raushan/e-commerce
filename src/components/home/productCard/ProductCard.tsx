@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react";
-import myContext from "../../context/myContext";
 import Products from "./products";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../redux/cartSlice";
-import { showSuccessToast } from "../../HOC/hoc/HOC";
 import { useNavigate } from "react-router-dom";
 import { SwiperSlide } from "swiper/react";
-import { Slider3 } from "../../HOC/hoc/Slider";
+import myContext from "../../../context/myContext";
+import { addToCart } from "../../../redux/cartSlice";
+import { showSuccessToast } from "../../../HOC/hoc/HOC";
+import { Slider3 } from "../../../HOC/hoc/Slider";
 
 const ProductCard = () => {
   const context = useContext(myContext);

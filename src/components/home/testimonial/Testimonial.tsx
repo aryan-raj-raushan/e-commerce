@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import myContext from "../../context/myContext";
-import { testimonialData } from "../../const/Const";
 import TestimonialCard from "./TestimonialCard";
+import { testimonialData } from "../../../const/Const";
+import myContext from "../../../context/myContext";
 
 const Testimonial = () => {
   const context = useContext(myContext);

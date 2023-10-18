@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import myContext from "../../context/myContext";
 import FeatureCard from "./Card";
-import { cardData } from "../../const/Const";
+import myContext from "../../../context/myContext";
+import { cardData } from "../../../const/Const";
 
 const Track = () => {
   const context = useContext(myContext);
-  const { toggleMode, mode } = context;
+  const { mode } = context;
   return (
     <div>
       <section className="text-gray-600 body-font">
