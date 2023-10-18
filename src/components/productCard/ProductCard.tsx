@@ -58,7 +58,7 @@ const ProductCard = () => {
         <div className=" max-w-fit">
           <Slider3 className="max-w-fit">
           {product.map((item: any, index: number) => (
-            <SwiperSlide key={index} className="max-w-fit">
+            <SwiperSlide key={index} className="max-w-fit" onClick={()=> handleClick(item.id)}>
               <Products
                 title={item.title}
                 price={item.price}
