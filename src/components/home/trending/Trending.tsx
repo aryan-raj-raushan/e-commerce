@@ -55,7 +55,7 @@ const Trending = () => {
     ];
     
   return (
-    <div className="flex flex-col-reverse lg:flex-row mx-2 sm:mx-10 gap-4 mb-10">
+    <div className="flex flex-col-reverse lg:flex-row mx-2 sm:mx-10 gap-4 mb-10 lg:mb-16">
        
       <div className="w-full lg:w-1/2">
         <h2 className="text-2xl font-medium">Trending Fashion</h2>

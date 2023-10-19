@@ -1,28 +1,10 @@
-import React, { useContext, useEffect } from "react";
 import Products from "./products";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SwiperSlide } from "swiper/react";
-import myContext from "../../../context/myContext";
-import { addToCart } from "../../../redux/cartSlice";
-import { showSuccessToast } from "../../../HOC/hoc/HOC";
 import { Slider3 } from "../../../HOC/hoc/Slider";
 
-const ProductCard = () => {
-  const context = useContext(myContext);
-  const { mode, product } = context;
+const ProductCard = ({mode, productData, title}:any) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state: any) => state.cart);
-  const addCart = (product: any) => {
-    dispatch(addToCart(product));
-    showSuccessToast("add to cart");
-  };
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-  }, [cartItems]);
-
   const handleClick = (id: any) => {
     navigate(`/productinfo/${id}`);
   };
@@ -35,7 +17,7 @@ const ProductCard = () => {
               className="sm:text-3xl text-2xl font-[900] leading-10  title-font mb-2 text-black "
               style={{ color: mode === "dark" ? "white" : "" }}
             >
-              NEW ARRIVALS
+              {title}
             </h1>
             <div className="absolute -right-2 -bottom-1 -z-50 ">
               <svg
@@ -57,16 +39,14 @@ const ProductCard = () => {
         {/* Products */}
         <div className=" max-w-fit">
           <Slider3 className="max-w-fit">
-          {product.map((item: any, index: number) => (
+          {productData.map((item: any, index: number) => (
             <SwiperSlide key={index} className="max-w-fit" onClick={()=> handleClick(item.id)}>
               <Products
                 title={item.title}
                 price={item.price}
                 imageUrl={item.imageUrl}
                 mode={mode}
-                handleCart={addCart}
                 data={item}
-                handleClick={handleClick}
               />
             </SwiperSlide>
           ))}

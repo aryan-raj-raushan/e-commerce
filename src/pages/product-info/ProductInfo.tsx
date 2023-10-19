@@ -13,7 +13,7 @@ import { Rating } from "@mui/material";
 import { getCommonStyles } from "../../HOC/hoc/HOC";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 
-function ProductInfo() {
+const ProductInfo = () => {
   const context = useContext(myContext);
   const { loading, setLoading, mode } = context;
 
@@ -36,6 +36,7 @@ function ProductInfo() {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     getProductData();
   }, []);
