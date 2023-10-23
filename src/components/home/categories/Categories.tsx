@@ -14,29 +14,38 @@ import TopDeals from "../../../assets/images/topdeals.webp"
 import Home from "../../../assets/images/home.webp"
 
 import { Slider2 } from "../../../HOC/hoc/Slider";
+import { useNavigate } from "react-router-dom";
 
 const Categories = () => {
-  const categoryData = [
-    { image: TopDeals, title: "Top Deals" },
-    { image: Electronics, title: "Electronics" },
-    { image: Mobile, title: "Mobiles" },
-    { image: Grocery, title: "Grocery" },
-    { image: Fashion, title: "Fashion" },
-    { image: Appliances, title: "Appliances" },
-    { image: Toys, title: "Toys" },
-    { image: Health, title: "Health" },
-    { image: Beauty, title: "Beauty" },
-    { image: Home, title: "Home" },
-    { image: Sports, title: "Sports" },
-    { image: Furniture, title: "Furniture" },
-  ];
 
+  const categoryData = [
+    { image: TopDeals, title: "Top Deals", label: "topdeals" },
+    { image: Electronics, title: "Electronics", label: "electronics" },
+    { image: Mobile, title: "Mobiles", label: "mobiles" },
+    { image: Grocery, title: "Grocery", label: "grocery" },
+    { image: Fashion, title: "Fashion", label: "fashion" },
+    { image: Appliances, title: "Appliances", label: "appliances" },
+    { image: Toys, title: "Toys", label: "toys" },
+    { image: Health, title: "Health", label: "health" },
+    { image: Beauty, title: "Beauty", label: "beauty" },
+    { image: Home, title: "Home", label: "home" },
+    { image: Sports, title: "Sports", label: "sports" },
+    { image: Furniture, title: "Furniture", label: "furniture" },
+  ];
+  const navigate = useNavigate();
+  const handleClick = (category: any) => {
+    navigate(`/allproducts/${category}`);
+  };
+  
   return (
     <div className="mt-7 mb-5 mx-auto">
       <Slider2>
         {categoryData.map((category, index) => (
-          <SwiperSlide key={index} className="max-w-fit max-h-auto mx- lg:mx-">
-            <div className="w-20 h-full sm:w-40 sm:h-40 rounded-full flex flex-col items-center justify-center">
+          <SwiperSlide key={index} className="max-w-fit max-h-auto">
+            <div
+              className="w-20 h-full sm:w-40 sm:h-40 rounded-full flex flex-col items-center justify-center"
+              onClick={() => handleClick(category.label)}
+            >
               <img
                 src={category.image}
                 alt={category.title}

@@ -2,12 +2,16 @@ import Products from "./products";
 import { useNavigate } from "react-router-dom";
 import { SwiperSlide } from "swiper/react";
 import { Slider3 } from "../../../HOC/hoc/Slider";
+import { getCommonStyles } from "../../../HOC/hoc/HOC";
 
 const ProductCard = ({mode, productData, title}:any) => {
   const navigate = useNavigate();
   const handleClick = (id: any) => {
     navigate(`/productinfo/${id}`);
   };
+  const darkText = getCommonStyles(mode);
+  const darkBg = getCommonStyles(mode, { backgroundColor: "rgb(46 49 55)" });
+
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-2 sm:px-5 pt-4 pb-8 md:pt-8 md:pb-12">
@@ -15,7 +19,7 @@ const ProductCard = ({mode, productData, title}:any) => {
           <div className="w-auto mb-3 lg:mb-5 relative sm:mx-10">
             <h1
               className="sm:text-3xl text-2xl font-[900] leading-10  title-font mb-2 text-black "
-              style={{ color: mode === "dark" ? "white" : "" }}
+              style={darkText}
             >
               {title}
             </h1>
@@ -45,8 +49,9 @@ const ProductCard = ({mode, productData, title}:any) => {
                 title={item.title}
                 price={item.price}
                 imageUrl={item.imageUrl}
-                mode={mode}
                 data={item}
+                darkText={darkText}
+                darkBg={darkBg}
               />
             </SwiperSlide>
           ))}
