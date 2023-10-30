@@ -27,6 +27,7 @@ const Product = ({
     edithandle(item);
     navigate("/updateproduct");
   };
+  console.log("check data",data)
   return (
     <div className="px-4 md:px-0 mb-16">
       <h1
@@ -70,7 +71,7 @@ const Product = ({
             </tr>
           </thead>
 
-          <tbody>
+          {/* <tbody>
             {data.map((item: any, index: number) => (
               <tr
                 key={item.id}
@@ -119,7 +120,7 @@ const Product = ({
                 </td>
               </tr>
             ))}
-          </tbody>
+          </tbody> */}
         </table>
       </div>
     </div>

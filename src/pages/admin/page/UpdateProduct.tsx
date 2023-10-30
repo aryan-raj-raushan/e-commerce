@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import  { useContext } from "react";
 import myContext from "../../../context/myContext";
 import { Watch } from "react-loader-spinner";
 import { CommonInputProps } from "../../../HOC/hoc/HOC";
