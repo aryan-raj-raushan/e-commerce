@@ -130,7 +130,6 @@ const MyState = (props: any) => {
 
   const edithandle = (item: any) => {
     setProducts(item);
-    console.log(item)
   };
   const handleBack = () => {
     setTimeout(() => {

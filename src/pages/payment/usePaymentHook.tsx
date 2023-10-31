@@ -4,11 +4,13 @@ import { showErrorToast, showSuccessToast } from "../../HOC/hoc/HOC";
 import { City } from "country-state-city";
 import { addDoc, collection } from "firebase/firestore";
 import { firebaseDb } from "../../firebase/firebase.config";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { deleteFromCart } from "../../redux/cartSlice";
 
 const usePaymentHook = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch();
   const initialFormData = {
     name: "",
     fullAddress: {
@@ -97,6 +99,7 @@ const usePaymentHook = () => {
         try {
           const orderData = addDoc(collection(firebaseDb, "orders"), orderInfo);
           setFormData(initialFormData);
+          dispatch(deleteFromCart(e))
         //   localStorage.removeItem('finalPrice');
         //   localStorage.removeItem('cart');
           navigate("/order")

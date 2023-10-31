@@ -92,6 +92,7 @@ const useRegisterationHook = () => {
       const userRef = collection(firebaseDb, "users");
       await addDoc(userRef, user);
       localStorage.setItem("user", JSON.stringify(users));
+      localStorage.setItem("cart", "");
       showSuccessToast("Signup Succesfully");
       setLoading(false);
       navigate("/");

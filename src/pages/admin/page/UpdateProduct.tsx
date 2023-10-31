@@ -1,5 +1,4 @@
-import { useContext, useEffect } from "react";
-import myContext from "../../../context/myContext";
+import React from "react";
 import { Watch } from "react-loader-spinner";
 import { CommonInputProps } from "../../../HOC/hoc/HOC";
 import Navbar from "../../../components/navbar/Navbar";
@@ -13,125 +12,25 @@ import {
 } from "@mui/material";
 import { categoryData, checkboxesColor, fields } from "../../../const/Const";
 import { FaCamera } from "react-icons/fa";
+import useUpdateProductHook from "./useUpdateProductHook";
 
 const UpdateProduct = () => {
-  const context = useContext(myContext);
   const {
-    products,
-    setProducts,
     loading,
+    products,
     selectedCategory,
     selectedSubcategory,
     selectedType,
     selectedValues,
-    value,
-    setSelectedCategory,
-    setSelectedSubcategory,
-    setSelectedSize,
-    setSelectedType,
-    setSelectedValues,
-    setValue,
     updateProduct,
     handleBack,
-  } = context;
-
-  const { allCategory, colorAvailable } = products ?? {};
-  const { subcategory, type, size, category } = allCategory ?? {};
-  const color = colorAvailable && colorAvailable;
-  useEffect(() => {
-    setSelectedValues(color || []);
-  }, [color, setSelectedValues]);  
-  
-  const handleChange = (e: any) => {
-    const { name, value, checked, type } = e.target;
-    let updatedColorAvailable = [...(color || [])];
-
-    if (checked && type === "checkbox") {
-      if (!updatedColorAvailable.includes(name)) {
-        updatedColorAvailable.push(name);
-      }
-    } else {
-      updatedColorAvailable = updatedColorAvailable.filter((color: string) => color !== name); 
-    }
-    setSelectedValues(updatedColorAvailable);
-    setProducts((prevProducts: any) => ({
-      ...prevProducts,
-      colorAvailable: updatedColorAvailable,
-    }));
-    // Switch case
-    switch (name) {
-      case "category":
-        setSelectedCategory(value);
-        setSelectedSubcategory("");
-        setSelectedType("");
-        setSelectedSize([]);
-        setProducts((prevProduct: any) => ({
-          ...prevProduct,
-          allCategory: {
-            category: value,
-            subcategory: "",
-            type: "",
-            sizes: [],
-          },
-        }));
-        break;
-
-      case "subcategory":
-        setSelectedSubcategory(value);
-        setSelectedType("");
-        setSelectedSize([]);
-        setProducts((prevProduct: any) => ({
-          ...prevProduct,
-          allCategory: {
-            ...prevProduct.allCategory,
-            subcategory: value,
-            type: "",
-            sizes: [],
-          },
-        }));
-        break;
-
-      case "type":
-        setSelectedType(value);
-        setSelectedSize([]);
-        setProducts((prevProduct: any) => ({
-          ...prevProduct,
-          allCategory: {
-            ...prevProduct.allCategory,
-            type: value,
-            sizes: [],
-          },
-        }));
-        break;
-
-      case "size":
-        setSelectedSize(value);
-        setProducts((prevProduct: any) => ({
-          ...prevProduct,
-          allCategory: {
-            ...prevProduct.allCategory,
-            sizes: value,
-          },
-        }));
-        break;
-      case "checkStock":
-        setValue(value);
-        setProducts((prevProducts: any) => ({
-          ...prevProducts,
-          checkStock: value,
-        }));
-        break;
-
-      default:
-        if (!checked && !name.includes("imageUrl") && type !== "checkbox") {
-          setProducts((prevProducts: any) => ({
-            ...prevProducts,
-            [name]: value,
-          }));
-        }
-        break;
-    }
-  };
+    handleChange,
+    subcategory,
+    type,
+    size,
+    category,
+    checkStock
+  } = useUpdateProductHook();
 
   return (
     <>
@@ -396,7 +295,7 @@ const UpdateProduct = () => {
                   row
                   aria-labelledby="checkStock"
                   name="checkStock"
-                  value={value}
+                  value={checkStock}
                   onChange={handleChange}
                 >
                   <FormControlLabel

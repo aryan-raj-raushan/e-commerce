@@ -1,3 +1,4 @@
+import React from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
