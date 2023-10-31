@@ -50,7 +50,7 @@ const MyState = (props: any) => {
     title: null,
     price: null,
     imageUrl: null,
-    category: null,
+    allCategory: null,
     description: null,
     checkStock: null,
     storeLocation: null,
@@ -62,7 +62,6 @@ const MyState = (props: any) => {
       year: "numeric",
     }),
   };
-  
 
   const [products, setProducts] = useState<any>(initialProductsState);
 
@@ -131,13 +130,21 @@ const MyState = (props: any) => {
 
   const edithandle = (item: any) => {
     setProducts(item);
+    console.log(item)
+  };
+  const handleBack = () => {
+    setTimeout(() => {
+      window.location.href = "/dashboard";
+    }, 800);
+    setLoading(true)
+    setProducts(initialProductsState);
   };
 
   const updateProduct = async () => {
     setLoading(true);
     try {
       await setDoc(doc(firebaseDb, "products", products.id), products);
-      showSuccessToast("Product Add successfully");
+      showSuccessToast("Product updated successfully");
       getProductData();
       setTimeout(() => {
         setLoading(false);
@@ -149,7 +156,7 @@ const MyState = (props: any) => {
       setLoading(false);
       showErrorToast(error.message);
     }
-    setProducts("");
+    resetForm()
   };
 
   /* -------------------------------------------------------------------------- */
@@ -269,6 +276,7 @@ const MyState = (props: any) => {
         setSelectedType,
         setSelectedValues,
         setValue,
+        handleBack
       }}
     >
       {props.children}

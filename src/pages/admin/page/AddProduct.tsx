@@ -61,13 +61,14 @@ const AddProduct = () => {
 
     switch (name) {
       case "category":
+        console.log(name,value)
         setSelectedCategory(value);
         setSelectedSubcategory("");
         setSelectedType("");
         setSelectedSize([]);
         setProducts((prevProduct: any) => ({
           ...prevProduct,
-          category: {
+          allCategory: {
             category: value,
             subcategory: "",
             type: "",
@@ -82,8 +83,8 @@ const AddProduct = () => {
         setSelectedSize([]);
         setProducts((prevProduct: any) => ({
           ...prevProduct,
-          category: {
-            ...prevProduct.category,
+          allCategory: {
+            ...prevProduct.allCategory,
             subcategory: value,
             type: "",
             sizes: [],
@@ -96,8 +97,8 @@ const AddProduct = () => {
         setSelectedSize([]);
         setProducts((prevProduct: any) => ({
           ...prevProduct,
-          category: {
-            ...prevProduct.category,
+          allCategory: {
+            ...prevProduct.allCategory,
             type: value,
             sizes: [],
           },
@@ -108,8 +109,8 @@ const AddProduct = () => {
         setSelectedSize(value);
         setProducts((prevProduct: any) => ({
           ...prevProduct,
-          category: {
-            ...prevProduct.category,
+          allCategory: {
+            ...prevProduct.allCategory,
             sizes: value,
           },
         }));
@@ -234,7 +235,7 @@ const AddProduct = () => {
                             sx={{ width: 100 }}
                             name="subcategory"
                           >
-                            <MenuItem value="">Select category</MenuItem>
+                            <MenuItem value="">Select Subcategory</MenuItem>
                             {categoryData
                               .find(
                                 (category: any) =>

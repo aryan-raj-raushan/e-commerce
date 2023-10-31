@@ -1,5 +1,6 @@
 const Products = ({ data,darkText,darkBg }: any) => {
   const { title, price, imageUrl } = data;
+  const image = imageUrl && imageUrl.imageUrl0
   return (
     <div
         className="p-4 md:w-auto h-full drop-shadow-lg flex flex-wrap"
@@ -11,7 +12,7 @@ const Products = ({ data,darkText,darkBg }: any) => {
           <div className="flex justify-center items-center cursor-pointer flex-wrap w-full min-h-full object-center">
             <img
               className="rounded-2xl sm:w-full min-h-[180px] max-h-40 object-contain p-2 hover:scale-110 transition-scale-105 duration-300 ease-in-out"
-              src={imageUrl}
+              src={image}
               alt="product"
               width={200}
               height={100}

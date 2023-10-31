@@ -51,7 +51,9 @@ const ProductInfo = () => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const { imageUrl, title, description, price } = products;
+  const { imageUrl, title, description, price, rating,totalRatings } = products;
+  console.log(products)
+  const image = imageUrl && imageUrl.imageUrl0
   const [displayedLines, setDisplayedLines] = useState(3); // Change to state
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -80,7 +82,7 @@ const ProductInfo = () => {
                 <img
                   alt={title}
                   className="lg:w-1/3 w-full h-64 lg:h-full object-contain lg:object-cover object-center rounded max-w-full"
-                  src={imageUrl}
+                  src={image}
                 />
                 <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                   <h1
@@ -93,12 +95,12 @@ const ProductInfo = () => {
                     <span className="flex items-center">
                       <Rating
                         name="half-rating-read"
-                        value={4}
+                        value={rating}
                         precision={0.5}
                         readOnly
                       />
                       <span className="text-gray-600 ml-3" style={darkText}>
-                        50 Reviews
+                        {totalRatings} Reviews
                       </span>
                     </span>
 

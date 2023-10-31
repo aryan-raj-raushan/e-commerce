@@ -7,7 +7,7 @@ const columns = [
   { key: "imageUrl", label: "Image", isImage: true },
   { key: "title", label: "Title" },
   { key: "price", label: "Price" },
-  { key: "category", label: "Category" },
+  { key: "allCategory", label: "Category" },
   { key: "date", label: "Date" },
 ];
 
@@ -71,7 +71,7 @@ const Product = ({
             </tr>
           </thead>
 
-          {/* <tbody>
+          <tbody>
             {data.map((item: any, index: number) => (
               <tr
                 key={item.id}
@@ -83,20 +83,28 @@ const Product = ({
                 <td className="px-6 py-4 text-black " style={darkText}>
                   {index + 1}.
                 </td>
-                {columns.map((column) => (
-                  <td
-                    key={column.key}
-                    className={`px-6 py-4 text-black ${
-                      column.isImage ? "font-medium whitespace-nowrap" : ""
-                    } ${mode === "dark" ? "text-white" : ""}`}
-                  >
-                    {column.isImage ? (
-                      <img className="w-16" src={item[column.key]} alt="img" />
-                    ) : (
-                      item[column.key]
-                    )}
-                  </td>
-                ))}
+                {columns.map((column: any) => {
+                  return (
+                    <td
+                      key={column.key}
+                      className={`px-6 py-4 text-black ${
+                        column.isImage ? "font-medium whitespace-nowrap" : ""
+                      } ${mode === "dark" ? "text-white" : ""}`}
+                    >
+                      {column.key === "imageUrl" && column.isImage ? (
+                        <img
+                          className="w-16"
+                          src={item.imageUrl.imageUrl0}
+                          alt="img"
+                        />
+                      ) : column.key === "allCategory" ? (
+                       <p className="capitalize">{item.allCategory.category}</p>
+                      ) : (
+                        item[column.key]
+                      )}
+                    </td>
+                  );
+                })}
                 <td className="px-6 py-4">
                   <div className=" flex gap-2 items-center">
                     <div
@@ -120,7 +128,7 @@ const Product = ({
                 </td>
               </tr>
             ))}
-          </tbody> */}
+          </tbody>
         </table>
       </div>
     </div>

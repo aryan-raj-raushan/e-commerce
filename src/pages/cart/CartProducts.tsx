@@ -22,6 +22,7 @@ const CartProducts = () => {
             <div className="rounded-lg md:w-2/3 ">
               {uniqueCart.map((item: any, index: number) => {
                 const { price, title, imageUrl, count } = item;
+                const image = imageUrl && imageUrl.imageUrl0
                 const priceWithoutCommas = price.replace(/,/g, "");
                 const priceAsFloat = parseFloat(priceWithoutCommas);
                 const shipping = priceAsFloat > 500 ? 0 : 40;
@@ -33,7 +34,7 @@ const CartProducts = () => {
                   >
                     <div className="justify-between flex sm:justify-start flex-1">
                       <img
-                        src={imageUrl}
+                        src={image}
                         alt={title}
                         className="rounded-lg w-40 h-40 object-contain"
                       />

@@ -48,7 +48,7 @@ const ProductCard = ({mode, productData, title}:any) => {
               <Products
                 title={item.title}
                 price={item.price}
-                imageUrl={item.imageUrl}
+                imageUrl={item.imageUrl.imageUrl0}
                 data={item}
                 darkText={darkText}
                 darkBg={darkBg}

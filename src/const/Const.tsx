@@ -271,7 +271,7 @@ export const fields: any = [
     name: "price",
     placeholder: "Product price",
     label: "Price",
-    type: "number",
+    type: "text",
   },
 
   {
@@ -494,5 +494,5 @@ export const checkboxesColor = [
   { label: "Orange", value: "orange" },
   { label: "Pink", value: "pink" },
   { label: "Voilet", value: "voilet" },
-  { label: "Indigo", value: "Indigo" },
+  { label: "Indigo", value: "indigo" },
 ];
