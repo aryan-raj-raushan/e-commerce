@@ -1,3 +1,5 @@
+import React from "react";
+
 const columns = [
   { key: "index", label: "S.No." },
   { key: "paymentId", label: "Payment Id" },

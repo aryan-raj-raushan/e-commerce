@@ -38,19 +38,42 @@ const MyState = (props: any) => {
   /*                               Add Product Section                          */
   /* -------------------------------------------------------------------------- */
 
-  const [products, setProducts] = useState<any>({
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSubcategory, setSelectedSubcategory] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedSize, setSelectedSize] = useState([]);
+  const [value, setValue] = useState("");
+  const [selectedValues, setSelectedValues] = useState<any>([]);
+
+  const initialProductsState = {
+    brandName: null,
     title: null,
     price: null,
     imageUrl: null,
-    category: null,
+    allCategory: null,
     description: null,
+    checkStock: null,
+    storeLocation: null,
+    storeName: null,
     time: Timestamp.now(),
     date: new Date().toLocaleString("en-US", {
       month: "short",
       day: "2-digit",
       year: "numeric",
     }),
-  });
+  };
+
+  const [products, setProducts] = useState<any>(initialProductsState);
+
+  const resetForm = () => {
+    setSelectedCategory("");
+    setSelectedSubcategory("");
+    setSelectedType("");
+    setSelectedSize([]);
+    setValue("");
+    setSelectedValues([]);
+    setProducts(initialProductsState);
+  };
 
   const addProduct = async () => {
     if (Object.values(products).some((value) => value === null)) {
@@ -62,7 +85,6 @@ const MyState = (props: any) => {
       await addDoc(productRef, products);
       showSuccessToast("Product Add successfully");
       getProductData();
-      // closeModal()
       setTimeout(() => {
         setLoading(false);
         window.location.href = "/dashboard";
@@ -72,7 +94,7 @@ const MyState = (props: any) => {
       setLoading(false);
       showErrorToast(error.message);
     }
-    setProducts("");
+    resetForm();
   };
 
   /* -------------------------------------------------------------------------- */
@@ -109,12 +131,19 @@ const MyState = (props: any) => {
   const edithandle = (item: any) => {
     setProducts(item);
   };
+  const handleBack = () => {
+    setTimeout(() => {
+      window.location.href = "/dashboard";
+    }, 800);
+    setLoading(true)
+    setProducts(initialProductsState);
+  };
 
   const updateProduct = async () => {
     setLoading(true);
     try {
       await setDoc(doc(firebaseDb, "products", products.id), products);
-      showSuccessToast("Product Add successfully");
+      showSuccessToast("Product updated successfully");
       getProductData();
       setTimeout(() => {
         setLoading(false);
@@ -126,7 +155,7 @@ const MyState = (props: any) => {
       setLoading(false);
       showErrorToast(error.message);
     }
-    setProducts("");
+    resetForm()
   };
 
   /* -------------------------------------------------------------------------- */
@@ -191,7 +220,7 @@ const MyState = (props: any) => {
         const userData = doc.data();
         // Check if the timestamp field exists and is a timestamp
         if (userData.time && userData.time instanceof Timestamp) {
-          userData.time = userData.time.toDate(); 
+          userData.time = userData.time.toDate();
         }
         usersArray.push(userData);
       });
@@ -234,6 +263,19 @@ const MyState = (props: any) => {
         setPaymentMode,
         order,
         userData,
+        selectedCategory,
+        selectedSubcategory,
+        selectedSize,
+        selectedType,
+        selectedValues,
+        value,
+        setSelectedCategory,
+        setSelectedSubcategory,
+        setSelectedSize,
+        setSelectedType,
+        setSelectedValues,
+        setValue,
+        handleBack
       }}
     >
       {props.children}

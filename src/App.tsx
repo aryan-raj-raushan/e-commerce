@@ -74,7 +74,7 @@ const App = () => {
               </ProtectedRoutesForAdmin>
             }
           />
-          <Route path="/allproducts" element={<AllProducts />} />
+          <Route path="/allproducts/*" element={<AllProducts />} />
           <Route
             path="/payment"
             element={

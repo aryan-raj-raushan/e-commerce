@@ -253,3 +253,246 @@ export const months = [
   "Nov",
   "Dec",
 ];
+
+export const fields: any = [
+  {
+    name: "brandName",
+    placeholder: "Brand name",
+    label: "Brand name",
+    type: "text",
+  },
+  {
+    name: "title",
+    placeholder: "Product name",
+    label: "Product name",
+    type: "text",
+  },
+  {
+    name: "price",
+    placeholder: "Product price",
+    label: "Price",
+    type: "text",
+  },
+
+  {
+    name: "rating",
+    placeholder: "Number of ratings",
+    label: "Rating(1  -5)",
+    type: "number",
+  },
+  {
+    name: "totalRatings",
+    placeholder: "Number of persons",
+    label: "Rated by Persons",
+    type: "number",
+  },
+  {
+    name: "storeName",
+    placeholder: "Store Name",
+    label: "Store Name",
+    type: "text",
+  },
+  {
+    name: "deliveryTime",
+    placeholder: "in days",
+    label: "Estimated delivery time",
+    type: "number",
+  },
+  {
+    name: "storeLocation",
+    placeholder: "Delivery location",
+    label: "Store location",
+    type: "text",
+  },
+  {
+    name: "Discount",
+    placeholder: "in percent",
+    label: "Discount percent (optional)",
+    type: "number",
+  },
+  {
+    name: "category",
+    placeholder: "Select category",
+    label: "Product Category",
+    type: "text",
+  },
+  {
+    name: "imageUrl",
+    placeholder: "Add image URL",
+    label: "Add image",
+    type: "text",
+  },
+
+  {
+    name: "description",
+    placeholder: "Product description",
+    label: "Product Description",
+    type: "text",
+  },
+];
+export const categoryData: any = [
+  {
+    title: "Electronics",
+    label: "electronics",
+    subcategories: ["Laptops", "Smartphones", "Accessories"],
+  },
+  {
+    title: "Mobiles",
+    label: "mobiles",
+    subcategories: ["Android", "iOS", "Feature Phones"],
+  },
+  {
+    title: "Grocery",
+    label: "grocery",
+    subcategories: ["Food", "Beverages", "Household"],
+  },
+  {
+    title: "Fashion",
+    label: "fashion",
+    subcategories: [
+      {
+        title: "Men",
+        label: "men",
+        subcategories: [
+          {
+            title: "Shirt",
+            label: "shirt",
+            sizes: ["S", "M", "L", "XL", "XXL"],
+          },
+          {
+            title: "Pant",
+            label: "pant",
+            sizes: ["28", "30", "32", "34"],
+          },
+          {
+            title: "Footwear",
+            label: "footwear",
+            sizes: ["7", "8", "9", "10", "11"],
+          },
+        ],
+      },
+      {
+        title: "Women",
+        label: "women",
+        subcategories: [
+          {
+            title: "Dresses",
+            label: "dresses",
+            sizes: ["S", "M", "L", "XL"],
+          },
+          {
+            title: "Shoes",
+            label: "shoes",
+            sizes: ["5", "6", "7", "8"],
+          },
+        ],
+      },
+      {
+        title: "Boys",
+        label: "boys",
+        subcategories: [
+          {
+            title: "Shirt",
+            label: "shirt",
+            sizes: ["XXS", "XS", "S", "M"],
+          },
+          {
+            title: "Pant",
+            label: "pant",
+            sizes: ["20", "22", "24", "26"],
+          },
+          {
+            title: "Footwear",
+            label: "footwear",
+            sizes: ["4", "5", "6", "7"],
+          },
+        ],
+      },
+      {
+        title: "Girls",
+        label: "girls",
+        subcategories: [
+          {
+            title: "Dresses",
+            label: "dresses",
+            sizes: ["XXS", "XS", "S", "M"],
+          },
+          {
+            title: "Shoes",
+            label: "shoes",
+            sizes: ["4", "5", "6", "7"],
+          },
+        ],
+      },
+      {
+        title: "Kids",
+        label: "boys",
+        subcategories: [
+          {
+            title: "Shirt",
+            label: "shirt",
+            sizes: ["XXS", "XS"],
+          },
+          {
+            title: "Pant",
+            label: "pant",
+            sizes: ["12", "14", "16", "18"],
+          },
+          {
+            title: "Footwear",
+            label: "footwear",
+            sizes: ["0", "1", "2", "3"],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Appliances",
+    label: "appliances",
+    subcategories: ["Kitchen", "Home", "Personal Care"],
+  },
+  {
+    title: "Toys",
+    label: "toys",
+    subcategories: ["Action Figures", "Puzzles", "Educational"],
+  },
+  {
+    title: "Health",
+    label: "health",
+    subcategories: ["Vitamins", "Fitness", "Personal Care"],
+  },
+  {
+    title: "Beauty",
+    label: "beauty",
+    subcategories: ["Skincare", "Makeup", "Fragrances"],
+  },
+  {
+    title: "Home",
+    label: "home",
+    subcategories: ["Furniture", "Decor", "Appliances"],
+  },
+  {
+    title: "Sports",
+    label: "sports",
+    subcategories: ["Team Sports", "Fitness", "Outdoor"],
+  },
+  {
+    title: "Furniture",
+    label: "furniture",
+    subcategories: ["Living Room", "Bedroom", "Kitchen"],
+  },
+];
+
+export const checkboxesColor = [
+  { label: "Red", value: "red" },
+  { label: "Blue", value: "blue" },
+  { label: "Green", value: "green" },
+  { label: "White", value: "white" },
+  { label: "Black", value: "black" },
+  { label: "Yellow", value: "yellow" },
+  { label: "Orange", value: "orange" },
+  { label: "Pink", value: "pink" },
+  { label: "Voilet", value: "voilet" },
+  { label: "Indigo", value: "indigo" },
+];

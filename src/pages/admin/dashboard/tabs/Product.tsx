@@ -1,3 +1,4 @@
+import React from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
@@ -7,7 +8,7 @@ const columns = [
   { key: "imageUrl", label: "Image", isImage: true },
   { key: "title", label: "Title" },
   { key: "price", label: "Price" },
-  { key: "category", label: "Category" },
+  { key: "allCategory", label: "Category" },
   { key: "date", label: "Date" },
 ];
 
@@ -27,6 +28,7 @@ const Product = ({
     edithandle(item);
     navigate("/updateproduct");
   };
+  console.log("check data",data)
   return (
     <div className="px-4 md:px-0 mb-16">
       <h1
@@ -82,20 +84,28 @@ const Product = ({
                 <td className="px-6 py-4 text-black " style={darkText}>
                   {index + 1}.
                 </td>
-                {columns.map((column) => (
-                  <td
-                    key={column.key}
-                    className={`px-6 py-4 text-black ${
-                      column.isImage ? "font-medium whitespace-nowrap" : ""
-                    } ${mode === "dark" ? "text-white" : ""}`}
-                  >
-                    {column.isImage ? (
-                      <img className="w-16" src={item[column.key]} alt="img" />
-                    ) : (
-                      item[column.key]
-                    )}
-                  </td>
-                ))}
+                {columns.map((column: any) => {
+                  return (
+                    <td
+                      key={column.key}
+                      className={`px-6 py-4 text-black ${
+                        column.isImage ? "font-medium whitespace-nowrap" : ""
+                      } ${mode === "dark" ? "text-white" : ""}`}
+                    >
+                      {column.key === "imageUrl" && column.isImage ? (
+                        <img
+                          className="w-16"
+                          src={item.imageUrl.imageUrl0}
+                          alt="img"
+                        />
+                      ) : column.key === "allCategory" ? (
+                       <p className="capitalize">{item.allCategory.category}</p>
+                      ) : (
+                        item[column.key]
+                      )}
+                    </td>
+                  );
+                })}
                 <td className="px-6 py-4">
                   <div className=" flex gap-2 items-center">
                     <div

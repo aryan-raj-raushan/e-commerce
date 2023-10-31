@@ -1,3 +1,4 @@
+import React from "react";
 import { formatDate } from "../../../../HOC/hoc/HOC";
 
 const columns = [

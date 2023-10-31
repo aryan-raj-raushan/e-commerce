@@ -18,19 +18,20 @@ function Order() {
           <div className=" h-full pt-10">
             {order
               .filter((obj: any) => obj.userid === userid)
-              .map((order: any) => {
-                // order.cartItems.map()
+              .map((order: any, index:number) => {
+                console.log("order",order)
                 return (
-                  <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
-                    {order.cartItems.map((item: any) => {
+                  <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0" key={index}>
+                    {order.cartItems.map((item: any, index:number) => {
+                      console.log(item)
                       return (
-                        <div className="rounded-lg md:w-2/3">
+                        <div className="rounded-lg md:w-2/3" key={index}>
                           <div
                             className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start"
                             style={darkBg}
                           >
                             <img
-                              src={item.imageUrl}
+                              src={item.imageUrl.imageUrl0}
                               alt={item.title}
                               className="w-full rounded-lg sm:w-40"
                             />
