@@ -1,72 +1,31 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { doc, getDoc } from "firebase/firestore";
-import { toast } from "react-toastify";
-import { addToCart } from "../../redux/cartSlice";
-import myContext from "../../context/myContext";
-import { firebaseDb } from "../../firebase/firebase.config";
+import React from "react";
 import Layout from "../../components/layout/layout";
 import Lottie from "lottie-react";
 import Loader from "../../assets/Lottie/dropLoader.json";
 import { Rating } from "@mui/material";
-import { getCommonStyles } from "../../HOC/hoc/HOC";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import useProductInfoHook from "./useProductInfoHook";
 
 const ProductInfo = () => {
-  const context = useContext(myContext);
-  const { loading, setLoading, mode } = context;
+  const {
+    loading,
+    products,
+    darkText,
+    socialMedia,
+    isExpanded,
+    toggleExpand,
+    addCart,
+  } = useProductInfoHook();
 
-  const [products, setProducts] = useState<any>("");
-  const params = useParams();
-  const { id } = params;
-  const getProductData = async () => {
-    setLoading(true);
-    try {
-      if (id) {
-        const productTemp: any = await getDoc(doc(firebaseDb, "products", id));
-        setProducts(productTemp.data());
-        setLoading(false);
-      } else {
-        console.error("id is undefined");
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getProductData();
-  }, []);
-
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state: any) => state.cart);
-  const addCart = (products: any) => {
-    dispatch(addToCart(products));
-    toast.success("add to cart");
-  };
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-  }, [cartItems]);
-
-  const { imageUrl, title, description, price, rating,totalRatings } = products;
-  console.log(products)
-  const image = imageUrl && imageUrl.imageUrl0
-  const [displayedLines, setDisplayedLines] = useState(3); // Change to state
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
-  const darkText = getCommonStyles(mode);
-
-  const socialMedia = [
-    { icon: <FaFacebookF />, link: "/facebook.com" },
-    { icon: <FaTwitter />, link: "/twitter.com" },
-    { icon: <FaInstagram />, link: "/instagram.com" },
-  ];
+  const {
+    imageUrl,
+    title,
+    description,
+    price,
+    rating,
+    totalRatings,
+    Discount,
+  } = products;
+  const image = imageUrl && imageUrl.imageUrl0;
 
   return (
     <Layout>
@@ -81,7 +40,7 @@ const ProductInfo = () => {
               <div className="lg:w-4/5 mx-auto flex flex-wrap">
                 <img
                   alt={title}
-                  className="lg:w-1/3 w-full h-64 lg:h-full object-contain lg:object-cover object-center rounded max-w-full"
+                  className="lg:w-1/3 w-full h-64 lg:h-full object-contain lg:object-contain object-center rounded max-w-full"
                   src={image}
                 />
                 <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
@@ -123,7 +82,12 @@ const ProductInfo = () => {
                     className="title-font font-medium text-2xl text-gray-900 pb-2"
                     style={darkText}
                   >
-                    ₹{price}
+                    ₹{price}{" "}
+                    {Discount && (
+                      <span className="text-sm text-success-400">
+                        ({Discount}% off)
+                      </span>
+                    )}
                   </div>
                   <div className="leading-relaxed border-b-2 mb-5 pb-5">
                     <h2
@@ -138,7 +102,7 @@ const ProductInfo = () => {
                     >
                       {description
                         .split("\n")
-                        .slice(0, isExpanded ? undefined : displayedLines)
+                        .slice(0, isExpanded ? undefined : 3)
                         .map((item: string, index: number) => (
                           <li key={index}>{item}</li>
                         ))}
@@ -180,6 +144,6 @@ const ProductInfo = () => {
       )}
     </Layout>
   );
-}
+};
 
 export default ProductInfo;

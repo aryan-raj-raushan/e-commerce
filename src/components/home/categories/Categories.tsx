@@ -12,12 +12,12 @@ import Mobile from "../../../assets/images/mobile.webp"
 import Appliances from "../../../assets/images/appliances.webp"
 import TopDeals from "../../../assets/images/topdeals.webp"
 import Home from "../../../assets/images/home.webp"
+import ViewAll from "../../../assets/images/viewall.png";
 
 import { Slider2 } from "../../../HOC/hoc/Slider";
 import { useNavigate } from "react-router-dom";
 
 const Categories = () => {
-
   const categoryData = [
     { image: TopDeals, title: "Top Deals", label: "topdeals" },
     { image: Electronics, title: "Electronics", label: "electronics" },
@@ -31,28 +31,40 @@ const Categories = () => {
     { image: Home, title: "Home", label: "home" },
     { image: Sports, title: "Sports", label: "sports" },
     { image: Furniture, title: "Furniture", label: "furniture" },
+    { title: "View All", label: "" },
   ];
   const navigate = useNavigate();
   const handleClick = (category: any) => {
     navigate(`/allproducts/${category}`);
   };
-  
+
   return (
     <div className="mt-7 mb-5 mx-auto">
       <Slider2>
         {categoryData.map((category, index) => (
-          <SwiperSlide key={index} className="max-w-fit max-h-auto">
-            <div
-              className="w-20 h-full sm:w-40 sm:h-40 rounded-full flex flex-col items-center justify-center"
-              onClick={() => handleClick(category.label)}
-            >
-              <img
-                src={category.image}
-                alt={category.title}
-                className="object-contain max-h-28"
-              />
-              <h4>{category.title}</h4>
-            </div>
+          <SwiperSlide
+            key={index}
+            className="max-w-fit max-h-auto cursor-pointer"
+          >
+            {category.image ? (
+              <div
+                className="w-20 h-full sm:w-40 sm:h-40 rounded-full flex flex-col items-center justify-center cursor-pointer"
+                onClick={() => handleClick(category.label)}
+              >
+                <img
+                  src={category.image}
+                  alt={category.title}
+                  className="object-contain max-h-28"
+                />
+                <h4>{category.title}</h4>
+              </div>
+            ) : (
+              <div className="h-full sm:h-40 flex items-center justify-center">
+                <div className="sm:w-20 mr-10 h-20 rounded-full flex flex-col items-center justify-center cursor-pointer bg-gray-100" onClick={() => handleClick(category.label)}>
+                  <h4 className="underline decoration-gray-400 underline-offset-4">{category.title}</h4>
+                </div>
+              </div>
+            )}
           </SwiperSlide>
         ))}
       </Slider2>

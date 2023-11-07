@@ -28,7 +28,7 @@ const Product = ({
     edithandle(item);
     navigate("/updateproduct");
   };
-  console.log("check data",data)
+  // console.log("check data",data)
   return (
     <div className="px-4 md:px-0 mb-16">
       <h1

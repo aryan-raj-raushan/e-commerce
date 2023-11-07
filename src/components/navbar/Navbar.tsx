@@ -18,7 +18,6 @@ const Navbar = () => {
   const context = useContext(myContext);
   const { toggleMode, mode } = context;
   const [open, setOpen] = useState(false);
-  // const [play, setPlay] = useState(0);
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");

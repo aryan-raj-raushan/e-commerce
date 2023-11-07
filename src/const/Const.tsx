@@ -66,19 +66,19 @@ export const testimonialData = [
     name: "Aryan Raj",
     role: "Frontend Developer",
     imageSrc: "https://cdn-icons-png.flaticon.com/128/4140/4140048.png",
-    text: "Edison bulb retro cloud bread echo park, helvetica stumptown taiyaki taxidermy 90's cronut +1 kinfolk...",
+    text: "Impressive variety! The website offers a diverse range of products. Quick delivery and excellent customer service make shopping here a delight.",
   },
   {
     name: "Punit Dwivedi",
     role: "Senior Product Designer",
     imageSrc: "https://cdn-icons-png.flaticon.com/128/560/560216.png",
-    text: "Edison bulb retro cloud bread echo park, helvetica stumptown taiyaki taxidermy 90's cronut +1 kinfolk...",
+    text: "User-friendly interface and top-notch quality. My go-to for all shopping needs. Efficient, reliable, and a wide selection of items. Highly recommended!",
   },
   {
     name: "Kumar Sahil",
     role: "Senior Testing Manager",
     imageSrc: "https://cdn-icons-png.flaticon.com/128/4140/4140037.png",
-    text: "Edison bulb retro cloud bread echo park, helvetica stumptown taiyaki taxidermy 90's cronut +1 kinfolk...",
+    text: "Fantastic experience! The website is intuitive, secure, and has amazing deals. Timely delivery and responsive support. I'm a happy, satisfied customer.",
   },
 ];
 

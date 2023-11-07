@@ -35,6 +35,35 @@ const MyState = (props: any) => {
   };
 
   /* -------------------------------------------------------------------------- */
+  /*                                    user                                    */
+  /* -------------------------------------------------------------------------- */
+
+  const [userData, setUserData] = useState([]);
+
+  const getUserData = async () => {
+    setLoading(true);
+    try {
+      const result = await getDocs(collection(firebaseDb, "users"));
+      const usersArray: any = [];
+
+      result.forEach((doc) => {
+        const userData = doc.data();
+        // Check if the timestamp field exists and is a timestamp
+        if (userData.time && userData.time instanceof Timestamp) {
+          userData.time = userData.time.toDate();
+        }
+        usersArray.push(userData);
+      });
+
+      setUserData(usersArray);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  /* -------------------------------------------------------------------------- */
   /*                               Add Product Section                          */
   /* -------------------------------------------------------------------------- */
 
@@ -101,7 +130,7 @@ const MyState = (props: any) => {
   /*                                 get product                                */
   /* -------------------------------------------------------------------------- */
 
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState<any>([]);
   const getProductData = async () => {
     setLoading(true);
     try {
@@ -135,7 +164,7 @@ const MyState = (props: any) => {
     setTimeout(() => {
       window.location.href = "/dashboard";
     }, 800);
-    setLoading(true)
+    setLoading(true);
     setProducts(initialProductsState);
   };
 
@@ -155,7 +184,7 @@ const MyState = (props: any) => {
       setLoading(false);
       showErrorToast(error.message);
     }
-    resetForm()
+    resetForm();
   };
 
   /* -------------------------------------------------------------------------- */
@@ -205,35 +234,6 @@ const MyState = (props: any) => {
   };
 
   /* -------------------------------------------------------------------------- */
-  /*                                    user                                    */
-  /* -------------------------------------------------------------------------- */
-
-  const [userData, setUserData] = useState([]);
-
-  const getUserData = async () => {
-    setLoading(true);
-    try {
-      const result = await getDocs(collection(firebaseDb, "users"));
-      const usersArray: any = [];
-
-      result.forEach((doc) => {
-        const userData = doc.data();
-        // Check if the timestamp field exists and is a timestamp
-        if (userData.time && userData.time instanceof Timestamp) {
-          userData.time = userData.time.toDate();
-        }
-        usersArray.push(userData);
-      });
-
-      setUserData(usersArray);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  };
-
-  /* -------------------------------------------------------------------------- */
   /*                                  useEffect                                 */
   /* -------------------------------------------------------------------------- */
 
@@ -254,6 +254,7 @@ const MyState = (props: any) => {
         setProducts,
         addProduct,
         product,
+        setProduct,
         user,
         setUser,
         updateProduct,
@@ -275,7 +276,7 @@ const MyState = (props: any) => {
         setSelectedType,
         setSelectedValues,
         setValue,
-        handleBack
+        handleBack,
       }}
     >
       {props.children}
