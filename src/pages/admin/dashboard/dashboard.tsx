@@ -21,6 +21,7 @@ const Dashboard = () => {
     context;
   const totalProducts = product.length > 0 ? product.length : 0;
   const totalOrder = order.length > 0 ? order.length : 0;
+  const totalUsers = userData.length > 0 ? userData.length : 0;
   const darkText = getCommonStyles(mode);
   const darkBg = getCommonStyles(mode, { backgroundColor: "rgb(46 49 55)" });
 
@@ -43,16 +44,35 @@ const Dashboard = () => {
       icon: <FaUser />,
       label: "Users",
       color: "green",
-      value: 20,
+      value: totalUsers,
     },
   ];
+
+  const filteredProducts = product.sort((a: any, b: any) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    // Check for invalid dates
+    if (isNaN(dateA) || isNaN(dateB)) {
+        return isNaN(dateA) ? 1 : -1;
+    }
+    return dateB - dateA;
+});
+  const filterUserData = userData.sort((a: any, b: any) => {
+    const dateA = new Date(a.time).getTime();
+    const dateB = new Date(b.time).getTime();
+    if (isNaN(dateA) || isNaN(dateB)) {
+        return isNaN(dateA) ? 1 : -1;
+    }
+    return dateB - dateA;
+});
+
 
   const tabComp = [
     {
       component: (
         <Product
           mode={mode}
-          data={product}
+          data={filteredProducts}
           loading={loading}
           edithandle={edithandle}
           deleteProduct={deleteProduct}
@@ -75,7 +95,7 @@ const Dashboard = () => {
       component: (
         <User
           mode={mode}
-          userData={userData}
+          userData={filterUserData}
           darkBg={darkBg}
           darkText={darkText}
         />

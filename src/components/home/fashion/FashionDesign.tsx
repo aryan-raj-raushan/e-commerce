@@ -7,9 +7,9 @@ import F3 from "../../../assets/images/f3.jpg";
 import F6 from "../../../assets/images/f6.jpg";
 import F8 from "../../../assets/images/f8.jpg";
 import F10 from "../../../assets/images/f10.webp";
+import { Link } from "react-router-dom";
 
 const FashionDesign = () => {
-
   return (
     <div className="grid grid-rows-5 grid-cols-4 mx-10 grid-flow-col gap-5 min-h-[300px] md:min-h-[500px] lg:min-h-[800px] lg:max-h-[1000px] mb-5 lg:mb-10">
       {/* box 1 */}
@@ -17,27 +17,31 @@ const FashionDesign = () => {
         className=" bg-contain bg-no-repeat bg-center object-contain rounded-lg  w-full h-full max-w-full max-h-full"
         style={{ backgroundImage: `url(${F1})`, backgroundSize: "100% 100%" }}
       >
-        <div className="flex items-end justify-start px-4 py-6 gap-3 h-full">
-          <p className="text-2xl text-white font-medium ">Beauty</p>
-        </div>
+        <Link to={"/allproducts/beauty"}>
+          <div className="flex items-end justify-start px-4 py-6 gap-3 h-full">
+            <p className="text-2xl text-white font-medium ">Beauty</p>
+          </div>
+        </Link>
       </div>
       {/* box 2 */}
       <div
         className="row-span-3 bg-contain bg-no-repeat bg-center object-contain rounded-lg  w-full h-full max-w-full max-h-full"
         style={{ backgroundImage: `url(${F3})`, backgroundSize: "100% 100%" }}
       >
-        <div className="flex flex-col items-start justify-start px-4 py-6 h-full">
-          <p className="text-3xl text-white font-medium mt-10">Men's Wear</p>
-          <p className="text-3xl text-white font-medium pt-5 w-1/2">
-            T-shirts & Jeans
-          </p>
-        </div>
+        <Link to={"/allproducts/fashion/men"}>
+          <div className="flex flex-col items-start justify-start px-4 py-6 h-full">
+            <p className="text-3xl text-white font-medium mt-10">Men's Wear</p>
+            <p className="text-3xl text-white font-medium pt-5 w-1/2">
+              T-shirts & Jeans
+            </p>
+          </div>
+        </Link>
       </div>
 
       <div className="bg-cover bg-no-repeat object-contain">
         <img
           src={F7}
-          alt=""
+          alt="Perfume"
           width={800}
           className="w-full h-[100%] rounded-xl "
         />
@@ -52,40 +56,50 @@ const FashionDesign = () => {
         </video>
       </div>
       <div className="row-span-2 col-span-1 bg-cover bg-no-repeat object-contain">
-        <img
-          src={F2}
-          alt=""
-          width={800}
-          className="w-full h-[100%] rounded-xl "
-        />
+        <Link to={"/allproducts/fashion/women/dresses"}>
+          <img
+            src={F2}
+            alt="Women dresses"
+            width={800}
+            className="w-full h-[100%] rounded-xl "
+          />
+        </Link>
       </div>
       <div className="col-span-2 bg-cover bg-no-repeat object-contain">
+        {/* <Link to={"/allproducts/fashion/women/dresses"}> */}
         <img
           src={F6}
-          alt=""
+          alt="Menswear discount"
           width={800}
           className="w-full h-[100%] rounded-xl "
         />
+        {/* </Link> */}
       </div>
       <div className="row-span-2 col-span-1 bg-cover bg-no-repeat object-contain">
-        <img
-          src={F5}
-          alt=""
-          width={800}
-          className="w-full h-[100%] rounded-xl "
-        />
+        <Link to={"/allproducts/fashion/women/dresses"}>
+          <img
+            src={F5}
+            alt="Women Kurtas sets"
+            width={800}
+            className="w-full h-[100%] rounded-xl "
+          />
+        </Link>
       </div>
       <div className="bg-contain bg-no-repeat object-contain ">
-        <img
-          src={F8}
-          alt="Footwear"
-          width={800}
-          className="w-full h-[100%] rounded-xl "
-        />
+        <Link to={"/allproducts/fashion/women/shoes"}>
+          <img
+            src={F8}
+            alt="Footwear"
+            width={800}
+            className="w-full h-[100%] rounded-xl "
+          />
+        </Link>
       </div>
       {/* box 9 */}
       <div className="bg-contain bg-no-repeat object-contain relative">
-        <p className="absolute text-xl text-white font-medium bottom-4 left-3">Watches</p>
+        <p className="absolute text-xl text-white font-medium bottom-4 left-3">
+          Watches
+        </p>
         <img
           src={F4}
           alt="Watches"
@@ -98,9 +112,11 @@ const FashionDesign = () => {
         className="row-span-3 bg-contain bg-no-repeat bg-center object-contain rounded-lg  w-full h-full max-w-full max-h-full"
         style={{ backgroundImage: `url(${F10})`, backgroundSize: "100% 100%" }}
       >
-        <div className="flex items-start justify-start px-4 py-6 gap-3 h-full">
-          <p className="text-3xl text-white font-medium mt-10">Kids Wear</p>
-        </div>
+        <Link to={"/allproducts/fashion/kids"}>
+          <div className="flex items-start justify-start px-4 py-6 gap-3 h-full">
+            <p className="text-3xl text-white font-medium mt-10">Kids Wear</p>
+          </div>
+        </Link>
       </div>
     </div>
   );

@@ -19,10 +19,10 @@ const Home = () => {
       <HeroSection />
       {/* <Filter />  */}
       <Categories/>
-      <ProductCard mode={mode} productData={product} title="New Arrivals"/>
+      <ProductCard mode={mode} productData={product} title="New Arrivals" filterData="newArrivals" link="/allproducts"/>
       <Trending/>
       <BeautyCare/>
-      <ProductCard mode={mode} productData={product} title="Beauty Care"/>
+      <ProductCard mode={mode} productData={product} title="Beauty Care" filterData="beauty" link="/allproducts/beauty"/>
       <FashionDesign />
       <Track />
       <Testimonial />

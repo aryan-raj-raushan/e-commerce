@@ -36,21 +36,24 @@ const Trending = () => {
         price: 'Start with Rs. 899 only/-',
         title: 'Premium brand tshirt',
         description: 'Unique Collection to your wardrobe casuals a hit of effortless cool with this best-looking t shirt.',
-        width: "300px"
+        width: "300px",
+        link: "/allproducts/fashion/men/shirt"
       },
       {
         imgSrc: 'https://m.media-amazon.com/images/I/617Oip+2w6L._UL1500_.jpg',
         price: 'Start with Rs. 499 only/-',
         title: '100% cotton jeans',
         description: 'Skinny fit jeans that fits close to body through hip, thigh, knee, and ankle',
-        width: "270px"
+        width: "270px",
+        link: "/allproducts/fashion/men/pant"
       },
       {
         imgSrc: 'https://m.media-amazon.com/images/I/51skGOslykL.jpg',
         price: 'Start with Rs. 599 only/-',
         title: 'Sports Shoes Collection',
         description: 'Breathable Sports Shoe',
-        width: "300px"
+        width: "300px",
+        link: "/allproducts/fashion/women/shoes"
       },
     ];
     
@@ -72,7 +75,7 @@ const Trending = () => {
           <h4 className="px-2 pt-1 text-lg text-black">{item.price}</h4>
           <p className="px-2">{item.title}</p>
           <p className="px-2 truncate">{item.description}</p>
-          <Link to="/" className="underline underline-offset-2 px-2">
+          <Link to={item.link} className="underline underline-offset-2 px-2">
             View all
           </Link>
         </div>

@@ -62,7 +62,7 @@ export const Slider2 = ({ children, options }: any) => {
 
   return (
     <div className="relative w-full mx-auto">
-      <Swiper {...swiperOptions} className="max-w-fit w-[95%]" >
+      <Swiper {...swiperOptions} className="max-w-fit w-[95%] " >
         {children}
       </Swiper>
       <div className="swiper-button-next custom-next absolute"></div>

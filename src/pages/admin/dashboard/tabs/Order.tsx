@@ -55,7 +55,7 @@ const Order = ({ mode, orderDetails,darkText,darkBg }: any) => {
               const rowData = [
                 { label: index + 1 },
                 { label: paymentId },
-                { content: <img className="w-16" src={imageUrl} alt="img" /> },
+                { content: <img className="w-16" src={imageUrl.imageUrl0} alt="img" /> },
                 { label: title },
                 { label: `₹${price}` },
                 { label: category },
@@ -66,7 +66,6 @@ const Order = ({ mode, orderDetails,darkText,darkBg }: any) => {
                 { label: email },
                 { label: date },
               ];
-
               return (
                 <tr
                   key={serial}
