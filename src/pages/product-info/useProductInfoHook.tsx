@@ -11,9 +11,9 @@ import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 
 const useProductInfoHook = () => {
   const socialMedia = [
-    { icon: <FaFacebookF />, link: "/facebook.com" },
-    { icon: <FaTwitter />, link: "/twitter.com" },
-    { icon: <FaInstagram />, link: "/instagram.com" },
+    { icon: <FaFacebookF />, link: "https://facebook.com" },
+    { icon: <FaTwitter />, link: "https://twitter.com" },
+    { icon: <FaInstagram />, link: "https://instagram.com" },
   ];
   const context = useContext(myContext);
   const { loading, setLoading, mode } = context;

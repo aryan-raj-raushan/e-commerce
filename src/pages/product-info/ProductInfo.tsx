@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../components/layout/layout";
 import Lottie from "lottie-react";
 import Loader from "../../assets/Lottie/dropLoader.json";
-import { Rating } from "@mui/material";
+import { IconButton, Rating } from "@mui/material";
 import useProductInfoHook from "./useProductInfoHook";
+import { Slider4 } from "../../HOC/hoc/Slider";
+import { Link } from "react-router-dom";
+import { Favorite } from "@mui/icons-material";
+import { toast } from "react-toastify";
+// import { Slider4 } from "../../HOC/hoc/ReactSlider";
 
 const ProductInfo = () => {
   const {
@@ -25,8 +30,33 @@ const ProductInfo = () => {
     totalRatings,
     Discount,
   } = products;
-  const image = imageUrl && imageUrl.imageUrl0;
-
+  const ratingAsNumber = Number(rating);
+  const imageSlider: any =
+    imageUrl &&
+    Object.entries(imageUrl)
+      .sort(
+        ([a], [b]) =>
+          parseInt(a.replace("imageUrl", "")) -
+          parseInt(b.replace("imageUrl", ""))
+      )
+      .map(([, url]) => url);
+  const [active, setActive] = useState(false);
+  const handleWishlistClick = () => {
+    setActive(!active);
+    if (!active) {
+      toast.success("Add to wishlist", {
+        position: "top-center",
+        autoClose: 800,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    };
+  };
+console.log(imageUrl,products)
   return (
     <Layout>
       {loading ? (
@@ -35,46 +65,47 @@ const ProductInfo = () => {
         </div>
       ) : (
         <section className="text-gray-600 body-font overflow-hidden">
-          <div className="container px-5 py-10 mx-auto">
+          <div className="container px-5 py-10 ">
             {products && (
-              <div className="lg:w-4/5 mx-auto flex flex-wrap">
-                <img
-                  alt={title}
-                  className="lg:w-1/3 w-full h-64 lg:h-full object-contain lg:object-contain object-center rounded max-w-full"
-                  src={image}
-                />
-                <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+              <div className="w-full lg:w-11/12 h-full flex flex-wrap justify-center ml-16">
+                <div className="w-full md:w-3/5 lg:w-1/3 lg:h-full">
+                  <Slider4 title={title}>{imageSlider}</Slider4>
+                </div>
+
+                <div className="lg:w-1/2 w-full lg:pl-5 lg:py-6 mt-6 lg:mt-0 text-start">
                   <h1
                     className="text-gray-900 text-3xl title-font font-medium mb-1"
                     style={darkText}
                   >
                     {title}
                   </h1>
-                  <div className="flex mb-2">
-                    <span className="flex items-center">
+                  <div className="flex mb-2 items-center mt-1">
+                    <div className="flex items-center text-sm">
                       <Rating
                         name="half-rating-read"
-                        value={rating}
+                        value={ratingAsNumber}
                         precision={0.5}
                         readOnly
+                        size="small"
                       />
-                      <span className="text-gray-600 ml-3" style={darkText}>
-                        {totalRatings} Reviews
+                      <span className="text-gray-600 ml-1" style={darkText}>
+                        ({totalRatings}) Reviews
                       </span>
-                    </span>
+                    </div>
 
                     <div
-                      className="flex items-center pl-2 ml-3 border-l-2 border-gray-200 gap-1"
+                      className="flex items-center pl-1 ml-3 border-l-2 border-gray-200 gap-1"
                       style={darkText}
                     >
                       {socialMedia.map((item, index) => (
-                        <a
+                        <Link
                           key={index}
-                          href={item.link}
+                          to={item.link}
                           className="text-gray-500 hover:scale-110"
+                          target="_blank"
                         >
                           {item.icon}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -116,25 +147,28 @@ const ProductInfo = () => {
                     </button>
                   </div>
 
-                  <div className="flex">
+                  <div className="flex justify-end">
                     <button
                       onClick={() => addCart(products)}
-                      className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                      className="flex items-center text-white bg-indigo-500 border-0 py-1 px-6 focus:outline-none hover:bg-indigo-600 rounded"
                     >
                       Add To Cart
                     </button>
-                    <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-                      <svg
-                        fill="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        className="w-5 h-5"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-                      </svg>
-                    </button>
+                    <IconButton
+                      aria-label="Add to Wishlist"
+                      onClick={handleWishlistClick}
+                      // style={{
+                      //   backgroundColor: active ? 'gray' : 'white',
+                      //   borderRadius: '50%',
+                      //   width: '40px',
+                      //   height: '40px',
+                      // }}
+                    >
+                      <Favorite
+                        sx={{ color: active ? "red" : " rgb(102 112 133)" }}
+                        fontSize="medium"
+                      />{" "}
+                    </IconButton>
                   </div>
                 </div>
               </div>
