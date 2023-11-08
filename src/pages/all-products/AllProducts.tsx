@@ -119,14 +119,15 @@ const AllProducts = () => {
                         ₹{price}
                       </h2>
                       {rating && totalRatings && (
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1 text-sm">
                           <Rating
                             name="half-rating-read"
                             defaultValue={ratingAsNumber}
                             precision={0.5}
                             readOnly
+                            size="small"
                           />{" "}
-                          {totalRatings}
+                          ({totalRatings})
                         </div>
                       )}
 

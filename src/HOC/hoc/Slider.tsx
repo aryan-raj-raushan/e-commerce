@@ -1,4 +1,4 @@
-import { Swiper } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -11,7 +11,9 @@ import {
   Navigation,
   FreeMode,
   Scrollbar,
+  Thumbs,
 } from "swiper/modules";
+import { useState } from "react";
 
 export const Slider = ({ children, options }: any) => {
   const swiperOptions = {
@@ -62,7 +64,7 @@ export const Slider2 = ({ children, options }: any) => {
 
   return (
     <div className="relative w-full mx-auto">
-      <Swiper {...swiperOptions} className="max-w-fit w-[95%] " >
+      <Swiper {...swiperOptions} className="max-w-fit w-[95%] ">
         {children}
       </Swiper>
       <div className="swiper-button-next custom-next absolute"></div>
@@ -97,8 +99,72 @@ export const Slider3 = ({ children, options }: any) => {
   );
 };
 
+export const Slider4 = ({ children, options, title }: any) => {
+  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  const swiperOptions = {
+    spaceBetween: 5,
+    loop: true,
+    navigation: false,
+    modules: [FreeMode, Pagination, Thumbs],
+    watchSlidesProgress: true,
+    slidesPerView: 5,
+    freeMode: true,
+    direction: "vertical",
+    ...options,
+  };
+  const swiperOptions2 = {
+    spaceBetween: 10,
+    loop: true,
+    navigation: false,
+    modules: [FreeMode, Pagination, Thumbs],
+    ...options,
+  };
 
-
-
-
-
+  return (
+    <div className="relative w-full h-full">
+      <div
+        className="lg:-left-14 absolute top-0 h-full -left-10"
+        style={{
+          zIndex: 1,
+        }}
+      >
+        <Swiper
+          {...swiperOptions}
+          onSwiper={setThumbsSwiper}
+          className="mySwiper w-full h-full cursor-pointer space-y-2"
+        >
+          {children.map((item: any, index: number) => {
+            return (
+              <SwiperSlide key={index}>
+                <img
+                  src={item}
+                  className="w-16 h-full border border-gray-200 rounded-lg object-contain"
+                  alt={title}
+                />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      </div>
+      <Swiper
+        {...swiperOptions2}
+        thumbs={{
+          swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+        }}
+        className="mySwiper2 w-4/5 h-full"
+      >
+        {children.map((item: any, index: number) => {
+          return (
+            <SwiperSlide key={index}>
+              <img
+                src={item}
+                className="object-contain lg:object-contain object-center rounded max-w-full w-full"
+                alt={title}
+              />
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+    </div>
+  );
+};
