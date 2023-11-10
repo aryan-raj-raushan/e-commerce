@@ -28,7 +28,6 @@ const Product = ({
     edithandle(item);
     navigate("/updateproduct");
   };
-  // console.log("check data",data)
   return (
     <div className="px-4 md:px-0 mb-16">
       <h1
@@ -51,7 +50,7 @@ const Product = ({
         </button>
       </div>
       <div className="relative overflow-x-auto">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
           <thead
             className="text-xs border border-gray-600 text-black uppercase bg-gray-200 shadow-[inset_0_0_8px_rgba(0,0,0,0.6)]"
             style={darkBg}
@@ -88,8 +87,8 @@ const Product = ({
                   return (
                     <td
                       key={column.key}
-                      className={`px-6 py-4 text-black ${
-                        column.isImage ? "font-medium whitespace-nowrap" : ""
+                      className={`px-6 py-4 text-black text-start font-normal  ${
+                        column.isImage ? "font-normal whitespace-nowrap" : ""
                       } ${mode === "dark" ? "text-white" : ""}`}
                     >
                       {column.key === "imageUrl" && column.isImage ? (
@@ -99,7 +98,7 @@ const Product = ({
                           alt="img"
                         />
                       ) : column.key === "allCategory" ? (
-                       <p className="capitalize">{item.allCategory.category}</p>
+                       <p className="capitalize">{item.allCategory.category} - {item.allCategory.subcategory}</p>
                       ) : (
                         item[column.key]
                       )}

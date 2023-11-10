@@ -4,7 +4,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import Order from "./pages/order/Order";
+import OrderPage from "./pages/order/OrderPage";
 import Home from "./pages/home/Home";
 import Dashboard from "./pages/admin/dashboard/dashboard";
 import NoPage from "./pages/no-page/NoPage";
@@ -22,8 +22,8 @@ import {
   ProtectedRoutesForAdmin,
 } from "./HOC/routes/protectedRoutes";
 import AllProducts from "./pages/all-products/AllProducts";
-import Payment from './pages/payment/Payment';
-import CartProducts from './pages/cart/CartProducts';
+import Payment from "./pages/payment/Payment";
+import CartProducts from "./pages/cart/CartProducts";
 
 const App = () => {
   return (
@@ -35,7 +35,7 @@ const App = () => {
             path="/order"
             element={
               <ProtectedRoutes>
-                <Order />
+                <OrderPage />
               </ProtectedRoutes>
             }
           />
@@ -43,7 +43,7 @@ const App = () => {
             path="/cart"
             element={
               <ProtectedRoutes>
-                <CartProducts/>
+                <CartProducts />
               </ProtectedRoutes>
             }
           />
@@ -79,7 +79,7 @@ const App = () => {
             path="/payment"
             element={
               <ProtectedPaymentGateway>
-               <Payment />
+                <Payment />
               </ProtectedPaymentGateway>
             }
           />

@@ -59,8 +59,8 @@ const Categories = () => {
                 <h4>{category.title}</h4>
               </div>
             ) : (
-              <div className="h-full sm:h-40 flex items-center justify-center">
-                <div className="sm:w-20 mr-10 h-20 rounded-full flex flex-col items-center justify-center cursor-pointer bg-gray-100" onClick={() => handleClick(category.label)}>
+              <div className="mr-10 h-full sm:h-40 flex items-center justify-center">
+                <div className="sm:w-20 h-20 rounded-full flex flex-col items-center justify-center cursor-pointer bg-gray-100" onClick={() => handleClick(category.label)}>
                   <h4 className="underline decoration-gray-400 underline-offset-4">{category.title}</h4>
                 </div>
               </div>

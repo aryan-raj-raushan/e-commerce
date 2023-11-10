@@ -20,7 +20,6 @@ const SelectColor = () => {
   const [selectedColor, setSelectedColor] = useState("warning");
   const handleColorChange = (color: any) => {
     setSelectedColor(color);
-    console.log("Selected color:", color);
   };
   const colorValue = colorMappings[selectedColor];
 

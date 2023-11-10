@@ -39,12 +39,15 @@ const FashionDesign = () => {
       </div>
 
       <div className="bg-cover bg-no-repeat object-contain">
+        <Link to={"/allproducts/beauty/fragrances"}>
         <img
           src={F7}
           alt="Perfume"
           width={800}
           className="w-full h-[100%] rounded-xl "
         />
+        </Link>
+        
       </div>
       {/* Box 4 */}
       <div className="row-span-2 col-span-2">

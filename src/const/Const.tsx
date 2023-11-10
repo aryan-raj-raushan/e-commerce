@@ -334,17 +334,39 @@ export const categoryData: any = [
   {
     title: "Electronics",
     label: "electronics",
-    subcategories: ["Laptops", "Smartphones", "Accessories"],
+    subcategories: [
+      { title: "Laptops", label: "laptops" },
+      { title: "Headphones", label: "headphones" },
+      { title: "Speaker", label: "speaker" },
+      { title: "Accessories", label: "accessories" },
+    ],
   },
   {
     title: "Mobiles",
     label: "mobiles",
-    subcategories: ["Android", "iOS", "Feature Phones"],
+    subcategories: [
+      { title: "Android", label: "android" },
+      { title: "iOS", label: "ios" },
+      { title: "Feature Phones", label: "featurephones" },
+    ],
+  },
+  {
+    title: "Watch",
+    label: "watch",
+    subcategories: [
+      { title: "Analog", label: "analog" },
+      { title: "Digital", label: "digital" },
+      { title: "Smartwatch", label: "smartwatch" },
+    ],
   },
   {
     title: "Grocery",
     label: "grocery",
-    subcategories: ["Food", "Beverages", "Household"],
+    subcategories: [
+      { title: "Food", label: "food" },
+      { title: "Beverages", label: "beverages" },
+      { title: "Household", label: "household" },
+    ],
   },
   {
     title: "Fashion",
@@ -359,11 +381,7 @@ export const categoryData: any = [
             label: "shirt",
             sizes: ["S", "M", "L", "XL", "XXL"],
           },
-          {
-            title: "Pant",
-            label: "pant",
-            sizes: ["28", "30", "32", "34"],
-          },
+          { title: "Pant", label: "pant", sizes: ["28", "30", "32", "34"] },
           {
             title: "Footwear",
             label: "footwear",
@@ -375,37 +393,17 @@ export const categoryData: any = [
         title: "Women",
         label: "women",
         subcategories: [
-          {
-            title: "Dresses",
-            label: "dresses",
-            sizes: ["S", "M", "L", "XL"],
-          },
-          {
-            title: "Shoes",
-            label: "shoes",
-            sizes: ["5", "6", "7", "8"],
-          },
+          { title: "Dresses", label: "dresses", sizes: ["S", "M", "L", "XL"] },
+          { title: "Shoes", label: "shoes", sizes: ["5", "6", "7", "8"] },
         ],
       },
       {
         title: "Boys",
         label: "boys",
         subcategories: [
-          {
-            title: "Shirt",
-            label: "shirt",
-            sizes: ["XXS", "XS", "S", "M"],
-          },
-          {
-            title: "Pant",
-            label: "pant",
-            sizes: ["20", "22", "24", "26"],
-          },
-          {
-            title: "Footwear",
-            label: "footwear",
-            sizes: ["4", "5", "6", "7"],
-          },
+          { title: "Shirt", label: "shirt", sizes: ["XXS", "XS", "S", "M"] },
+          { title: "Pant", label: "pant", sizes: ["20", "22", "24", "26"] },
+          { title: "Footwear", label: "footwear", sizes: ["4", "5", "6", "7"] },
         ],
       },
       {
@@ -417,32 +415,16 @@ export const categoryData: any = [
             label: "dresses",
             sizes: ["XXS", "XS", "S", "M"],
           },
-          {
-            title: "Shoes",
-            label: "shoes",
-            sizes: ["4", "5", "6", "7"],
-          },
+          { title: "Shoes", label: "shoes", sizes: ["4", "5", "6", "7"] },
         ],
       },
       {
         title: "Kids",
-        label: "boys",
+        label: "kids",
         subcategories: [
-          {
-            title: "Shirt",
-            label: "shirt",
-            sizes: ["XXS", "XS"],
-          },
-          {
-            title: "Pant",
-            label: "pant",
-            sizes: ["12", "14", "16", "18"],
-          },
-          {
-            title: "Footwear",
-            label: "footwear",
-            sizes: ["0", "1", "2", "3"],
-          },
+          { title: "Shirt", label: "shirt", sizes: ["XXS", "XS"] },
+          { title: "Pant", label: "pant", sizes: ["12", "14", "16", "18"] },
+          { title: "Footwear", label: "footwear", sizes: ["0", "1", "2", "3"] },
         ],
       },
     ],
@@ -450,37 +432,65 @@ export const categoryData: any = [
   {
     title: "Appliances",
     label: "appliances",
-    subcategories: ["Kitchen", "Home", "Personal Care"],
+    subcategories: [
+      { title: "Kitchen", label: "kitchen" },
+      { title: "Home", label: "home" },
+      { title: "Personal Care", label: "personalcare" },
+    ],
   },
   {
     title: "Toys",
     label: "toys",
-    subcategories: ["Action Figures", "Puzzles", "Educational"],
+    subcategories: [
+      { title: "Action Figures", label: "actionfigures" },
+      { title: "Puzzles", label: "puzzles" },
+      { title: "Educational", label: "educational" },
+    ],
   },
   {
     title: "Health",
     label: "health",
-    subcategories: ["Vitamins", "Fitness", "Personal Care"],
+    subcategories: [
+      { title: "Vitamins", label: "vitamins" },
+      { title: "Fitness", label: "fitness" },
+      { title: "Personal Care", label: "personalcarehealth" },
+    ],
   },
   {
     title: "Beauty",
     label: "beauty",
-    subcategories: ["Skincare", "Makeup", "Fragrances"],
+    subcategories: [
+      { title: "Skincare", label: "skincare" },
+      { title: "Makeup", label: "makeup" },
+      { title: "Fragrances", label: "fragrances" },
+    ],
   },
   {
     title: "Home",
     label: "home",
-    subcategories: ["Furniture", "Decor", "Appliances"],
+    subcategories: [
+      { title: "Furniture", label: "furniture" },
+      { title: "Decor", label: "decor" },
+      { title: "Appliances", label: "homeappliances" },
+    ],
   },
   {
     title: "Sports",
     label: "sports",
-    subcategories: ["Team Sports", "Fitness", "Outdoor"],
+    subcategories: [
+      { title: "Team Sports", label: "teamsports" },
+      { title: "Fitness", label: "fitnesssports" },
+      { title: "Outdoor", label: "outdoor" },
+    ],
   },
   {
     title: "Furniture",
     label: "furniture",
-    subcategories: ["Living Room", "Bedroom", "Kitchen"],
+    subcategories: [
+      { title: "Living Room", label: "livingroom" },
+      { title: "Bedroom", label: "bedroom" },
+      { title: "Kitchen", label: "kitchenfurniture" },
+    ],
   },
 ];
 

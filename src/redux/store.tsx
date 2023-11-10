@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import cartSlice from "./cartSlice";
 
 const user = JSON.parse(localStorage.getItem("user") || "{}");
-const isAdminLogin = user?.user?.email.includes("aryan") ? true : false;
+const isAdminLogin = user?.user?.email.toLowerCase().includes("aryan") ? true : false;
 
 export const store = configureStore({
   reducer: {
@@ -10,7 +10,7 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: isAdminLogin,
+      serializableCheck: false,
     }),
-  devTools: true,
+  devTools: isAdminLogin,
 });

@@ -65,7 +65,6 @@ const useCartHook = () => {
 
   cartItems.forEach((item: any) => {
     const itemId = item.id;
-
     if (!uniqueItems[itemId]) {
       uniqueItems[itemId] = {
         ...item,
