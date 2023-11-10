@@ -116,7 +116,6 @@ const OrderPage = () => {
                       >
                         {order.orderItems.map((item: any, index: number) => {
                           const deliveryDate = item.deliveryTime;
-                          console.log(item)
                           const store = item.storeLocation
                           const quantity = item.quantity
                           const todayDate = moment().format("ll");

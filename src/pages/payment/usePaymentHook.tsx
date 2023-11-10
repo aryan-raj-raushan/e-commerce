@@ -69,7 +69,6 @@ const usePaymentHook = () => {
   };
 
   const handleBuy = async (item: any) => {
-    console.log("itekscheck", item);
     if (
       Object.values(formData.fullAddress).some((value) => value === "") ||
       Object.values(formData)

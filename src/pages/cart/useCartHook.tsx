@@ -42,7 +42,6 @@ const useCartHook = () => {
     });
   };
   const handleDecrease = (item: any) => {
-    console.log("handle",item)
     if (item.count === 1) {
       showSuccessToast(`Remove from cart ${item.title}`);
     } else {

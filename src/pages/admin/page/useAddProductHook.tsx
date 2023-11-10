@@ -47,7 +47,6 @@ const useAddProductHook = () => {
 
     switch (name) {
       case "category":
-        console.log(name, value);
         setSelectedCategory(value);
         setSelectedSubcategory("");
         setSelectedType("");

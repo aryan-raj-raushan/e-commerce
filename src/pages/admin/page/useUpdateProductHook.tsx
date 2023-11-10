@@ -33,22 +33,9 @@ const useUpdateProductHook = () => {
 
   const handleChange = (e: any) => {
     const { name, value, checked, type } = e.target;
-    console.log(name, value);
     let updatedColorAvailable = [...(color || [])];
-
-    // if (name.includes("imageUrl")) {
-    //   setProducts((prevProducts: any) => ({
-    //     ...prevProducts,
-    //     imageUrl: {
-    //       ...prevProducts.imageUrl,
-    //       [name]: value,
-    //     },
-    //   }));
-    // }
-
     if (name.includes("imageUrl")) {
       if (value.trim() === "") {
-        // If the entered value is empty or contains only spaces, remove the property from the state
         setProducts((prevProducts: any) => {
           const updatedImageUrl = { ...prevProducts.imageUrl };
           delete updatedImageUrl[name];

@@ -24,7 +24,6 @@ const Dashboard = () => {
   const totalUsers = userData.length > 0 ? userData.length : 0;
   const darkText = getCommonStyles(mode);
   const darkBg = getCommonStyles(mode, { backgroundColor: "rgb(46 49 55)" });
-  console.log(order)
 
   const [selectedTab, setSelectedTab] = useState(0);
 
