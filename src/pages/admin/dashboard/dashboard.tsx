@@ -24,6 +24,7 @@ const Dashboard = () => {
   const totalUsers = userData.length > 0 ? userData.length : 0;
   const darkText = getCommonStyles(mode);
   const darkBg = getCommonStyles(mode, { backgroundColor: "rgb(46 49 55)" });
+  console.log(order)
 
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -65,6 +66,14 @@ const Dashboard = () => {
     }
     return dateB - dateA;
 });
+  const filterOrderData = order.sort((a: any, b: any) => {
+    const dateA = new Date(a.time).getTime();
+    const dateB = new Date(b.time).getTime();
+    if (isNaN(dateA) || isNaN(dateB)) {
+        return isNaN(dateA) ? 1 : -1;
+    }
+    return dateB - dateA;
+});
 
 
   const tabComp = [
@@ -85,7 +94,7 @@ const Dashboard = () => {
       component: (
         <Order
           mode={mode}
-          orderDetails={order}
+          orderDetails={filterOrderData}
           darkBg={darkBg}
           darkText={darkText}
         />

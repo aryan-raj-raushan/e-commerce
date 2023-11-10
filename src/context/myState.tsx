@@ -277,6 +277,7 @@ const MyState = (props: any) => {
         setSelectedValues,
         setValue,
         handleBack,
+        getOrderData,
       }}
     >
       {props.children}

@@ -55,7 +55,7 @@ const ProductCard = ({ mode, productData, title, filterData, link }: any) => {
 
   return (
     <section className="text-gray-600 body-font">
-      <div className="container px-2 sm:px-5 pt-4 pb-8 md:pt-8 md:pb-12">
+      <div className="px-2 sm:px-5 pt-4 pb-8 md:pt-8 md:pb-12">
         <div className="flex justify-between">
           <div className="w-auto mb-3 lg:mb-5 relative sm:mx-10">
             <h1

@@ -45,15 +45,11 @@ export const Slider2 = ({ children, options }: any) => {
     centeredSlides: false,
     modules: [FreeMode, Navigation, Scrollbar],
     freeMode: true,
-    // mousewheel: {
-    //   releaseOnEdges: true,
-    // },
     cssMode: true,
     slidesPerView: "auto",
     navigation: {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
-      // disabledClass: ".swiper-button-disabled",
     },
     scrollbar: {
       hide: true,
@@ -69,7 +65,6 @@ export const Slider2 = ({ children, options }: any) => {
       </Swiper>
       <div className="swiper-button-next custom-next absolute"></div>
       <div className="swiper-button-prev custom-prev absolute "></div>
-      {/* <div className="swiper-button-disabled"></div> */}
     </div>
   );
 };
@@ -123,7 +118,7 @@ export const Slider4 = ({ children, options, title }: any) => {
   return (
     <div className="relative w-full h-full">
       <div
-        className="lg:-left-14 absolute top-0 h-full -left-10"
+        className="lg:-left-14 absolute top-0 h-full -left-4 sm:-left-10"
         style={{
           zIndex: 1,
         }}

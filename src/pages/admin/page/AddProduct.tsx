@@ -136,8 +136,8 @@ const AddProduct = () => {
                                   category.label === selectedCategory
                               )
                               ?.subcategories.map((sub: any, index: number) => (
-                                <MenuItem key={index} value={sub}>
-                                  {sub}
+                                <MenuItem key={index} value={sub.label}>
+                                  {sub.title}
                                 </MenuItem>
                               ))}
                           </Select>

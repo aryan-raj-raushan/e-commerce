@@ -8,7 +8,6 @@ import { Slider4 } from "../../HOC/hoc/Slider";
 import { Link } from "react-router-dom";
 import { Favorite } from "@mui/icons-material";
 import { toast } from "react-toastify";
-// import { Slider4 } from "../../HOC/hoc/ReactSlider";
 
 const ProductInfo = () => {
   const {
@@ -54,9 +53,8 @@ const ProductInfo = () => {
         progress: undefined,
         theme: "light",
       });
-    };
+    }
   };
-console.log(imageUrl,products)
   return (
     <Layout>
       {loading ? (
@@ -67,11 +65,10 @@ console.log(imageUrl,products)
         <section className="text-gray-600 body-font overflow-hidden">
           <div className="container px-5 py-10 ">
             {products && (
-              <div className="w-full lg:w-11/12 h-full flex flex-wrap justify-center ml-16">
-                <div className="w-full md:w-3/5 lg:w-1/3 lg:h-full">
-                  <Slider4 title={title}>{imageSlider}</Slider4>
-                </div>
-
+              <div className="w-full lg:w-11/12 h-full flex flex-wrap justify-center ml-4 sm:ml-16">
+                  <div className="w-full md:w-3/5 lg:w-1/3 lg:h-full">
+                    <Slider4 title={title}>{imageSlider}</Slider4>
+                  </div>
                 <div className="lg:w-1/2 w-full lg:pl-5 lg:py-6 mt-6 lg:mt-0 text-start">
                   <h1
                     className="text-gray-900 text-3xl title-font font-medium mb-1"

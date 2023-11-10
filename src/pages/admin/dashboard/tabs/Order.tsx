@@ -6,7 +6,7 @@ const columns = [
   { key: "imageUrl", label: "Image", isImage: true },
   { key: "title", label: "Title" },
   { key: "price", label: "Price" },
-  { key: "category", label: "Category" },
+  { key: "quantity", label: "Quantity" },
   { key: "allorder.addressInfo.name", label: "Name" },
   { key: "address", label: "Address" },
   { key: "pincode", label: "Pincode" },
@@ -40,25 +40,23 @@ const Order = ({ mode, orderDetails,darkText,darkBg }: any) => {
         </thead>
         {orderDetails.map((allorder: any, index: number) => (
           <tbody key={index}>
-            {allorder.cartItems.map((item: any, serial: number) => {
-              const { title, category, imageUrl, price } = item;
-              const {
-                name,
-                mobileNumber,
-                email,
-                date,
-                fullAddress,
-              } = allorder.addressInfo;
-              const {paymentId} = allorder
+            {allorder.orderItems.map((item: any, serial: number) => {
+              const { title, imageUrl, price,quantity } = item;
+              const { name, mobileNumber, email, fullAddress } =
+                allorder.addressInfo;
+              const { paymentId, date } = allorder;
               const { state, pincode, address, city } = fullAddress;
-
               const rowData = [
                 { label: index + 1 },
                 { label: paymentId },
-                { content: <img className="w-16" src={imageUrl.imageUrl0} alt="img" /> },
+                {
+                  content: (
+                    <img className="w-16" src={imageUrl.imageUrl0} alt="img" />
+                  ),
+                },
                 { label: title },
                 { label: `₹${price}` },
-                { label: category },
+                { label: quantity },
                 { label: name },
                 { label: `${address}, ${city}, ${state}` },
                 { label: pincode },
@@ -77,7 +75,7 @@ const Order = ({ mode, orderDetails,darkText,darkBg }: any) => {
                   {rowData.map((cellData, cellIndex) => (
                     <td
                       key={cellIndex}
-                      className="px-2 py-4 text-black"
+                      className="px-2 py-4 text-black capitalize"
                       style={darkText}
                     >
                       {cellData.content || cellData.label}

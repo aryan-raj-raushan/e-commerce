@@ -42,6 +42,7 @@ const useCartHook = () => {
     });
   };
   const handleDecrease = (item: any) => {
+    console.log("handle",item)
     if (item.count === 1) {
       showSuccessToast(`Remove from cart ${item.title}`);
     } else {
@@ -65,7 +66,6 @@ const useCartHook = () => {
 
   cartItems.forEach((item: any) => {
     const itemId = item.id;
-
     if (!uniqueItems[itemId]) {
       uniqueItems[itemId] = {
         ...item,

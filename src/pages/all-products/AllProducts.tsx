@@ -26,7 +26,6 @@ const AllProducts = () => {
     handleFilterClose,
     loading,
   } = useAllProductHook();
-
   return (
     <Layout>
       {loading ? (
