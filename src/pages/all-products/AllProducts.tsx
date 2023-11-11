@@ -7,6 +7,7 @@ import FreeDelivery from "../../assets/svg/free-delivery-icon.svg";
 import useAllProductHook from "./useAllProductHook";
 import { BsFilterLeft } from "react-icons/bs";
 import { ReactComponent as DoubleArrowDown } from "../../assets/svg/double-chevrons-up.svg";
+import "./style.css";
 
 const AllProducts = () => {
   const {
@@ -79,6 +80,7 @@ const AllProducts = () => {
                   rating,
                   deliveryTime,
                   id,
+                  checkStock
                 } = products;
                 let totalAmount = 0;
                 originalProductOrder.forEach((cartItem: any) => {
@@ -91,12 +93,19 @@ const AllProducts = () => {
                 });
                 const prices = totalAmount;
                 const ratingAsNumber = Number(rating);
+                const stock = checkStock === "InStock" ? false : true;
                 return (
                   <div
-                    className="flex flex-col items-stretch justify-between gap-2 min-h-[300px] max-h-[500px] p-2 lg:w-full cursor-pointer"
+                    className="flex flex-col items-stretch justify-between gap-2 min-h-[300px] max-h-[500px] p-2 lg:w-full cursor-pointer relative"
                     key={id}
                     onClick={() => handleClick(id)}
                   >
+                    {stock && (
+                      <div className="ribbon">
+                        <span>Out of stock</span>
+                      </div>
+                    )}
+
                     <div className="bg-contain bg-no-repeat object-contain bg-center w-full flex items-center justify-center">
                       <img
                         src={imageUrl.imageUrl0}
@@ -108,7 +117,7 @@ const AllProducts = () => {
                       />
                     </div>
                     <div className="flex flex-col items-start text-start">
-                      <h2 className="text-lg font-normal text-gray-800">
+                      <h2 className="text-lg font-normal text-gray-800 line-clamp-3">
                         {title}
                       </h2>
                       <h4 className="text-sm text-gray-500 font-normal truncate w-full">
