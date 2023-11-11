@@ -111,7 +111,7 @@ const OrderPage = () => {
                     const orderDate = order.date;
                     return (
                       <div
-                        className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0 space-y-4"
+                        className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0 space-y-4 py-5"
                         key={index}
                       >
                         {order.orderItems.map((item: any, index: number) => {

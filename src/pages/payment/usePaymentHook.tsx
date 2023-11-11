@@ -24,7 +24,7 @@ const usePaymentHook = () => {
     mobileNumber: "",
   };
   const context = useContext(myContext);
-  const { mode, loading, setLoading, getOrderData } = context;
+  const { mode, loading, setLoading, getOrderData, setPaymentMode } = context;
 
   const finalPriceItems = JSON.parse(
     localStorage.getItem("finalPrice") || "{}"
@@ -86,10 +86,11 @@ const usePaymentHook = () => {
       currency: "INR",
       order_receipt: "order_rcptid_" + formData.name,
       name: "24Seven",
-      description: "for testing purpose",
+      description: "Payment Gateway",
       handler: async (response: any) => {
         // setLoading(true)
         showSuccessToast("Payment Successful");
+        setPaymentMode(true);
         const paymentId = response.razorpay_payment_id;
         // store in firebase
         const orderInfo = {
@@ -106,11 +107,12 @@ const usePaymentHook = () => {
         };
         try {
           await addDoc(collection(firebaseDb, "orders"), orderInfo);
+          setPaymentMode(true);
           setFormData(initialFormData);
           getOrderData();
-          localStorage.removeItem("cart");
+          dispatch(deleteFromCart(item));
+          localStorage.setItem("cart", "");
           localStorage.removeItem("finalPrice");
-          window.location.reload();
           window.location.href = "/order";
           setLoading(false);
         } catch (error) {
