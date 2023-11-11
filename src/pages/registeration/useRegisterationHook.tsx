@@ -3,6 +3,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { firebaseAuth, firebaseDb } from "../../firebase/firebase.config";
@@ -92,7 +95,7 @@ const useRegisterationHook = () => {
       const userRef = collection(firebaseDb, "users");
       await addDoc(userRef, user);
       localStorage.setItem("user", JSON.stringify(users));
-      localStorage.removeItem("cart");
+      localStorage.setItem("cart", "");
       localStorage.removeItem("finalPrice");
       showSuccessToast("Signup Succesfully");
       setLoading(false);
@@ -105,6 +108,10 @@ const useRegisterationHook = () => {
       showErrorToast(errorMessage);
     }
   };
+
+  /* -------------------------------------------------------------------------- */
+  /*                                    Login                                   */
+  /* -------------------------------------------------------------------------- */
 
   const [loginState, setLoginState] = useState<LoginState>({
     email: "",
@@ -121,10 +128,6 @@ const useRegisterationHook = () => {
     e.preventDefault();
     accountLogin();
   };
-
-  /* -------------------------------------------------------------------------- */
-  /*                                    Login                                   */
-  /* -------------------------------------------------------------------------- */
 
   const accountLogin = async () => {
     setLoading(true);
@@ -150,6 +153,40 @@ const useRegisterationHook = () => {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(firebaseAuth, provider);
+      localStorage.setItem("user", JSON.stringify(result));
+      const user = result.user;
+      setUser(user);
+      showSuccessToast("Signin with Google Successfully");
+      setLoading(false);
+      navigate("/");
+    } catch (error) {
+      setLoading(false);
+      setError("Error signing in with Google");
+      showErrorToast("Error signing in with Google");
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    const email = prompt("Enter your email address:");
+    if (email) {
+      try {
+        await sendPasswordResetEmail(firebaseAuth, email);
+        showSuccessToast(
+          "Password reset email sent successfully. Check your inbox."
+        );
+      } catch (error: any) {
+        const errorMessage =
+          error.message || "Error sending password reset email.";
+        showErrorToast(errorMessage);
+      }
+    }
+  };
+
   return {
     error,
     handleSubmit,
@@ -163,8 +200,11 @@ const useRegisterationHook = () => {
     handleLogin,
     handleSubmitLogin,
     isLoginValid,
-    loginState
+    loginState,
+    handleGoogleLogin,
+    handleForgotPassword,
   };
 };
 
 export default useRegisterationHook;
+

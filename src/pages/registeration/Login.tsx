@@ -4,6 +4,7 @@ import FormExtra from "./FormExtra";
 import { loginFields } from "../../const/Const";
 import { FallingLines } from "react-loader-spinner";
 import useRegisterationHook from "./useRegisterationHook";
+import GoogleLogo from "../../assets/logo/google-logo.png";
 
 const Login = () => {
   const {
@@ -13,6 +14,7 @@ const Login = () => {
     handleSubmitLogin,
     isLoginValid,
     loginState,
+    handleGoogleLogin,
   } = useRegisterationHook();
 
   return (
@@ -46,6 +48,18 @@ const Login = () => {
             text="Login"
             disabled={!isLoginValid}
           />
+          <button
+            className="flex items-center justify-center w-full border py-1 rounded-lg"
+            onClick={handleGoogleLogin}
+            style={{ backgroundColor: "white", color: "black" }}
+          >
+            Sign in with Google
+            <img
+              src={GoogleLogo}
+              alt="Google Logo"
+              style={{ width: "20px", marginLeft: "6px" }}
+            />
+          </button>
         </form>
       )}
     </>
