@@ -8,6 +8,7 @@ import { Slider4 } from "../../HOC/hoc/Slider";
 import { Link } from "react-router-dom";
 import { Favorite } from "@mui/icons-material";
 import { toast } from "react-toastify";
+import { RiInformationFill } from "react-icons/ri";
 
 const ProductInfo = () => {
   const {
@@ -28,8 +29,10 @@ const ProductInfo = () => {
     rating,
     totalRatings,
     Discount,
+    checkStock,
   } = products;
   const ratingAsNumber = Number(rating);
+  const stock = checkStock === "InStock" ? false : true;
   const imageSlider: any =
     imageUrl &&
     Object.entries(imageUrl)
@@ -55,6 +58,18 @@ const ProductInfo = () => {
       });
     }
   };
+  const handleNotify = () => {
+    toast.success("Notify when it available", {
+      position: "top-center",
+      autoClose: 800,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }
   return (
     <Layout>
       {loading ? (
@@ -66,9 +81,9 @@ const ProductInfo = () => {
           <div className="container px-5 py-10 ">
             {products && (
               <div className="w-full lg:w-11/12 h-full flex flex-wrap justify-center ml-4 sm:ml-16">
-                  <div className="w-full md:w-3/5 lg:w-1/3 lg:h-full">
-                    <Slider4 title={title}>{imageSlider}</Slider4>
-                  </div>
+                <div className="w-full md:w-3/5 lg:w-1/3 lg:h-full">
+                  <Slider4 title={title}>{imageSlider}</Slider4>
+                </div>
                 <div className="lg:w-1/2 w-full lg:pl-5 lg:py-6 mt-6 lg:mt-0 text-start">
                   <h1
                     className="text-gray-900 text-3xl title-font font-medium mb-1"
@@ -105,6 +120,10 @@ const ProductInfo = () => {
                         </Link>
                       ))}
                     </div>
+                  </div>
+                  <div className="py-2 text-red-500 flex items-center gap-1">
+                    <RiInformationFill />
+                    Currently Out of Stock
                   </div>
                   <div
                     className="title-font font-medium text-2xl text-gray-900 pb-2"
@@ -145,21 +164,25 @@ const ProductInfo = () => {
                   </div>
 
                   <div className="flex justify-end">
-                    <button
-                      onClick={() => addCart(products)}
-                      className="flex items-center text-white bg-indigo-500 border-0 py-1 px-6 focus:outline-none hover:bg-indigo-600 rounded"
-                    >
-                      Add To Cart
-                    </button>
+                    {stock ? (
+                      <button
+                        onClick={handleNotify}
+                        className="flex items-center text-white bg-success-500 border-0 py-1 px-6 focus:outline-none hover:bg-success-600 rounded"
+                      >
+                        Notify me
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => addCart(products)}
+                        className="flex items-center text-white bg-indigo-500 border-0 py-1 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                      >
+                        Add To Cart
+                      </button>
+                    )}
+
                     <IconButton
                       aria-label="Add to Wishlist"
                       onClick={handleWishlistClick}
-                      // style={{
-                      //   backgroundColor: active ? 'gray' : 'white',
-                      //   borderRadius: '50%',
-                      //   width: '40px',
-                      //   height: '40px',
-                      // }}
                     >
                       <Favorite
                         sx={{ color: active ? "red" : " rgb(102 112 133)" }}

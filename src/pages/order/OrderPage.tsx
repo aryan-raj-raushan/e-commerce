@@ -104,14 +104,14 @@ const OrderPage = () => {
                 Your order
               </h2>
               <hr />
-              <div className=" h-full pt-5">
+              <div className=" h-full py-5">
                 {order
                   .filter((obj: any) => obj.userid === userid)
                   .map((order: any, index: number) => {
                     const orderDate = order.date;
                     return (
                       <div
-                        className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0 space-y-4 py-5"
+                        className="mx-auto max-w-6xl justify-center px-6 md:flex md:space-x-6 xl:px-0 space-y-4 pt-5"
                         key={index}
                       >
                         {order.orderItems.map((item: any, index: number) => {
@@ -125,15 +125,15 @@ const OrderPage = () => {
                           );
                           const track = orderDate === todayDate ? 0 : value;
                           return (
-                            <div className="rounded-lg md:w-2/3" key={index}>
+                            <div className="rounded-lg md:w-4/5" key={index}>
                               <div
-                                className="justify-between mb-6 rounded-lg bg-white p-6 shadow-lg border border-gray-200 sm:flex sm:justify-start w-full"
+                                className="justify-center items-center mb-6 rounded-lg bg-white p-6 shadow-lg border border-gray-200 flex flex-col sm:flex-row sm:justify-start w-full"
                                 style={darkBg}
                               >
                                 <img
                                   src={item.imageUrl.imageUrl0}
                                   alt={item.title}
-                                  className="w-full rounded-lg sm:w-40 object-contain"
+                                  className="w-40 rounded-lg sm:w-40 object-contain"
                                 />
                                 <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
                                   <div className="mt-5 sm:mt-0 sm:w-full">
@@ -154,7 +154,7 @@ const OrderPage = () => {
                                       <p className="text-lg">{status}</p>
                                     </div>
                                     <p className="pt-1">Product shipped from : <span className="font-medium">{store}</span> </p>
-                                    <div className="mx-5">
+                                    <div className="mx-5 mt-2 w-4/5">
                                       <Slider
                                         aria-label="Order status"
                                         value={track}

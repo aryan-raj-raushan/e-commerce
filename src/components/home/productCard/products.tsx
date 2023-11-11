@@ -1,12 +1,21 @@
 import { Rating } from "@mui/material";
+import "./style.css";
 
 const Products = ({ data, darkText, darkBg }: any) => {
-  const { title, price, imageUrl, rating, totalRatings, Discount } = data;
+  const { title, price, imageUrl, rating, totalRatings, Discount, checkStock } =
+    data;
   const image = imageUrl && imageUrl.imageUrl0;
   const ratingAsNumber = Number(rating);
+  const stock = checkStock === "InStock" ? false : true;
 
   return (
-    <div className="p-4 md:w-auto h-full drop-shadow-lg flex flex-wrap">
+    <div className="p-4 md:w-auto h-full drop-shadow-lg flex flex-wrap relative">
+      {stock && (
+        <div className="ribbon">
+          <span>Out of stock</span>
+        </div>
+      )}
+
       <div
         className="h-full w-60 border-2 hover:shadow-gray-100 hover:shadow-2xl transition-shadow duration-300 ease-in-out border-gray-200 border-opacity-60 rounded-2xl overflow-hidden flex flex-col justify-between"
         style={darkBg}

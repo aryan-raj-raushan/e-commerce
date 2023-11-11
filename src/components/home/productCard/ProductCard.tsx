@@ -97,9 +97,6 @@ const ProductCard = ({ mode, productData, title, filterData, link }: any) => {
                 onClick={() => handleClick(item.id)}
               >
                 <Products
-                  title={item.title}
-                  price={item.price}
-                  imageUrl={item.imageUrl.imageUrl0}
                   data={item}
                   darkText={darkText}
                   darkBg={darkBg}
