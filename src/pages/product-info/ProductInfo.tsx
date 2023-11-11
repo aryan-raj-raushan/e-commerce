@@ -121,10 +121,13 @@ const ProductInfo = () => {
                       ))}
                     </div>
                   </div>
-                  <div className="py-2 text-red-500 flex items-center gap-1">
-                    <RiInformationFill />
-                    Currently Out of Stock
-                  </div>
+                  {stock && (
+                    <div className="py-2 text-red-500 flex items-center gap-1">
+                      <RiInformationFill />
+                      Currently Out of Stock
+                    </div>
+                  )}
+
                   <div
                     className="title-font font-medium text-2xl text-gray-900 pb-2"
                     style={darkText}
