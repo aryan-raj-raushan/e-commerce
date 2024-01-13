@@ -12,7 +12,7 @@ import Mobile from "../../../assets/images/mobile.webp"
 import Appliances from "../../../assets/images/appliances.webp"
 import TopDeals from "../../../assets/images/topdeals.webp"
 import Home from "../../../assets/images/home.webp"
-import ViewAll from "../../../assets/images/viewall.png";
+// import ViewAll from "../../../assets/images/viewall.png";
 
 import { Slider2 } from "../../../HOC/hoc/Slider";
 import { useNavigate } from "react-router-dom";
@@ -39,7 +39,7 @@ const Categories = () => {
   };
 
   return (
-    <div className="mt-7 mb-5 mx-auto">
+    <div className="mt-7 sm:mb-5 mx-auto">
       <Slider2>
         {categoryData.map((category, index) => (
           <SwiperSlide
@@ -48,7 +48,7 @@ const Categories = () => {
           >
             {category.image ? (
               <div
-                className="w-20 h-full sm:w-40 sm:h-40 rounded-full flex flex-col items-center justify-center cursor-pointer"
+                className="w-10 h-full sm:w-40 sm:h-40 rounded-full flex flex-col items-center justify-center cursor-pointer"
                 onClick={() => handleClick(category.label)}
               >
                 <img
@@ -56,12 +56,12 @@ const Categories = () => {
                   alt={category.title}
                   className="object-contain max-h-28"
                 />
-                <h4>{category.title}</h4>
+                <h4 className="hidden sm:block text-lg">{category.title}</h4>
               </div>
             ) : (
               <div className="mr-10 h-full sm:h-40 flex items-center justify-center">
-                <div className="sm:w-20 h-20 rounded-full flex flex-col items-center justify-center cursor-pointer bg-gray-100" onClick={() => handleClick(category.label)}>
-                  <h4 className="underline decoration-gray-400 underline-offset-4">{category.title}</h4>
+                <div className="w-10 sm:w-20 h-10 sm:h-20 rounded-full flex flex-col items-center justify-center cursor-pointer bg-gray-100 text-[8px] sm:text-lg" onClick={() => handleClick(category.label)}>
+                  <h4 className="underline decoration-gray-400 underline-offset-4 sm:block">{category.title}</h4>
                 </div>
               </div>
             )}

@@ -56,10 +56,10 @@ const ProductCard = ({ mode, productData, title, filterData, link }: any) => {
   return (
     <section className="text-gray-600 body-font">
       <div className="px-2 sm:px-5 pt-4 pb-8 md:pt-8 md:pb-12">
-        <div className="flex justify-between">
-          <div className="w-auto mb-3 lg:mb-5 relative sm:mx-10">
+        <div className="flex justify-between items-center">
+          <div className="w-auto mb-3 lg:mb-5 relative mx-4 sm:mx-10">
             <h1
-              className="sm:text-3xl text-2xl font-[900] leading-10  title-font mb-2 text-black "
+              className="sm:text-3xl text-lg font-[900] leading-10  title-font mb-2 text-black "
               style={darkText}
             >
               {title}
@@ -80,7 +80,7 @@ const ProductCard = ({ mode, productData, title, filterData, link }: any) => {
             </div>
           </div>
           <Link
-            className="mr-10 text-lg font-normal underline underline-offset-4 decoration-gray-500 cursor-pointer"
+            className="mr-4 sm:mr-10 text-sm sm:text-lg font-normal underline underline-offset-4 decoration-gray-500 cursor-pointer"
             to={link}
           >
             View all
@@ -88,7 +88,7 @@ const ProductCard = ({ mode, productData, title, filterData, link }: any) => {
         </div>
 
         {/* Products */}
-        <div className=" max-w-fit">
+        <div className="max-w-fit">
           <Slider3 className="max-w-fit">
             {filteredProducts.map((item: any, index: number) => (
               <SwiperSlide

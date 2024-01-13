@@ -17,5 +17,16 @@ font-size: 25px;
 font-size: 25px;
 }
 
+@media only screen and (max-width: 640px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 25px;
+        height: 25px;
+        display: none;
+    }
 
-
+    .swiper-button-prev::after,
+    .swiper-button-next::after {
+        font-size: 15px;
+    }
+}
