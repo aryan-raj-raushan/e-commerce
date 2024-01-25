@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 const FashionDesign = () => {
   return (
-    <div className="grid grid-rows-5 grid-cols-4 mx-10 grid-flow-col gap-5 min-h-[300px] md:min-h-[500px] lg:min-h-[800px] lg:max-h-[1000px] mb-5 lg:mb-10">
+    <div className="hidden xl:grid grid-rows-5 grid-cols-4 mx-10 grid-flow-col gap-5 min-h-[300px] md:min-h-[500px] lg:min-h-[800px] lg:max-h-[1000px] mb-5 lg:mb-10">
       {/* box 1 */}
       <div
         className=" bg-contain bg-no-repeat bg-center object-contain rounded-lg  w-full h-full max-w-full max-h-full"

@@ -62,15 +62,15 @@ const Trending = () => {
        
       <div className="w-full lg:w-1/2">
         <h2 className="text-2xl font-medium">Trending Fashion</h2>
-        <div className="flex flex-wrap mt-4 min-h-96 max-h-[480px]">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap mt-4 h-full sm:min-h-96 sm:max-h-[480px] space-y-4 sm:space-y-0">
       {data.map((item, index) => (
-        <div key={index} className="flex flex-col text-start gap-1 w-1/3 h-full">
+        <div key={index} className="flex flex-col text-start gap-1 w-full sm:w-1/3 h-full ">
           <img
             src={item.imgSrc}
             alt=""
             width={300}
             height={100}
-            className={`max-h-[300px] min-h-[${item.width}] h-full`}
+            className={`max-h-[250px] sm:max-h-[300px] sm:min-h-[${item.width}] h-full self-center sm:self-start`}
           />
           <h4 className="px-2 pt-1 text-lg text-black">{item.price}</h4>
           <p className="px-2">{item.title}</p>
