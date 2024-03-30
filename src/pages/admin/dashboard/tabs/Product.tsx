@@ -28,6 +28,13 @@ const Product = ({
     edithandle(item);
     navigate("/updateproduct");
   };
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const isAdminLogin = user?.user?.email
+    .toLowerCase()
+    .includes("aryanraj.raushan")
+    ? true
+    : false;
+
   return (
     <div className="px-4 md:px-0 mb-16">
       <h1
@@ -98,7 +105,10 @@ const Product = ({
                           alt="img"
                         />
                       ) : column.key === "allCategory" ? (
-                       <p className="capitalize">{item.allCategory.category} - {item.allCategory.subcategory}</p>
+                        <p className="capitalize">
+                          {item.allCategory.category} -{" "}
+                          {item.allCategory.subcategory}
+                        </p>
                       ) : (
                         item[column.key]
                       )}
@@ -111,12 +121,14 @@ const Product = ({
                       className=" flex gap-2 cursor-pointer text-black"
                       style={darkText}
                     >
-                      <div
-                        className="hover:scale-110"
-                        onClick={() => deleteProduct(item)}
-                      >
-                        <AiOutlineDelete size={25} />
-                      </div>
+                      {isAdminLogin && (
+                        <div
+                          className="hover:scale-110"
+                          onClick={() => deleteProduct(item)}
+                        >
+                          <AiOutlineDelete size={25} />
+                        </div>
+                      )}
                       <div
                         className="hover:scale-110"
                         onClick={() => handleEdit(item)}
